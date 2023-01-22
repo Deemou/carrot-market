@@ -4,9 +4,9 @@
     "airbnb",
     "airbnb-typescript",
     "airbnb/hooks",
+    "plugin:prettier/recommended",
     "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",
-    "plugin:prettier/recommended",
     "plugin:@typescript-eslint/recommended-requiring-type-checking"
   ],
   "parserOptions": {
@@ -19,7 +19,17 @@
   "rules": {
     "react/prop-types": "off",
     "react/react-in-jsx-scope": "off",
-    "react/jsx-props-no-spreading": "off"
+    "react/jsx-props-no-spreading": "off",
+    //react 함수형 컴포넌트 정의 방식 선언
+    "react/function-component-definition": [
+      2,
+      {
+        "namedComponents": [
+          "function-declaration",
+          "arrow-function"
+        ]
+      }
+    ]
   },
   "settings": {
     "react": {
