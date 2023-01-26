@@ -12,7 +12,12 @@ interface LayoutProps {
   children: React.ReactNode;
 }
 
-export default function Layout({ title, canGoBack, hasTabBar, children }: LayoutProps) {
+export default function Layout({
+  title,
+  canGoBack,
+  hasTabBar,
+  children
+}: LayoutProps) {
   const router = useRouter();
   const onClick = () => {
     router.back();
@@ -38,7 +43,9 @@ export default function Layout({ title, canGoBack, hasTabBar, children }: Layout
             </svg>
           </button>
         ) : null}
-        {title ? <span className={cls(canGoBack ? 'mx-auto' : '', '')}>{title}</span> : null}
+        {title ? (
+          <span className={cls(canGoBack ? 'mx-auto' : '', '')}>{title}</span>
+        ) : null}
       </div>
       <div className={cls('pt-12', hasTabBar ? 'pb-24' : '')}>{children}</div>
       {hasTabBar ? (
@@ -47,7 +54,9 @@ export default function Layout({ title, canGoBack, hasTabBar, children }: Layout
             href="/"
             className={cls(
               'flex flex-col items-center space-y-2 ',
-              router.pathname === '/' ? 'text-orange-500' : 'transition-colors hover:text-gray-500'
+              router.pathname === '/'
+                ? 'text-orange-500'
+                : 'transition-colors hover:text-gray-500'
             )}
           >
             <svg

@@ -18,8 +18,8 @@ const Community: NextPage = () => {
               동네질문
             </span>
             <div className="mt-2 px-4 text-gray-700">
-              <span className="font-medium text-orange-500">Q.</span> What is the best mandu
-              restaurant?
+              <span className="font-medium text-orange-500">Q.</span> What is
+              the best mandu restaurant?
             </div>
             <div className="mt-5 flex w-full items-center justify-between px-4 text-xs font-medium text-gray-500">
               <span>니꼬</span>

@@ -8,7 +8,10 @@ interface InputProps {
 export default function Input({ label, name, kind, ...rest }: InputProps) {
   return (
     <div>
-      <label className="mb-1 block text-sm font-medium text-gray-700" htmlFor={name}>
+      <label
+        className="mb-1 block text-sm font-medium text-gray-700"
+        htmlFor={name}
+      >
         {label}
       </label>
       {kind === 'text' ? (

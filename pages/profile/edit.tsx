@@ -14,11 +14,22 @@ const EditProfile: NextPage = () => {
             className="cursor-pointer rounded-md border border-gray-300 py-2 px-3 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
           >
             Change
-            <input id="picture" type="file" className="hidden" accept="image/*" />
+            <input
+              id="picture"
+              type="file"
+              className="hidden"
+              accept="image/*"
+            />
           </label>
         </div>
         <Input required label="Email address" name="email" type="email" />
-        <Input required label="Phone number" name="phone" type="number" kind="phone" />
+        <Input
+          required
+          label="Phone number"
+          name="phone"
+          type="number"
+          kind="phone"
+        />
         <Button text="Update profile" />
       </form>
     </Layout>

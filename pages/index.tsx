@@ -9,7 +9,14 @@ const Home: NextPage = () => {
     <Layout title="홈" hasTabBar>
       <div className="flex flex-col space-y-5 divide-y">
         {new Array(10).fill(1).map((_, i) => (
-          <Item key={Date.now()} id={i} title="iPhone 14" price={99} comments={1} hearts={1} />
+          <Item
+            key={Date.now()}
+            id={i}
+            title="iPhone 14"
+            price={99}
+            comments={1}
+            hearts={1}
+          />
         ))}
         <FloatingButton href="/items/upload">
           <svg

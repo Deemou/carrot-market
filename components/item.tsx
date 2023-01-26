@@ -9,9 +9,18 @@ interface ItemProps {
   hearts: number;
 }
 
-export default function Item({ title, price, comments, hearts, id }: ItemProps) {
+export default function Item({
+  title,
+  price,
+  comments,
+  hearts,
+  id
+}: ItemProps) {
   return (
-    <Link href={`/items/${id}`} className="flex cursor-pointer justify-between px-4 pt-5">
+    <Link
+      href={`/items/${id}`}
+      className="flex cursor-pointer justify-between px-4 pt-5"
+    >
       <div className="flex space-x-4">
         <div className="h-20 w-20 rounded-md bg-gray-400" />
         <div className="flex flex-col pt-2">
