@@ -5,7 +5,7 @@ interface InputProps {
   [key: string]: any;
 }
 
-export default function Input({ label, name, kind = 'text', ...rest }: InputProps) {
+export default function Input({ label, name, kind, ...rest }: InputProps) {
   return (
     <div>
       <label className="mb-1 block text-sm font-medium text-gray-700" htmlFor={name}>

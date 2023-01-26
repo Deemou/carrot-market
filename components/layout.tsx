@@ -173,7 +173,7 @@ export default function Layout({ title, canGoBack, hasTabBar, children }: Layout
 }
 
 Layout.defaultProps = {
-  title: null,
+  title: '',
   canGoBack: false,
   hasTabBar: false
 };
