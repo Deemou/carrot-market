@@ -4,5 +4,7 @@ module.exports = {
   theme: {
     extend: {}
   },
-  plugins: []
+  darkMode: 'media', // class
+  // eslint-disable-next-line global-require
+  plugins: [require('@tailwindcss/forms')]
 };
