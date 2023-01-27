@@ -1,30 +1,32 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { useState } from 'react';
 
-interface UseMutationState {
+interface UseMutationState<T> {
   loading: boolean;
-  data?: object;
+  data?: T;
   error?: object;
 }
-type UseMutationResult = [(data: any) => void, UseMutationState];
+type UseMutationResult<T> = [(data: any) => void, UseMutationState<T>];
 
-export default function useMutation(url: string): UseMutationResult {
-  const [state, setSate] = useState<UseMutationState>({
+export default function useMutation<T = any>(
+  url: string
+): UseMutationResult<T> {
+  const [state, setSate] = useState<UseMutationState<T>>({
     loading: false,
     data: undefined,
     error: undefined
   });
-  function mutation(data: any) {
+  function mutation(newData: any) {
     setSate((prev) => ({ ...prev, loading: true }));
     fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(data)
+      body: JSON.stringify(newData)
     })
       .then((response) => response.json().catch(() => {}))
-      .then((newData) => setSate((prev) => ({ ...prev, newData })))
+      .then((data) => setSate((prev) => ({ ...prev, data })))
       .catch((error) => setSate((prev) => ({ ...prev, error })))
       .finally(() => setSate((prev) => ({ ...prev, loading: false })));
   }
