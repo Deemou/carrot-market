@@ -1,21 +1,41 @@
+/* eslint-disable no-void */
 /* eslint-disable react/button-has-type */
 import type { NextPage } from 'next';
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import Button from '../components/button';
 import Input from '../components/input';
-import cls from '../libs/utils';
+import useMutation from '../libs/client/useMutation';
+import cls from '../libs/client/utils';
+
+interface EnterForm {
+  email?: string;
+  phone?: string;
+}
 
 const Enter: NextPage = () => {
+  const [enter, { loading, data, error }] = useMutation('/api/users/enter');
+  const { register, handleSubmit, reset } = useForm<EnterForm>();
   const [method, setMethod] = useState<'email' | 'phone'>('email');
-  const onEmailClick = () => setMethod('email');
-  const onPhoneClick = () => setMethod('phone');
+  const onEmailClick = () => {
+    reset();
+    setMethod('email');
+  };
+  const onPhoneClick = () => {
+    reset();
+    setMethod('phone');
+  };
+  const onValid = (validForm: EnterForm) => {
+    if (loading) return;
+    enter(validForm);
+  };
   return (
     <div className="mt-16 px-4">
       <h3 className="text-center text-3xl font-bold">Enter to Carrot</h3>
       <div className="mt-12">
         <div className="flex flex-col items-center">
           <h5 className="text-sm font-medium text-gray-500">Enter using:</h5>
-          <div className="mt-8  grid  w-full grid-cols-2 border-b ">
+          <div className="mt-8 grid  w-full grid-cols-2 border-b ">
             <button
               className={cls(
                 'border-b-2 pb-4 text-sm font-medium',
@@ -40,12 +60,24 @@ const Enter: NextPage = () => {
             </button>
           </div>
         </div>
-        <form className="mt-8 flex flex-col space-y-4">
+        <form
+          onSubmit={(...args) => void handleSubmit(onValid)(...args)}
+          className="mt-8 flex flex-col space-y-4"
+        >
           {method === 'email' ? (
-            <Input name="email" label="Email address" type="email" required />
+            <Input
+              register={register('email', {
+                required: true
+              })}
+              name="email"
+              label="Email address"
+              type="email"
+              required
+            />
           ) : null}
           {method === 'phone' ? (
             <Input
+              register={register('phone')}
               name="phone"
               label="Phone number"
               type="number"
@@ -53,8 +85,12 @@ const Enter: NextPage = () => {
               required
             />
           ) : null}
-          {method === 'email' ? <Button text="Get login link" /> : null}
-          {method === 'phone' ? <Button text="Get one-time password" /> : null}
+          {method === 'email' ? (
+            <Button text={loading ? 'Loading' : 'Get login link'} />
+          ) : null}
+          {method === 'phone' ? (
+            <Button text={loading ? 'Loading' : 'Get one-time password'} />
+          ) : null}
         </form>
 
         <div className="mt-8">
