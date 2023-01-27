@@ -1,7 +1,7 @@
 /* eslint-disable react/button-has-type */
 import type { NextPage } from 'next';
-import Layout from '../../components/layout';
-import TextArea from '../../components/textarea';
+import Layout from '@components/layout';
+import TextArea from '@components/textarea';
 
 const CommunityPostDetail: NextPage = () => {
   return (
