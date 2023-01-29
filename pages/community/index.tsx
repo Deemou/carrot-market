@@ -10,7 +10,8 @@ const Community: NextPage = () => {
       <div className="space-y-4 divide-y-[2px]">
         {[1, 2, 3, 4, 5, 6].map((_, i) => (
           <Link
-            key={Date.now()}
+            // eslint-disable-next-line react/no-array-index-key
+            key={i}
             href={`/community/${i}`}
             className="flex cursor-pointer flex-col items-start pt-4"
           >

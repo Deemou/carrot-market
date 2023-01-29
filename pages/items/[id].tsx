@@ -57,7 +57,9 @@ const ItemDetail: NextPage = () => {
           <h2 className="text-2xl font-bold text-gray-900">Similar items</h2>
           <div className=" mt-6 grid grid-cols-2 gap-4">
             {new Array(6).fill(1).map(() => (
-              <div key={Date.now()}>
+              <div // eslint-disable-next-line react/no-array-index-key
+                key={Date.now()}
+              >
                 <div className="mb-4 h-56 w-full bg-slate-300" />
                 <h3 className="-mb-1 text-gray-700">Galaxy S60</h3>
                 <span className="text-sm font-medium text-gray-900">$6</span>

@@ -9,8 +9,8 @@ const Live: NextPage = () => {
     <Layout hasTabBar title="라이브">
       <div className=" space-y-4 divide-y-[1px]">
         {new Array(7).fill(1).map((_, i) => (
-          <Link
-            key={Date.now()}
+          <Link // eslint-disable-next-line react/no-array-index-key
+            key={i}
             href={`/live/${i}`}
             className="block px-4  pt-4"
           >

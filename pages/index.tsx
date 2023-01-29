@@ -16,7 +16,8 @@ const Home: NextPage = () => {
       <div className="flex flex-col space-y-5 divide-y">
         {new Array(10).fill(1).map((_, i) => (
           <Item
-            key={Date.now()}
+            // eslint-disable-next-line react/no-array-index-key
+            key={i}
             id={i}
             title="iPhone 14"
             price={99}
