@@ -15,12 +15,12 @@ async function handler(
       payload: token
     }
   });
-  if (!exists) res.status(404).end();
+  if (!exists) return res.status(404).end();
   req.session.user = {
-    id: exists?.userId
+    id: exists.userId
   };
   await req.session.save();
-  res.status(200).end();
+  return res.status(200).end();
 }
 
 export default withIronSessionApiRoute(withHandler('POST', handler), {
