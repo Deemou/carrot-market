@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 import { NextApiHandler } from 'next';
 
 export interface ResponseType {
@@ -5,13 +6,23 @@ export interface ResponseType {
   [key: string]: any;
 }
 
-export default function withHandler(
-  method: 'GET' | 'POST' | 'DELETE',
-  handler: NextApiHandler
-): NextApiHandler {
+interface ConfigType {
+  method: 'GET' | 'POST' | 'DELETE';
+  handler: NextApiHandler;
+  isPrivate?: boolean;
+}
+
+export default function withHandler({
+  method,
+  handler,
+  isPrivate
+}: ConfigType): NextApiHandler {
   return async (req, res) => {
     if (req.method !== method) {
-      res.status(405).end();
+      return res.status(405).end();
+    }
+    if (isPrivate && !req.session.user) {
+      return res.status(401).json({ ok: false, error: 'Plz log in.' });
     }
     try {
       await handler(req, res);
