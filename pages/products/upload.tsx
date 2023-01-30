@@ -1,6 +1,5 @@
 /* eslint-disable no-void */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import type { NextPage } from 'next';
 import Button from '@components/button';
 import Input from '@components/input';
@@ -8,6 +7,7 @@ import Layout from '@components/layout';
 import TextArea from '@components/textarea';
 import { useForm } from 'react-hook-form';
 import useMutation from '@libs/client/useMutation';
+import { Product } from '@prisma/client';
 
 interface UploadProductForm {
   name: string;
@@ -15,9 +15,15 @@ interface UploadProductForm {
   description: string;
 }
 
+interface UploadProductMutation {
+  ok: boolean;
+  product: Product;
+}
+
 const Upload: NextPage = () => {
   const { register, handleSubmit } = useForm<UploadProductForm>();
-  const [uploadProduct, { loading, data }] = useMutation('/api/products');
+  const [uploadProduct, { loading, data }] =
+    useMutation<UploadProductMutation>('/api/products');
   const onValid = (productData: UploadProductForm) => {
     if (loading) return;
     uploadProduct(productData);
