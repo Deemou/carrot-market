@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable consistent-return */
 import { NextApiHandler } from 'next';
 
@@ -6,19 +7,21 @@ export interface ResponseType {
   [key: string]: any;
 }
 
+type method = 'GET' | 'POST' | 'DELETE';
+
 interface ConfigType {
-  method: 'GET' | 'POST' | 'DELETE';
+  methods: method[];
   handler: NextApiHandler;
   isPrivate?: boolean;
 }
 
 export default function withHandler({
-  method,
+  methods,
   handler,
   isPrivate
 }: ConfigType): NextApiHandler {
   return async (req, res) => {
-    if (req.method !== method) {
+    if (req.method && !methods.includes(req.method as any)) {
       return res.status(405).end();
     }
     if (isPrivate && !req.session.user) {
