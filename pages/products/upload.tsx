@@ -33,7 +33,7 @@ const Upload: NextPage = () => {
   };
   useEffect(() => {
     if (data?.ok) {
-      void router.push(`/products/${data.product.id}`);
+      void router.replace(`/products/${data.product.id}`);
     }
   }, [data, router]);
   return (
