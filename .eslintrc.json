@@ -35,6 +35,16 @@
         "component": false,
         "html": false
       }
+    ],
+    "@typescript-eslint/naming-convention": [
+      "error",
+      {
+        "selector": "typeAlias",
+        "format": [
+          "PascalCase",
+          "camelCase"
+        ]
+      }
     ]
   },
   "settings": {
