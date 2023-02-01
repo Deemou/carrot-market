@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { NextApiRequest, NextApiResponse } from 'next';
 import withHandler, { ResponseType } from '@libs/server/withHandler';
@@ -8,29 +9,73 @@ async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseType>
 ) {
-  const {
-    body: { question },
-    session: { user }
-  } = req;
-  const post = await client.post.create({
-    data: {
-      question,
-      user: {
-        connect: {
-          id: user?.id
+  if (req.method === 'POST') {
+    const {
+      body: { question, latitude, longitude },
+      session: { user }
+    } = req;
+    const post = await client.post.create({
+      data: {
+        question,
+        latitude,
+        longitude,
+        user: {
+          connect: {
+            id: user?.id
+          }
         }
       }
-    }
-  });
-  res.json({
-    ok: true,
-    post
-  });
+    });
+    res.json({
+      ok: true,
+      post
+    });
+  }
+  if (req.method === 'GET') {
+    const {
+      query: { latitude, longitude }
+    } = req;
+    if (!latitude || !longitude)
+      return res.status(404).json({ ok: false, error: 'Invalid location' });
+    const parsedLatitude = parseFloat(latitude.toString());
+    const parsedLongitue = parseFloat(longitude.toString());
+    const posts = await client.post.findMany({
+      include: {
+        user: {
+          select: {
+            id: true,
+            name: true,
+            avatar: true
+          }
+        },
+        _count: {
+          select: {
+            wondering: true,
+            answers: true
+          }
+        }
+      },
+      where: {
+        latitude: {
+          gte: parsedLatitude - 0.01,
+          lte: parsedLatitude + 0.01
+        },
+        longitude: {
+          gte: parsedLongitue - 0.01,
+          lte: parsedLongitue + 0.01
+        }
+      }
+    });
+    res.json({
+      ok: true,
+      posts
+    });
+  }
 }
 
 export default withApiSession(
   withHandler({
-    methods: ['POST'],
+    methods: ['GET', 'POST'],
     handler
   })
 );
