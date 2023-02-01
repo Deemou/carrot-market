@@ -1,10 +1,41 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable no-void */
+/* eslint-disable no-underscore-dangle */
 import type { NextPage } from 'next';
 import Link from 'next/link';
 import FloatingButton from '@components/floating-button';
 import Layout from '@components/layout';
+import useSWR from 'swr';
+import { Post, User } from '@prisma/client';
+import useCoords from '@libs/client/useCoords';
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
+
+interface PostWithUser extends Post {
+  user: User;
+  _count: {
+    wondering: number;
+    answers: number;
+  };
+}
+
+interface PostsResponse {
+  ok: boolean;
+  posts: PostWithUser[];
+}
 
 const Community: NextPage = () => {
+  const router = useRouter();
+  const { latitude, longitude } = useCoords();
+  const { data } = useSWR<PostsResponse>(
+    latitude && longitude
+      ? `/api/posts?latitude=${latitude}&longitude=${longitude}`
+      : null
+  );
+  useEffect(() => {
+    if (data && !data.ok) {
+      void router.replace('/community');
+    }
+  }, [data, router]);
   return (
     <Layout hasTabBar title="동네생활">
       <div className="space-y-4 divide-y-[2px]">
