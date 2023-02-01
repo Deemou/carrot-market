@@ -1,9 +1,96 @@
 /* eslint-disable react/button-has-type */
+/* eslint-disable no-unsafe-optional-chaining */
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable no-void */
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 import type { NextPage } from 'next';
 import Layout from '@components/layout';
 import TextArea from '@components/textarea';
+import { useRouter } from 'next/router';
+import useSWR from 'swr';
+import { Answer, Post, User } from '@prisma/client';
+import Link from 'next/link';
+import useMutation from '@libs/client/useMutation';
+import cls from '@libs/client/utils';
+import { useForm } from 'react-hook-form';
+import { useEffect } from 'react';
+
+interface AnswerWithUser extends Answer {
+  user: User;
+}
+
+interface PostWithUser extends Post {
+  user: User;
+  _count: {
+    answers: number;
+    wondering: number;
+  };
+  answers: AnswerWithUser[];
+}
+
+interface CommunityPostResponse {
+  ok: boolean;
+  post: PostWithUser;
+  isWondering: boolean;
+}
+
+interface AnswerForm {
+  answer: string;
+}
+
+interface AnswerResponse {
+  ok: boolean;
+  response: Answer;
+}
 
 const CommunityPostDetail: NextPage = () => {
+  const router = useRouter();
+  const { register, handleSubmit, reset } = useForm<AnswerForm>();
+  const { data, mutate } = useSWR<CommunityPostResponse>(
+    router.query.id ? `/api/posts/${router.query.id}` : null
+  );
+  const [wonder, { loading }] = useMutation(
+    `/api/posts/${router.query.id}/wonder`
+  );
+  const [sendAnswer, { data: answerData, loading: answerLoading }] =
+    useMutation<AnswerResponse>(`/api/posts/${router.query.id}/answers`);
+  const onWonderClick = () => {
+    if (!data) return;
+    void mutate(
+      {
+        ...data,
+        post: {
+          ...data.post,
+          _count: {
+            ...data.post._count,
+            wondering: data.isWondering
+              ? data?.post._count.wondering - 1
+              : data?.post._count.wondering + 1
+          }
+        },
+        isWondering: !data.isWondering
+      },
+      false
+    );
+    if (!loading) {
+      wonder({});
+    }
+  };
+  const onValid = (form: AnswerForm) => {
+    if (answerLoading) return;
+    sendAnswer(form);
+  };
+  useEffect(() => {
+    if (data && !data.ok) {
+      void router.replace('/community');
+    }
+  }, [data, router]);
+  useEffect(() => {
+    if (answerData && answerData.ok) {
+      reset();
+      void mutate();
+    }
+  }, [answerData, reset, mutate]);
   return (
     <Layout canGoBack>
       <div>
