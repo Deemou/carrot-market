@@ -4,7 +4,7 @@ import useSWR from 'swr';
 import Item from './item';
 
 interface ProductListProps {
-  kind: 'favs' | 'sales' | 'purchases';
+  kind: 'Fav' | 'Sale' | 'Purchase';
 }
 
 interface Record {
@@ -17,7 +17,9 @@ interface ProductListResponse {
 }
 
 export default function ProductList({ kind }: ProductListProps) {
-  const { data } = useSWR<ProductListResponse>(`/api/users/me/${kind}`);
+  const { data } = useSWR<ProductListResponse>(
+    `/api/users/me/records?kind=${kind}`
+  );
   return data
     ? data[kind]?.map((record) => (
         <Item
