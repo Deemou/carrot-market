@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable react/button-has-type */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable no-void */
@@ -12,6 +13,7 @@ import { Stream } from '@prisma/client';
 import { useForm } from 'react-hook-form';
 import useMutation from '@libs/client/useMutation';
 import useUser from '@libs/client/useUser';
+import { useEffect, useRef } from 'react';
 
 interface StreamMessage {
   message: string;
@@ -38,6 +40,10 @@ interface MessageForm {
 const LiveStream: NextPage = () => {
   const { user } = useUser();
   const router = useRouter();
+  const scrollRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    scrollRef?.current?.scrollIntoView();
+  });
   const { register, handleSubmit, reset } = useForm<MessageForm>();
   const { data, mutate } = useSWR<StreamResponse>(
     router.query.id ? `/api/streams/${router.query.id}` : null,
@@ -97,6 +103,7 @@ const LiveStream: NextPage = () => {
                 reversed={message.user.id === user?.id}
               />
             ))}
+            <div ref={scrollRef} />
           </div>
           <div className="fixed inset-x-0 bottom-0  bg-white py-2">
             <form
