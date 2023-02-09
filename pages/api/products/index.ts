@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { NextApiRequest, NextApiResponse } from 'next';
 import withHandler, { ResponseType } from '@libs/server/withHandler';
@@ -9,14 +10,21 @@ async function handler(
   res: NextApiResponse<ResponseType>
 ) {
   if (req.method === 'GET') {
-    const products = await client.product.findMany({
+    const productQueries = await client.product.findMany({
       include: {
         _count: {
           select: {
-            favs: true
+            records: {
+              where: {
+                kind: { equals: 'Fav' }
+              }
+            }
           }
         }
       }
+    });
+    const products = productQueries.map((product) => {
+      return { ...product, _count: { favs: product._count.records } };
     });
     res.json({
       ok: true,
