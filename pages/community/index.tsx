@@ -13,7 +13,7 @@ import { useRouter } from 'next/router';
 interface PostWithUser extends Post {
   user: User;
   _count: {
-    wondering: number;
+    wonderings: number;
     answers: number;
   };
 }
@@ -72,7 +72,7 @@ const Community: NextPage = () => {
                     d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
                   ></path>
                 </svg>
-                <span>궁금해요 {post._count.wondering}</span>
+                <span>궁금해요 {post._count.wonderings}</span>
               </span>
               <span className="flex items-center space-x-2 text-sm">
                 <svg

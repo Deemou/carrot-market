@@ -23,7 +23,7 @@ interface PostWithUser extends Post {
   user: User;
   _count: {
     answers: number;
-    wondering: number;
+    wonderings: number;
   };
   answers: AnswerWithUser[];
 }
@@ -63,9 +63,9 @@ const CommunityPostDetail: NextPage = () => {
           ...data.post,
           _count: {
             ...data.post._count,
-            wondering: data.isWondering
-              ? data?.post._count.wondering - 1
-              : data?.post._count.wondering + 1
+            wonderings: data.isWondering
+              ? data?.post._count.wonderings - 1
+              : data?.post._count.wonderings + 1
           }
         },
         isWondering: !data.isWondering
@@ -138,7 +138,7 @@ const CommunityPostDetail: NextPage = () => {
                   d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
                 ></path>
               </svg>
-              <span>궁금해요 {data?.post?._count?.wondering}</span>
+              <span>궁금해요 {data?.post?._count?.wonderings}</span>
             </button>
             <span className="flex items-center space-x-2 text-sm">
               <svg
