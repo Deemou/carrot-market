@@ -73,7 +73,7 @@ export default function usePagination({
       <div
         className={cls(
           'flex items-center justify-center',
-          currentPage < 4 ? 'hidden' : ''
+          pages.includes(1) ? 'hidden' : ''
         )}
       >
         <button
@@ -118,7 +118,7 @@ export default function usePagination({
       <div
         className={cls(
           'flex items-center justify-center',
-          currentPage + 3 > maxPage ? 'hidden' : ''
+          pages.includes(maxPage) ? 'hidden' : ''
         )}
       >
         <svg
