@@ -19,7 +19,7 @@ export default function usePagination({
   const router = useRouter();
   const maxPage = Number((dataSize / limit).toFixed());
   const [pages, setPages] = useState<number[]>([]);
-
+  const pageLimit = Math.min(5, maxPage);
   const onClickPage = (page: number) => {
     void router.push(`${router.pathname}?page=${page}`);
   };
@@ -32,7 +32,7 @@ export default function usePagination({
   };
   useEffect(() => {
     if (currentPage <= 3) {
-      setPages([1, 2, 3, 4, 5]);
+      setPages(Array.from({ length: pageLimit }, (_, i) => i + 1));
     } else if (currentPage > 3 && currentPage + 2 < maxPage) {
       setPages([
         currentPage - 2,
@@ -42,9 +42,11 @@ export default function usePagination({
         currentPage + 2
       ]);
     } else if (currentPage + 3 >= maxPage) {
-      setPages([maxPage - 4, maxPage - 3, maxPage - 2, maxPage - 1, maxPage]);
+      setPages(
+        Array.from({ length: pageLimit }, (_, i) => maxPage - i).reverse()
+      );
     }
-  }, [currentPage, maxPage]);
+  }, [currentPage, maxPage, pageLimit]);
   return (
     <div className="item-center flex justify-center space-x-2 py-5">
       <button
