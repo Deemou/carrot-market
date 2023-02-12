@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { NextApiRequest, NextApiResponse } from 'next';
 import withHandler, { ResponseType } from '@libs/server/withHandler';
@@ -10,10 +11,12 @@ async function handler(
 ) {
   if (req.method === 'GET') {
     const limit = 5;
-    const page = Number(req.query.page) || 1;
-    const skip: number = (page - 1) * limit;
-
     const streamsCount = await client.stream.count();
+    const page = Number(req.query.page);
+    if (page < 1 || page > Math.ceil(streamsCount / limit)) {
+      return res.status(404).end();
+    }
+    const skip = ((page || 1) - 1) * limit;
     const streams = await client.stream.findMany({
       take: limit,
       skip,
