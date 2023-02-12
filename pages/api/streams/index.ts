@@ -13,7 +13,8 @@ async function handler(
     const limit = 5;
     const streamsCount = await client.stream.count();
     const page = Number(req.query.page);
-    if (page < 1 || page > Math.ceil(streamsCount / limit)) {
+    const lastPage = Math.ceil(streamsCount / limit);
+    if (page < 1 || page > lastPage) {
       return res.status(404).end();
     }
     const skip = ((page || 1) - 1) * limit;
@@ -24,7 +25,7 @@ async function handler(
         createdAt: 'desc'
       }
     });
-    res.json({ ok: true, streams, streamsCount, limit });
+    res.json({ ok: true, streams, lastPage });
   }
   if (req.method === 'POST') {
     const {

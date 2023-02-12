@@ -11,8 +11,7 @@ import useSWR from 'swr';
 interface StreamsResponse {
   ok: boolean;
   streams: Stream[];
-  streamsCount: number;
-  limit: number;
+  lastPage: number;
 }
 
 const Streams: NextPage = () => {
@@ -41,11 +40,7 @@ const Streams: NextPage = () => {
           </Link>
         ))}
         {data ? (
-          <PaginationBar
-            currentPage={page}
-            dataSize={data.streamsCount}
-            limit={data.limit}
-          />
+          <PaginationBar currentPage={page} lastPage={data.lastPage} />
         ) : null}
         <FloatingButton href="/streams/create">
           <svg

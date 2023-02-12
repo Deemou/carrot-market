@@ -6,18 +6,15 @@ import cls from '@/libs/client/utils';
 
 interface PaginationProps {
   currentPage: number;
-  dataSize: number;
-  limit: number;
+  lastPage: number;
 }
 type Direction = 'prev' | 'next';
 
 export default function usePagination({
   currentPage,
-  dataSize,
-  limit
+  lastPage
 }: PaginationProps) {
   const router = useRouter();
-  const lastPage = Number((dataSize / limit).toFixed());
   const [pages, setPages] = useState<number[]>([]);
   const pageLimit = Math.min(5, lastPage);
   const onClickPage = (page: number) => {
