@@ -17,9 +17,9 @@ export default function usePagination({
   limit
 }: PaginationProps) {
   const router = useRouter();
-  const maxPage = Number((dataSize / limit).toFixed());
+  const lastPage = Number((dataSize / limit).toFixed());
   const [pages, setPages] = useState<number[]>([]);
-  const pageLimit = Math.min(5, maxPage);
+  const pageLimit = Math.min(5, lastPage);
   const onClickPage = (page: number) => {
     void router.push(`${router.pathname}?page=${page}`);
   };
@@ -33,7 +33,7 @@ export default function usePagination({
   useEffect(() => {
     if (currentPage <= 3) {
       setPages(Array.from({ length: pageLimit }, (_, i) => i + 1));
-    } else if (currentPage > 3 && currentPage + 2 < maxPage) {
+    } else if (currentPage > 3 && currentPage + 2 < lastPage) {
       setPages([
         currentPage - 2,
         currentPage - 1,
@@ -41,12 +41,12 @@ export default function usePagination({
         currentPage + 1,
         currentPage + 2
       ]);
-    } else if (currentPage + 3 >= maxPage) {
+    } else if (currentPage + 3 >= lastPage) {
       setPages(
-        Array.from({ length: pageLimit }, (_, i) => maxPage - i).reverse()
+        Array.from({ length: pageLimit }, (_, i) => lastPage - i).reverse()
       );
     }
-  }, [currentPage, maxPage, pageLimit]);
+  }, [currentPage, lastPage, pageLimit]);
   return (
     <div className="item-center flex justify-center space-x-2 py-5">
       <button
@@ -118,7 +118,7 @@ export default function usePagination({
       <div
         className={cls(
           'flex items-center justify-center',
-          pages.includes(maxPage) ? 'hidden' : ''
+          pages.includes(lastPage) ? 'hidden' : ''
         )}
       >
         <svg
@@ -138,14 +138,14 @@ export default function usePagination({
         <button
           className="aspect-square w-10 rounded-md bg-zinc-400 font-medium text-white"
           onClick={() => {
-            onClickPage(maxPage);
+            onClickPage(lastPage);
           }}
         >
-          <span>{maxPage}</span>
+          <span>{lastPage}</span>
         </button>
       </div>
       <button
-        className={currentPage === maxPage ? 'hidden' : 'block'}
+        className={currentPage === lastPage ? 'hidden' : 'block'}
         onClick={() => {
           onClickDirection('next');
         }}
