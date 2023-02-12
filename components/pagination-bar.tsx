@@ -145,7 +145,7 @@ export default function usePagination({
         </button>
       </div>
       <button
-        className=""
+        className={currentPage === maxPage ? 'hidden' : 'block'}
         onClick={() => {
           onClickDirection('next');
         }}
