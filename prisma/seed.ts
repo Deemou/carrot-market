@@ -17,6 +17,9 @@ async function main() {
           connect: {
             id: 1
           }
+        },
+        chat: {
+          create: {}
         }
       }
     });
