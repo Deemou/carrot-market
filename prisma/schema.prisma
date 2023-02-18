@@ -30,6 +30,7 @@ model User {
   records         Record[]
   streams         Stream[]
   messages        Message[]
+  chats           Chat[]
 }
 
 model Token {
@@ -136,17 +137,28 @@ enum Kind {
 }
 
 model Stream {
-  id          Int       @id @default(autoincrement())
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
   name        String
-  description String    @db.MediumText
+  description String   @db.MediumText
   price       Int
-  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId      Int
-  messages    Message[]
+  chat        Chat     @relation(fields: [chatId], references: [id])
+  chatId      Int      @unique
 
   @@index([userId])
+  @@index([chatId])
+}
+
+model Chat {
+  id        Int       @id @default(autoincrement())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  users     User[]
+  messages  Message[]
+  stream    Stream?
 }
 
 model Message {
@@ -156,9 +168,9 @@ model Message {
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    Int
   message   String   @db.MediumText
-  stream    Stream   @relation(fields: [streamId], references: [id], onDelete: Cascade)
-  streamId  Int
+  chat      Chat     @relation(fields: [chatId], references: [id], onDelete: Cascade)
+  chatId    Int
 
   @@index([userId])
-  @@index([streamId])
+  @@index([chatId])
 }

@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 import { NextApiRequest, NextApiResponse } from 'next';
 import withHandler, { ResponseType } from '@libs/server/withHandler';
 import client from '@libs/server/client';
@@ -15,16 +16,9 @@ async function handler(
       id: Number(id)
     },
     include: {
-      messages: {
+      chat: {
         select: {
-          id: true,
-          message: true,
-          user: {
-            select: {
-              avatar: true,
-              id: true
-            }
-          }
+          id: true
         }
       }
     }

@@ -17,7 +17,7 @@ async function handler(
   const message = await client.message.create({
     data: {
       message: body.message,
-      stream: {
+      chat: {
         connect: {
           id: Number(id)
         }

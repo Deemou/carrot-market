@@ -42,6 +42,9 @@ async function handler(
           connect: {
             id: user?.id
           }
+        },
+        chat: {
+          create: {}
         }
       }
     });
