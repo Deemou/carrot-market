@@ -10,7 +10,17 @@ async function handler(
   res: NextApiResponse<ResponseType>
 ) {
   if (req.method === 'GET') {
+    const {
+      query: { page }
+    } = req;
+    const limit = 10;
+    const productCount = await client.product.count();
     const productQueries = await client.product.findMany({
+      take: limit,
+      skip: (Number(page) - 1) * limit,
+      orderBy: {
+        createdAt: 'desc'
+      },
       include: {
         _count: {
           select: {
@@ -23,12 +33,14 @@ async function handler(
         }
       }
     });
+    const lastPage = Math.ceil(productCount / limit);
     const products = productQueries.map((product) => {
       return { ...product, _count: { favs: product._count.records } };
     });
     res.json({
       ok: true,
-      products
+      products,
+      lastPage
     });
   }
   if (req.method === 'POST') {

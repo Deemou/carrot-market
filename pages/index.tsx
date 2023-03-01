@@ -1,12 +1,15 @@
+/* eslint-disable no-void */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import type { NextPage } from 'next';
+import Head from 'next/head';
 import FloatingButton from '@components/floating-button';
 import Item from '@components/item';
-import Head from 'next/head';
-import useSWR from 'swr';
 import { Product } from '@prisma/client';
 import Layout from '@/components/layout';
+import useInfiniteScroll from '@/libs/client/useInfiniteScroll';
+import useSWRInfinite from 'swr/infinite';
+import { useEffect } from 'react';
 
 export interface ProductWithCount extends Product {
   _count: {
@@ -17,10 +20,24 @@ export interface ProductWithCount extends Product {
 interface ProductsResponse {
   ok: boolean;
   products: ProductWithCount[];
+  lastPage: number;
 }
+const requestUrl = '/api/products';
+const getKey = (pageIndex: number, previousPageData: ProductsResponse) => {
+  if (pageIndex === 0) return `${requestUrl}?page=1`;
+  if (pageIndex + 1 > previousPageData.lastPage) return null;
+  return `${requestUrl}?page=${pageIndex + 1}`;
+};
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 const Home: NextPage = () => {
-  const { data } = useSWR<ProductsResponse>('/api/products');
+  const { data, setSize } = useSWRInfinite<ProductsResponse>(getKey, fetcher);
+
+  const page = useInfiniteScroll();
+  useEffect(() => {
+    void setSize(page);
+  }, [setSize, page]);
+
   return (
     <>
       <Head>
@@ -28,15 +45,17 @@ const Home: NextPage = () => {
       </Head>
       <Layout>
         <div className="flex flex-col space-y-5 divide-y">
-          {data?.products?.map((product) => (
-            <Item
-              id={product.id}
-              key={product.id}
-              title={product.name}
-              price={product.price}
-              hearts={product._count.favs}
-            />
-          ))}
+          {data?.map((productsPage) => {
+            return productsPage.products?.map((product) => (
+              <Item
+                id={product.id}
+                key={product.id}
+                title={product.name}
+                price={product.price}
+                hearts={product._count.favs}
+              />
+            ));
+          })}
           <FloatingButton href="/products/upload">
             <svg
               className="h-6 w-6"
