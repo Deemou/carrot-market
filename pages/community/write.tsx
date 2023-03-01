@@ -1,7 +1,6 @@
 /* eslint-disable no-void */
 import type { NextPage } from 'next';
 import Button from '@components/button';
-import Layout from '@components/layout';
 import TextArea from '@components/textarea';
 import { useForm } from 'react-hook-form';
 import useMutation from '@libs/client/useMutation';
@@ -34,19 +33,17 @@ const Write: NextPage = () => {
     }
   }, [data, router]);
   return (
-    <Layout canGoBack title="Write Post">
-      <form
-        onSubmit={(...args) => void handleSubmit(onValid)(...args)}
-        className="space-y-4 p-4"
-      >
-        <TextArea
-          register={register('question', { required: true, minLength: 5 })}
-          required
-          placeholder="Ask a question!"
-        />
-        <Button text={loading ? 'Loading...' : 'Submit'} />
-      </form>
-    </Layout>
+    <form
+      onSubmit={(...args) => void handleSubmit(onValid)(...args)}
+      className="space-y-4 p-4"
+    >
+      <TextArea
+        register={register('question', { required: true, minLength: 5 })}
+        required
+        placeholder="Ask a question!"
+      />
+      <Button text={loading ? 'Loading...' : 'Submit'} />
+    </form>
   );
 };
 

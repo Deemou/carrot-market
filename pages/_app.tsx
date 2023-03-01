@@ -1,12 +1,8 @@
 import '../styles/globals.css';
 import type { AppProps } from 'next/app';
 import { SWRConfig } from 'swr';
-import useUser from '@/libs/client/useUser';
-
-function LoginCheck() {
-  const { user } = useUser();
-  return null;
-}
+import Header from '@/components/header';
+import TabBar from '@/components/tabBar';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -16,9 +12,12 @@ function MyApp({ Component, pageProps }: AppProps) {
         fetcher: (url: string) => fetch(url).then((response) => response.json())
       }}
     >
-      <div className="mx-auto w-full max-w-xl">
-        <LoginCheck />
-        <Component {...pageProps} />
+      <div className="min-h-screen w-full bg-black py-4">
+        <div className="mx-auto w-full max-w-xl">
+          <Header />
+          <Component {...pageProps} />
+          <TabBar />
+        </div>
       </div>
     </SWRConfig>
   );

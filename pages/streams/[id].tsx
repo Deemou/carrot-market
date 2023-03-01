@@ -4,7 +4,6 @@
 /* eslint-disable no-void */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 import type { NextPage } from 'next';
-import Layout from '@components/layout';
 import Chat from '@/components/chat';
 import { Stream } from '@prisma/client';
 import { useRouter } from 'next/router';
@@ -27,21 +26,19 @@ const LiveStream: NextPage = () => {
     router.query.id ? `${requestUrl}` : null
   );
   return (
-    <Layout canGoBack>
-      <div className="space-y-4 py-10  px-4">
-        <div className="aspect-video w-full rounded-md bg-slate-300 shadow-sm" />
-        <div className="mt-5">
-          <h1 className="text-3xl font-bold text-gray-900">
-            {data?.stream?.name}
-          </h1>
-          <span className="mt-3 block text-2xl text-gray-900">
-            ${data?.stream?.price}
-          </span>
-          <p className=" my-6 text-gray-700">{data?.stream?.description}</p>
-        </div>
-        <Chat title="Live Chat" chatId={data?.stream?.chat?.id} />
+    <div className="space-y-4 py-10  px-4">
+      <div className="aspect-video w-full rounded-md bg-slate-300 shadow-sm" />
+      <div className="mt-5">
+        <h1 className="text-3xl font-bold text-gray-900">
+          {data?.stream?.name}
+        </h1>
+        <span className="mt-3 block text-2xl text-gray-900">
+          ${data?.stream?.price}
+        </span>
+        <p className=" my-6 text-gray-700">{data?.stream?.description}</p>
       </div>
-    </Layout>
+      <Chat title="Live Chat" chatId={data?.stream?.chat?.id} />
+    </div>
   );
 };
 
