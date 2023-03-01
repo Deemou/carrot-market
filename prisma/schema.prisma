@@ -17,10 +17,10 @@ model User {
   createdAt       DateTime    @default(now())
   updatedAt       DateTime    @updatedAt
   phone           String?     @unique
-  email           String?     @unique
+  email           String      @unique
+  password        String
   name            String
   avatar          String?
-  tokens          Token[]
   products        Product[]
   posts           Post[]
   answers         Answer[]
@@ -38,10 +38,7 @@ model Token {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   payload   String   @unique
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    Int
-
-  @@index([userId])
+  email     String
 }
 
 model Product {
