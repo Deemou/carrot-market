@@ -14,7 +14,7 @@ export default function Message({
   return (
     <div
       className={cls(
-        'flex  items-start',
+        'flex items-start',
         reversed ? 'flex-row-reverse space-x-reverse' : 'space-x-2'
       )}
     >
