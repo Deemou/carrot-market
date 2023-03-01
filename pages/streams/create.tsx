@@ -8,6 +8,7 @@ import useMutation from '@libs/client/useMutation';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { Stream } from '@prisma/client';
+import Layout from '@/components/layout';
 
 interface CreateForm {
   name: string;
@@ -35,32 +36,34 @@ const Create: NextPage = () => {
     }
   }, [data, router]);
   return (
-    <form
-      onSubmit={(...args) => void handleSubmit(onValid)(...args)}
-      className=" space-y-4 py-10 px-4"
-    >
-      <Input
-        register={register('name', { required: true })}
-        required
-        label="Name"
-        name="name"
-        type="text"
-      />
-      <Input
-        register={register('price', { required: true, valueAsNumber: true })}
-        required
-        label="Price"
-        name="price"
-        type="text"
-        kind="price"
-      />
-      <TextArea
-        register={register('description', { required: true })}
-        name="description"
-        label="Description"
-      />
-      <Button text={loading ? 'Loading...' : 'Go live'} />
-    </form>
+    <Layout>
+      <form
+        onSubmit={(...args) => void handleSubmit(onValid)(...args)}
+        className=" space-y-4 py-10 px-4"
+      >
+        <Input
+          register={register('name', { required: true })}
+          required
+          label="Name"
+          name="name"
+          type="text"
+        />
+        <Input
+          register={register('price', { required: true, valueAsNumber: true })}
+          required
+          label="Price"
+          name="price"
+          type="text"
+          kind="price"
+        />
+        <TextArea
+          register={register('description', { required: true })}
+          name="description"
+          label="Description"
+        />
+        <Button text={loading ? 'Loading...' : 'Go live'} />
+      </form>
+    </Layout>
   );
 };
 

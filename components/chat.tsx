@@ -116,10 +116,10 @@ export default function ChatRoom({ title, chatId }: ChatProps) {
           })}
         <div id="divRef" ref={scrollRef} />
       </div>
-      <div className="fixed inset-x-0 bottom-0  bg-white py-2">
+      <div className="inset-x-0 py-2">
         <form
           onSubmit={(...args) => void handleSubmit(onValid)(...args)}
-          className="relative mx-auto flex w-full  max-w-md items-center"
+          className="relative mx-auto flex w-full  max-w-lg items-center"
         >
           <input
             type="text"
@@ -136,24 +136,3 @@ export default function ChatRoom({ title, chatId }: ChatProps) {
     </div>
   );
 }
-
-// void mutate(
-//   (prev) =>
-//     prev && {
-//       ...prev,
-//       chat: {
-//         ...prev[0].chat,
-//         messages: [
-//           ...prev[0].chat.messages,
-//           {
-//             id: Date.now(),
-//             message: form.message,
-//             user: {
-//               ...user
-//             }
-//           }
-//         ]
-//       }
-//     },
-//   false
-// );

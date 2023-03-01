@@ -1,8 +1,12 @@
 import '../styles/globals.css';
 import type { AppProps } from 'next/app';
 import { SWRConfig } from 'swr';
-import Header from '@/components/header';
-import TabBar from '@/components/tabBar';
+import useUser from '@/libs/client/useUser';
+
+function LoginCheck() {
+  const { user } = useUser();
+  return null;
+}
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -14,9 +18,8 @@ function MyApp({ Component, pageProps }: AppProps) {
     >
       <div className="min-h-screen w-full bg-black py-4">
         <div className="mx-auto w-full max-w-xl">
-          <Header />
+          <LoginCheck />
           <Component {...pageProps} />
-          <TabBar />
         </div>
       </div>
     </SWRConfig>

@@ -14,7 +14,7 @@ export default function TabBar() {
   }
 
   return isAuthPages() ? null : (
-    <nav className="fixed bottom-0 flex w-full max-w-xl justify-between border-t px-10 pb-5 pt-3 text-xs text-white">
+    <nav className="fixed bottom-0 flex w-full max-w-xl justify-between border-t bg-black px-10 pb-5 pt-3 text-xs text-white">
       <Link
         href="/"
         className={cls(

@@ -8,6 +8,7 @@ import Chat from '@/components/chat';
 import { Stream } from '@prisma/client';
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
+import Layout from '@/components/layout';
 
 interface StreamProps extends Stream {
   chat: { id: string };
@@ -26,19 +27,21 @@ const LiveStream: NextPage = () => {
     router.query.id ? `${requestUrl}` : null
   );
   return (
-    <div className="space-y-4 py-10  px-4">
-      <div className="aspect-video w-full rounded-md bg-slate-300 shadow-sm" />
-      <div className="mt-5">
-        <h1 className="text-3xl font-bold text-gray-900">
-          {data?.stream?.name}
-        </h1>
-        <span className="mt-3 block text-2xl text-gray-900">
-          ${data?.stream?.price}
-        </span>
-        <p className=" my-6 text-gray-700">{data?.stream?.description}</p>
+    <Layout>
+      <div className="space-y-4 py-10">
+        <div className="aspect-video w-full rounded-md bg-slate-300 shadow-sm" />
+        <div className="mt-5">
+          <h1 className="text-3xl font-bold text-gray-900">
+            {data?.stream?.name}
+          </h1>
+          <span className="mt-3 block text-2xl text-gray-900">
+            ${data?.stream?.price}
+          </span>
+          <p className=" my-6 text-gray-700">{data?.stream?.description}</p>
+        </div>
+        <Chat title="Live Chat" chatId={data?.stream?.chat?.id} />
       </div>
-      <Chat title="Live Chat" chatId={data?.stream?.chat?.id} />
-    </div>
+    </Layout>
   );
 };
 
