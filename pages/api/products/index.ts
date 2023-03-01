@@ -61,6 +61,13 @@ async function handler(
         }
       }
     });
+    await client.record.create({
+      data: {
+        user: { connect: { id: user?.id } },
+        product: { connect: { id: Number(product.id) } },
+        kind: 'Sale'
+      }
+    });
     res.json({
       ok: true,
       product

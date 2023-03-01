@@ -13,15 +13,17 @@ interface Record {
 }
 
 interface ProductListResponse {
-  [key: string]: Record[];
+  ok: boolean;
+  products: Record[];
 }
 
 export default function ProductList({ kind }: ProductListProps) {
   const { data } = useSWR<ProductListResponse>(
     `/api/users/me/records?kind=${kind}`
   );
-  return data
-    ? data[kind]?.map((record) => (
+  return data ? (
+    <div>
+      {data?.products?.map((record) => (
         <Item
           id={record.product.id}
           key={record.id}
@@ -29,6 +31,7 @@ export default function ProductList({ kind }: ProductListProps) {
           price={record.product.price}
           hearts={record.product._count.favs}
         />
-      ))
-    : null;
+      ))}
+    </div>
+  ) : null;
 }
