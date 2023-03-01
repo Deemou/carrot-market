@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { NextApiRequest, NextApiResponse } from 'next';
 import withHandler, { ResponseType } from '@libs/server/withHandler';
@@ -9,21 +10,25 @@ async function handler(
   res: NextApiResponse<ResponseType>
 ) {
   const { token } = req.body;
+  const email = req.session.auth?.email;
   const foundToken = await client.token.findUnique({
     where: {
       payload: token
     }
   });
-  if (!foundToken) return res.status(404).end();
-  req.session.user = {
-    id: foundToken.userId
-  };
-  await req.session.save();
+
+  if (!foundToken || foundToken.email !== email)
+    return res.json({
+      ok: false,
+      error: 'Invalid Token. Please check again.'
+    });
+
   await client.token.deleteMany({
     where: {
-      userId: foundToken.userId
+      email: foundToken.email
     }
   });
+
   return res.json({ ok: true });
 }
 

@@ -1,0 +1,19 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+
+import nodemailer from 'nodemailer';
+
+const smtpTransport = nodemailer.createTransport({
+  service: 'Naver',
+  host: 'smtp.naver.com',
+  port: 587,
+  auth: {
+    user: process.env.MAIL_ID,
+    pass: process.env.MAIL_PASSWORD
+  },
+  tls: {
+    rejectUnauthorized: false
+  }
+});
+export default smtpTransport;
