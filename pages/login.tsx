@@ -84,11 +84,11 @@ const Enter: NextPage = () => {
               type="password"
               required
             />
-            {errors.formErrors ? (
+            {errors.formErrors && (
               <span className="my-2 block text-center font-medium text-red-600">
                 {errors.formErrors.message}
               </span>
-            ) : null}
+            )}
             <Button text={loading ? 'Loading' : 'Continue'} />
           </form>
         </div>

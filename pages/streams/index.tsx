@@ -39,9 +39,7 @@ const Streams: NextPage = () => {
             </h1>
           </Link>
         ))}
-        {data ? (
-          <PaginationBar currentPage={page} lastPage={data.lastPage} />
-        ) : null}
+        {data && <PaginationBar currentPage={page} lastPage={data.lastPage} />}
         <FloatingButton href="/streams/create">
           <svg
             className="h-6 w-6"

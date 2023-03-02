@@ -15,14 +15,14 @@ export default function TextArea({
 }: TextAreaProps) {
   return (
     <div>
-      {label ? (
+      {label && (
         <label
           htmlFor={name}
           className="mb-1 block text-sm font-medium text-gray-700"
         >
           {label}
         </label>
-      ) : null}
+      )}
       <textarea
         id={name}
         {...register}

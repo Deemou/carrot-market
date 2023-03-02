@@ -118,11 +118,11 @@ const SignUp: NextPage = () => {
                 type="text"
                 required
               />
-              {errors.name ? (
+              {errors.name && (
                 <span className="bloc my-2 text-center font-medium text-red-600">
                   {errors.name.message}
                 </span>
-              ) : null}
+              )}
               <Input
                 register={accountRegister('password', {
                   required: true,
@@ -136,11 +136,11 @@ const SignUp: NextPage = () => {
                 type="password"
                 required
               />
-              {errors.password ? (
+              {errors.password && (
                 <span className="my-2 block text-center font-medium text-red-600">
                   {errors.password.message}
                 </span>
-              ) : null}
+              )}
               <Button text={emailLoading ? 'Loading' : 'Create Account'} />
             </form>
           ) : (
@@ -161,11 +161,11 @@ const SignUp: NextPage = () => {
                   type="number"
                   required
                 />
-                {errors.formErrors ? (
+                {errors.formErrors && (
                   <span className="my-2 block text-center font-medium text-red-600">
                     {errors.formErrors.message}
                   </span>
-                ) : null}
+                )}
                 <Button text={tokenLoading ? 'Loading' : 'Confirm Token'} />
               </form>
               <span className="my-4 flex justify-center text-lg font-medium text-red-400">
@@ -191,11 +191,11 @@ const SignUp: NextPage = () => {
               type="email"
               required
             />
-            {errors.formErrors ? (
+            {errors.formErrors && (
               <span className="my-2 block text-center font-medium text-red-600">
                 {errors.formErrors.message}
               </span>
-            ) : null}
+            )}
             <Button text={emailLoading ? 'Loading' : 'Verify Email'} />
           </form>
         )}

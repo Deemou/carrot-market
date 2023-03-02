@@ -97,11 +97,11 @@ const EditProfile: NextPage = () => {
           type="text"
           kind="phone"
         />
-        {errors.formErrors ? (
+        {errors.formErrors && (
           <span className="my-2 block text-center font-medium text-red-500">
             {errors.formErrors.message}
           </span>
-        ) : null}
+        )}
         <Button text={loading ? 'Loading...' : 'Update profile'} />
       </form>
     </Layout>

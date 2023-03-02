@@ -46,9 +46,9 @@ export default function ChatRoom({ title, chatId }: ChatProps) {
   const scrollId = 'chatBox';
 
   const getKey = (pageIndex: number, previousPageData: ChatResponse) => {
-    if (pageIndex === 0) return chatId ? `${requestUrl}?page=1` : null;
+    if (pageIndex === 0) return chatId && `${requestUrl}?page=1`;
     if (pageIndex + 1 > previousPageData.lastPage) return null;
-    return chatId ? `${requestUrl}?page=${pageIndex + 1}` : null;
+    return chatId && `${requestUrl}?page=${pageIndex + 1}`;
   };
   const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
