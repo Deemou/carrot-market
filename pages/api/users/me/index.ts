@@ -22,13 +22,14 @@ async function handler(
   if (req.method === 'POST') {
     const {
       session: { user },
-      body: { email, phone, name }
+      body: { email, phone, name, avatar }
     } = req;
     const currentUser = await client.user.findUnique({
       where: {
         id: user?.id
       }
     });
+
     if (email && email !== currentUser?.email) {
       const alreadyExists = Boolean(
         await client.user.findUnique({
@@ -83,6 +84,7 @@ async function handler(
       });
       res.json({ ok: true });
     }
+
     if (name) {
       await client.user.update({
         where: {
@@ -93,6 +95,16 @@ async function handler(
         }
       });
     }
+
+    if (avatar) {
+      await client.user.update({
+        where: {
+          id: user?.id
+        },
+        data: { avatar }
+      });
+    }
+
     res.json({ ok: true });
   }
 }

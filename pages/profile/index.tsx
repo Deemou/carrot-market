@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import type { NextPage } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
 import useUser from '@libs/client/useUser';
 import useSWR from 'swr';
 import { Review, User } from '@prisma/client';
@@ -23,7 +24,19 @@ const Profile: NextPage = () => {
     <Layout>
       <div className="px-4">
         <div className="mt-4 flex items-center space-x-3">
-          <div className="h-16 w-16 rounded-full bg-orange-500" />
+          {user?.avatar ? (
+            <div className="relative h-14 w-14">
+              <Image
+                src={user.avatar}
+                fill
+                alt="avatar"
+                priority
+                className="rounded-full bg-transparent object-cover"
+              />
+            </div>
+          ) : (
+            <div className="h-14 w-14 rounded-full bg-orange-500" />
+          )}
           <div className="flex flex-col">
             <span className="text-lg font-medium text-white">{user?.name}</span>
             <Link href="/profile/edit" className=" text-gray-400">

@@ -1,17 +1,28 @@
 /* eslint-disable no-void */
 import type { NextPage } from 'next';
+import Image from 'next/image';
+import Layout from '@/components/layout';
 import Button from '@components/button';
 import Input from '@components/input';
 import useUser from '@libs/client/useUser';
 import { useForm } from 'react-hook-form';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import useMutation from '@libs/client/useMutation';
-import Layout from '@/components/layout';
+import { v4 as uuidv4 } from 'uuid';
+import firebase from '@libs/server/firebase';
+import {
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL
+} from 'firebase/storage';
 
 interface EditProfileForm {
   email?: string;
   phone?: string;
   name?: string;
+  avatar?: FileList;
   formErrors?: string;
 }
 
@@ -20,6 +31,9 @@ interface EditProfileResponse {
   error?: string;
 }
 
+const imageSizeKB = 300;
+const imageSize = imageSizeKB * 1024;
+
 const EditProfile: NextPage = () => {
   const { user } = useUser();
   const {
@@ -27,33 +41,97 @@ const EditProfile: NextPage = () => {
     setValue,
     handleSubmit,
     setError,
+    watch,
     formState: { errors }
   } = useForm<EditProfileForm>();
+  const [imageFile, setImageFile] = useState<FileList>();
+  const [avatarPreview, setAvatarPreview] = useState('');
+  const avatarWatch = watch('avatar');
+
   useEffect(() => {
     if (user?.name) setValue('name', user.name);
     if (user?.email) setValue('email', user.email);
     if (user?.phone) setValue('phone', user.phone);
+    if (user?.avatar) setAvatarPreview(user.avatar);
   }, [user, setValue]);
+
   const [editProfile, { data, loading }] =
     useMutation<EditProfileResponse>(`/api/users/me`);
   const onValid = ({ email, phone, name }: EditProfileForm) => {
     if (loading) return;
+
     if (email === '' && phone === '') {
       setError('formErrors', {
         message: 'Email OR Phone number are required. You need to choose one.'
       });
     }
-    editProfile({
-      email,
-      phone,
-      name
-    });
+
+    if (!imageFile || imageFile.length < 1) {
+      editProfile({ email, phone, name });
+      return;
+    }
+
+    const storageService = getStorage(firebase);
+    const imageRef = ref(storageService, `avatar/${uuidv4()}`);
+    const uploadTask = uploadBytesResumable(imageRef, imageFile[0]);
+    uploadTask.on(
+      'state_changed',
+      (snapshot) => {
+        switch (snapshot.state) {
+          case 'paused':
+            console.log('Upload is paused.');
+            break;
+          case 'running':
+            console.log('Upload is running.');
+            break;
+          default:
+        }
+      },
+      (error) => {
+        console.log(error);
+      },
+      () => {
+        void getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+          editProfile({
+            email,
+            phone,
+            name,
+            avatar: url
+          });
+        });
+      }
+    );
   };
+
+  useEffect(() => {
+    if (
+      avatarWatch &&
+      avatarWatch?.length > 0 &&
+      avatarWatch[0].size > imageSize
+    ) {
+      alert(`Please upload an image less than ${imageSizeKB}KB.`);
+      return;
+    }
+
+    setImageFile(avatarWatch);
+    if (imageFile && imageFile.length > 0) {
+      setAvatarPreview(URL.createObjectURL(imageFile[0]));
+    }
+  }, [imageFile, avatarWatch]);
+
+  const router = useRouter();
+  useEffect(() => {
+    if (data?.ok) {
+      void router.push(`/profile`);
+    }
+  }, [data, router]);
+
   useEffect(() => {
     if (data && !data.ok && data.error) {
       setError('formErrors', { message: data.error });
     }
   }, [data, setError]);
+
   return (
     <Layout>
       <form
@@ -61,18 +139,36 @@ const EditProfile: NextPage = () => {
         className="space-y-4 py-10 px-4"
       >
         <div className="flex items-center space-x-3">
-          <div className="h-14 w-14 rounded-full bg-orange-500" />
+          {avatarPreview ? (
+            <div className="relative h-14 w-14">
+              <Image
+                src={avatarPreview}
+                fill
+                alt="avatar"
+                priority
+                className="rounded-full bg-transparent object-cover"
+              />
+            </div>
+          ) : (
+            <div className="h-14 w-14 rounded-full bg-orange-500" />
+          )}
           <label
             htmlFor="picture"
             className="cursor-pointer rounded-md border border-gray-300 py-2 px-3 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
           >
             Change
             <input
+              {...register('avatar')}
               id="picture"
               type="file"
-              className="hidden"
               accept="image/*"
+              className="hidden"
             />
+            {errors.avatar?.message && (
+              <span className="my-2 block text-center font-medium text-red-500">
+                {errors.avatar.message}
+              </span>
+            )}
           </label>
         </div>
         <Input
