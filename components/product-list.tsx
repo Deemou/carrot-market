@@ -21,19 +21,17 @@ export default function ProductList({ kind }: ProductListProps) {
   const { data } = useSWR<ProductListResponse>(
     `/api/users/me/records?kind=${kind}`
   );
-  return (
-    data && (
-      <div>
-        {data?.products?.map((record) => (
-          <Item
-            id={record.product.id}
-            key={record.id}
-            title={record.product.name}
-            price={record.product.price}
-            hearts={record.product._count.favs}
-          />
-        ))}
-      </div>
-    )
-  );
+  return data ? (
+    <div>
+      {data?.products?.map((record) => (
+        <Item
+          id={record.product.id}
+          key={record.id}
+          title={record.product.name}
+          price={record.product.price}
+          hearts={record.product._count.favs}
+        />
+      ))}
+    </div>
+  ) : null;
 }
