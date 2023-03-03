@@ -1,14 +1,14 @@
 /* eslint-disable no-void */
 import type { NextPage } from 'next';
+import { useRouter } from 'next/router';
+import { useForm } from 'react-hook-form';
+import { useEffect } from 'react';
+import useMutation from '@libs/client/useMutation';
+import { Stream } from '@prisma/client';
+import Layout from '@/components/layout';
 import Button from '@components/button';
 import Input from '@components/input';
 import TextArea from '@components/textarea';
-import { useForm } from 'react-hook-form';
-import useMutation from '@libs/client/useMutation';
-import { useEffect } from 'react';
-import { useRouter } from 'next/router';
-import { Stream } from '@prisma/client';
-import Layout from '@/components/layout';
 
 interface CreateForm {
   name: string;
@@ -36,7 +36,7 @@ const Create: NextPage = () => {
     }
   }, [data, router]);
   return (
-    <Layout>
+    <Layout seoTitle="Create Stream">
       <form
         onSubmit={(...args) => void handleSubmit(onValid)(...args)}
         className=" space-y-4 py-10 px-4"

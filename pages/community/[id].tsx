@@ -4,16 +4,16 @@
 /* eslint-disable no-void */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 import type { NextPage } from 'next';
-import TextArea from '@components/textarea';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
 import { Answer, Post, User } from '@prisma/client';
-import Link from 'next/link';
 import useMutation from '@libs/client/useMutation';
-import cls from '@libs/client/utils';
 import { useForm } from 'react-hook-form';
 import { useEffect } from 'react';
+import cls from '@libs/client/utils';
 import Layout from '@/components/layout';
+import TextArea from '@components/textarea';
 
 interface AnswerWithUser extends Answer {
   user: User;
@@ -92,7 +92,7 @@ const CommunityPostDetail: NextPage = () => {
     }
   }, [answerData, reset, mutate]);
   return (
-    <Layout>
+    <Layout seoTitle="Community Post Detail">
       <div>
         <span className="my-3 ml-4 inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-800">
           동네질문

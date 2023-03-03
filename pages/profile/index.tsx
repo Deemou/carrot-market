@@ -21,7 +21,7 @@ const Profile: NextPage = () => {
   const { user } = useUser();
   const { data } = useSWR<ReviewsResponse>('/api/reviews');
   return (
-    <Layout>
+    <Layout seoTitle="Profile">
       <div className="px-4">
         <div className="mt-4 flex items-center space-x-3">
           {user?.avatar ? (

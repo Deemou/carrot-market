@@ -2,14 +2,14 @@
 /* eslint-disable react/button-has-type */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 import type { NextPage } from 'next';
-import Button from '@components/button';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
-import Link from 'next/link';
 import { Product, User } from '@prisma/client';
 import useMutation from '@libs/client/useMutation';
 import cls from '@libs/client/utils';
 import Layout from '@/components/layout';
+import Button from '@components/button';
 
 interface ProductWithUser extends Product {
   user: User;
@@ -33,7 +33,7 @@ const ItemDetail: NextPage = () => {
     toggleFav({});
   };
   return (
-    <Layout>
+    <Layout seoTitle="Product Detail">
       <div className="px-4  py-4">
         <div className="mb-8">
           <div className="h-96 bg-slate-300" />

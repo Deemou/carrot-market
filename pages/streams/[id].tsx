@@ -4,11 +4,11 @@
 /* eslint-disable no-void */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 import type { NextPage } from 'next';
-import Chat from '@/components/chat';
-import { Stream } from '@prisma/client';
 import { useRouter } from 'next/router';
+import { Stream } from '@prisma/client';
 import useSWR from 'swr';
 import Layout from '@/components/layout';
+import Chat from '@/components/chat';
 
 interface StreamProps extends Stream {
   chat: { id: string };
@@ -27,7 +27,7 @@ const LiveStream: NextPage = () => {
     router.query.id ? `${requestUrl}` : null
   );
   return (
-    <Layout>
+    <Layout seoTitle="Stream Detail">
       <div className="space-y-4 py-10">
         <div className="aspect-video w-full rounded-md bg-slate-300 shadow-sm" />
         <div className="mt-5">

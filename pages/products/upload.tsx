@@ -1,15 +1,15 @@
 /* eslint-disable no-void */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import type { NextPage } from 'next';
+import { useRouter } from 'next/router';
+import { useForm } from 'react-hook-form';
+import { useEffect } from 'react';
+import { Product } from '@prisma/client';
+import useMutation from '@libs/client/useMutation';
+import Layout from '@/components/layout';
 import Button from '@components/button';
 import Input from '@components/input';
 import TextArea from '@components/textarea';
-import { useForm } from 'react-hook-form';
-import useMutation from '@libs/client/useMutation';
-import { useEffect } from 'react';
-import { Product } from '@prisma/client';
-import { useRouter } from 'next/router';
-import Layout from '@/components/layout';
 
 interface UploadProductForm {
   name: string;
@@ -37,7 +37,7 @@ const Upload: NextPage = () => {
     }
   }, [data, router]);
   return (
-    <Layout>
+    <Layout seoTitle="Upload Product">
       <form
         className="space-y-4 p-4"
         onSubmit={(...args) => void handleSubmit(onValid)(...args)}

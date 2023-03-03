@@ -5,7 +5,7 @@ import Layout from '@/components/layout';
 
 const Bought: NextPage = () => {
   return (
-    <Layout>
+    <Layout seoTitle="Products Bought">
       <div className="flex flex-col space-y-5 divide-y  pb-10">
         <ProductList kind="Purchase" />
       </div>

@@ -2,13 +2,13 @@
 /* eslint-disable no-underscore-dangle */
 import type { NextPage } from 'next';
 import Link from 'next/link';
-import FloatingButton from '@components/floating-button';
+import { useRouter } from 'next/router';
 import useSWR from 'swr';
 import { Post, User } from '@prisma/client';
 import useCoords from '@libs/client/useCoords';
 import { useEffect } from 'react';
-import { useRouter } from 'next/router';
 import Layout from '@/components/layout';
+import FloatingButton from '@components/floating-button';
 
 interface PostWithUser extends Post {
   user: User;
@@ -37,7 +37,7 @@ const Community: NextPage = () => {
     }
   }, [data, router]);
   return (
-    <Layout>
+    <Layout seoTitle="Community">
       <div className="space-y-4 divide-y-[2px]">
         {data?.posts?.map((post) => (
           <Link

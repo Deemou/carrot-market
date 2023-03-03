@@ -1,13 +1,10 @@
 /* eslint-disable no-void */
 import type { NextPage } from 'next';
+import { useRouter } from 'next/router';
 import Image from 'next/image';
-import Layout from '@/components/layout';
-import Button from '@components/button';
-import Input from '@components/input';
-import useUser from '@libs/client/useUser';
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+import useUser from '@libs/client/useUser';
 import useMutation from '@libs/client/useMutation';
 import { v4 as uuidv4 } from 'uuid';
 import firebase from '@libs/server/firebase';
@@ -17,6 +14,9 @@ import {
   uploadBytesResumable,
   getDownloadURL
 } from 'firebase/storage';
+import Layout from '@/components/layout';
+import Button from '@components/button';
+import Input from '@components/input';
 
 interface EditProfileForm {
   email?: string;
@@ -133,7 +133,7 @@ const EditProfile: NextPage = () => {
   }, [data, setError]);
 
   return (
-    <Layout>
+    <Layout seoTitle="Edit Profile">
       <form
         onSubmit={(...args) => void handleSubmit(onValid)(...args)}
         className="space-y-4 py-10 px-4"

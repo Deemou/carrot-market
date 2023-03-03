@@ -1,12 +1,12 @@
 import type { NextPage } from 'next';
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
 import Link from 'next/link';
-import FloatingButton from '@components/floating-button';
-import PaginationBar from '@components/pagination-bar';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import { Stream } from '@prisma/client';
 import useSWR from 'swr';
 import Layout from '@/components/layout';
+import FloatingButton from '@components/floating-button';
+import PaginationBar from '@components/pagination-bar';
 
 interface StreamsResponse {
   ok: boolean;
@@ -25,7 +25,7 @@ const Streams: NextPage = () => {
     }
   }, [page, router]);
   return (
-    <Layout>
+    <Layout seoTitle="Streams">
       <div className=" space-y-4 divide-y-[1px]">
         {data?.streams.map((stream) => (
           <Link

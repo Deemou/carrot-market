@@ -43,7 +43,7 @@ const Home: NextPage = () => {
       <Head>
         <title>Home</title>
       </Head>
-      <Layout>
+      <Layout seoTitle="Home">
         <div className="flex flex-col space-y-5 divide-y">
           {data?.map((productsPage) => {
             return productsPage.products?.map((product) => (

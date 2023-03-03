@@ -1,14 +1,14 @@
 /* eslint-disable no-void */
 import type { NextPage } from 'next';
-import Button from '@components/button';
-import TextArea from '@components/textarea';
+import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
-import useMutation from '@libs/client/useMutation';
 import { useEffect } from 'react';
 import { Post } from '@prisma/client';
-import { useRouter } from 'next/router';
+import useMutation from '@libs/client/useMutation';
 import useCoords from '@libs/client/useCoords';
 import Layout from '@/components/layout';
+import Button from '@components/button';
+import TextArea from '@components/textarea';
 
 interface WriteForm {
   question: string;
@@ -34,7 +34,7 @@ const Write: NextPage = () => {
     }
   }, [data, router]);
   return (
-    <Layout>
+    <Layout seoTitle="Write Community Post">
       <form
         onSubmit={(...args) => void handleSubmit(onValid)(...args)}
         className="space-y-4 p-4"
