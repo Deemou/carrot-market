@@ -19,10 +19,7 @@ export default function Input({
 }: InputProps) {
   return (
     <div>
-      <label
-        className="mb-1 block text-sm font-medium text-white"
-        htmlFor={name}
-      >
+      <label className="mb-1 block text-sm font-medium " htmlFor={name}>
         {label}
       </label>
       {kind === 'text' && (

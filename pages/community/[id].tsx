@@ -185,7 +185,7 @@ const CommunityPostDetail: NextPage = () => {
             required
             register={register('answer', { required: true, minLength: 5 })}
           />
-          <button className="mt-2 w-full rounded-md border border-transparent bg-orange-500 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 ">
+          <button className="mt-2 w-full rounded-md border border-transparent bg-orange-500 py-2 px-4 text-sm font-medium  shadow-sm hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 ">
             {answerLoading ? 'Loading...' : 'Reply'}
           </button>
         </form>

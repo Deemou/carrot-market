@@ -56,7 +56,7 @@ const Enter: NextPage = () => {
   }, [data, router]);
   return (
     <div className="mt-16 px-4">
-      <h3 className="text-center text-3xl font-bold text-white">
+      <h3 className="text-center text-3xl font-bold ">
         Log in to Carrot Market
       </h3>
       <div className="mt-12">
@@ -96,7 +96,7 @@ const Enter: NextPage = () => {
           <div className="relative">
             <div className="absolute w-full border-t border-gray-300" />
             <div className="relative -top-3 text-center ">
-              <span className="bg-black px-2 text-white">Or enter with</span>
+              <span className="bg-black px-2 ">Or enter with</span>
             </div>
           </div>
           <div className="mt-2 grid grid-cols-2 gap-3">
@@ -128,9 +128,7 @@ const Enter: NextPage = () => {
         </div>
         <div className="flex justify-center p-4">
           <Link href="/sign-up" className="cursor-pointer  font-medium ">
-            <span className="text-white">
-              You don't have an account yet? Sign up!
-            </span>
+            <span className="">You don't have an account yet? Sign up!</span>
           </Link>
         </div>
       </div>

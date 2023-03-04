@@ -74,7 +74,7 @@ export default function usePagination({
         )}
       >
         <button
-          className="aspect-square w-10 rounded-md bg-zinc-400 font-medium text-white"
+          className="aspect-square w-10 rounded-md bg-zinc-400 font-medium "
           onClick={() => {
             onClickPage(1);
           }}
@@ -100,7 +100,7 @@ export default function usePagination({
         return (
           <button
             className={cls(
-              'aspect-square w-10 rounded-md font-medium text-white',
+              'aspect-square w-10 rounded-md font-medium ',
               page === currentPage ? 'bg-black' : 'bg-zinc-400'
             )}
             onClick={() => {
@@ -133,7 +133,7 @@ export default function usePagination({
           ></path>
         </svg>
         <button
-          className="aspect-square w-10 rounded-md bg-zinc-400 font-medium text-white"
+          className="aspect-square w-10 rounded-md bg-zinc-400 font-medium "
           onClick={() => {
             onClickPage(lastPage);
           }}

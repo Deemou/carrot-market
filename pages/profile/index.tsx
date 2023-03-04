@@ -38,7 +38,7 @@ const Profile: NextPage = () => {
             <div className="h-14 w-14 rounded-full bg-orange-500" />
           )}
           <div className="flex flex-col">
-            <span className="text-lg font-medium text-white">{user?.name}</span>
+            <span className="text-lg font-medium ">{user?.name}</span>
             <Link href="/profile/edit" className=" text-gray-400">
               Edit profile &rarr;
             </Link>
@@ -46,7 +46,7 @@ const Profile: NextPage = () => {
         </div>
         <div className="mt-10 flex justify-around">
           <Link href="/profile/sold" className="flex flex-col items-center">
-            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-orange-500 text-white">
+            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-orange-500 ">
               <svg
                 className="h-6 w-6"
                 fill="none"
@@ -62,12 +62,10 @@ const Profile: NextPage = () => {
                 ></path>
               </svg>
             </div>
-            <span className="mt-2 text-sm font-medium text-white">
-              판매내역
-            </span>
+            <span className="mt-2 text-sm font-medium ">판매내역</span>
           </Link>
           <Link href="/profile/bought" className="flex flex-col items-center">
-            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-orange-500 text-white">
+            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-orange-500 ">
               <svg
                 className="h-6 w-6"
                 fill="none"
@@ -83,12 +81,10 @@ const Profile: NextPage = () => {
                 ></path>
               </svg>
             </div>
-            <span className="mt-2 text-sm font-medium text-white">
-              구매내역
-            </span>
+            <span className="mt-2 text-sm font-medium ">구매내역</span>
           </Link>
           <Link href="/profile/loved" className="flex flex-col items-center">
-            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-orange-500 text-white">
+            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-orange-500 ">
               <svg
                 className="h-6 w-6"
                 fill="none"
@@ -104,9 +100,7 @@ const Profile: NextPage = () => {
                 ></path>
               </svg>
             </div>
-            <span className="mt-2 text-sm font-medium text-white">
-              관심목록
-            </span>
+            <span className="mt-2 text-sm font-medium ">관심목록</span>
           </Link>
         </div>
         {data?.reviews?.map((review) => (
@@ -114,9 +108,7 @@ const Profile: NextPage = () => {
             <div className="flex items-center space-x-4">
               <div className="h-12 w-12 rounded-full bg-slate-500" />
               <div>
-                <h4 className="text-sm font-bold text-white">
-                  {review.createdBy.name}
-                </h4>
+                <h4 className="text-sm font-bold ">{review.createdBy.name}</h4>
                 <div className="flex items-center">
                   {[1, 2, 3, 4, 5].map((star) => (
                     <svg

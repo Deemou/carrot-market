@@ -88,7 +88,7 @@ const SignUp: NextPage = () => {
   }, [accountData, setError]);
   return (
     <div className="mt-16 px-4">
-      <h3 className="text-center text-3xl font-bold text-white">
+      <h3 className="text-center text-3xl font-bold ">
         Sign up for Carrot Market
       </h3>
       <div className="mt-12">
@@ -201,9 +201,7 @@ const SignUp: NextPage = () => {
         )}
         <div className="flex justify-center p-4">
           <Link href="/login" className="cursor-pointer  font-medium ">
-            <span className="text-white">
-              You already have an account? Login!
-            </span>
+            <span className="">You already have an account? Login!</span>
           </Link>
         </div>
       </div>
