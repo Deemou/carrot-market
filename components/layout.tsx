@@ -15,7 +15,7 @@ export default function Layout({ children, seoTitle }: LayoutProps) {
         <title>{seoTitle} | Carrot Market</title>
       </Head>
       <Header />
-      <div className="pt-14 pb-24">{children}</div>
+      <div className="pt-16 pb-24">{children}</div>
       <TabBar />
     </div>
   );
