@@ -9,10 +9,11 @@ interface LayoutProps {
 }
 
 export default function Layout({ children, seoTitle }: LayoutProps) {
+  const message = `${seoTitle} | Carrot Market`;
   return (
     <div>
       <Head>
-        <title>{seoTitle} | Carrot Market</title>
+        <title>{message}</title>
       </Head>
       <Header />
       <div className="pt-16 pb-24">{children}</div>
