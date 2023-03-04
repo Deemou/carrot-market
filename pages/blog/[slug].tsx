@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 import { GetStaticProps, NextPage } from 'next';
 import { readdirSync } from 'fs';
 import matter from 'gray-matter';
@@ -6,10 +7,19 @@ import remarkParse from 'remark-parse/lib';
 import { unified } from 'unified';
 import Layout from '@components/layout';
 
-const Post: NextPage<{ post: string; data: any }> = ({ post, data }) => {
+interface IData {
+  title: string;
+  date: string;
+  category: string;
+}
+
+const Post: NextPage<{ post: string; data: IData }> = ({ post, data }) => {
   return (
     <Layout seoTitle={data.title}>
-      <div dangerouslySetInnerHTML={{ __html: post }} />
+      <div
+        className="blog-post-content"
+        dangerouslySetInnerHTML={{ __html: post }}
+      />
     </Layout>
   );
 };
