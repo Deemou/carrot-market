@@ -86,4 +86,9 @@ video {
   @apply text-white;
 }
 
+input,
+textarea {
+  @apply text-black;
+}
+
 @import './blog.scss';
