@@ -168,7 +168,7 @@ const CommunityPostDetail: NextPage = () => {
                   {answer.user.name}
                 </span>
                 <span className="block text-xs text-gray-500 ">
-                  {answer.createdAt}
+                  {answer.createdAt.toString()}
                 </span>
                 <p className="mt-2 text-gray-700">{answer.answer} </p>
               </div>

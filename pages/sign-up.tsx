@@ -85,7 +85,7 @@ const SignUp: NextPage = () => {
     if (accountData && !accountData.ok && accountData.error) {
       setError('formErrors', { message: accountData.error });
     }
-  }, [accountData, setError]);
+  }, [accountData, router, setError]);
   return (
     <div className="mt-16 px-4">
       <h3 className="text-center text-3xl font-bold ">

@@ -18,6 +18,7 @@ const Blog: NextPage<{ posts: Post[] }> = ({ posts }) => {
         Latest Posts
       </h1>
       {posts.map((post, index) => (
+        // eslint-disable-next-line react/no-array-index-key
         <div key={index} className="mb-5">
           <Link href={`/blog/${post.slug}`}>
             <span className="text-lg text-red-500">{post.title}</span>
@@ -33,7 +34,7 @@ const Blog: NextPage<{ posts: Post[] }> = ({ posts }) => {
   );
 };
 
-export async function getStaticProps() {
+export function getStaticProps() {
   const blogPosts = readdirSync('./posts').map((file) => {
     const content = readFileSync(`./posts/${file}`, 'utf-8');
     const slug = file.split('.')[0];
