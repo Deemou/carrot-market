@@ -113,8 +113,7 @@ export async function getStaticProps() {
     props: {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       posts: JSON.parse(JSON.stringify(posts))
-    },
-    revalidate: 60
+    }
   };
 }
 
