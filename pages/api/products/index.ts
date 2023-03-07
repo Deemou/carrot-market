@@ -68,6 +68,7 @@ async function handler(
         kind: 'Sale'
       }
     });
+    await res.revalidate('/');
     res.json({
       ok: true,
       product

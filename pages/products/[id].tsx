@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable no-void */
 /* eslint-disable react/button-has-type */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
-import type { NextPage } from 'next';
+import type { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
@@ -10,6 +11,7 @@ import useMutation from '@libs/client/useMutation';
 import cls from '@libs/client/utils';
 import Layout from '@/components/layout';
 import Button from '@components/button';
+import client from '@/libs/server/client';
 
 interface ProductWithUser extends Product {
   user: User;
@@ -21,16 +23,23 @@ interface ItemDetailResponse {
   isLiked: boolean;
 }
 
-const ItemDetail: NextPage = () => {
+const ItemDetail: NextPage<ItemDetailResponse> = (props) => {
   const router = useRouter();
   const { data, mutate } = useSWR<ItemDetailResponse>(
-    router.query.id ? `/api/products/${router.query.id}` : null
+    `/api/products/${router.query.id}`,
+    {
+      fallbackData: props
+    }
   );
-  const [toggleFav] = useMutation(`/api/products/${router.query.id}/fav`);
+  const [toggleFav, { loading }] = useMutation(
+    `/api/products/${router.query.id}/fav`
+  );
   const onFavClick = () => {
     if (!data) return;
     void mutate({ ...data, isLiked: !data.isLiked }, false);
-    toggleFav({});
+    if (!loading) {
+      toggleFav({});
+    }
   };
   return (
     <Layout seoTitle="Product Detail">
@@ -121,6 +130,62 @@ const ItemDetail: NextPage = () => {
       </div>
     </Layout>
   );
+};
+
+export const getStaticPaths: GetStaticPaths = () => {
+  return {
+    paths: [],
+    fallback: 'blocking'
+  };
+};
+
+export const getStaticProps: GetStaticProps = async (ctx) => {
+  const id = ctx?.params?.id;
+  if (!Number(id)) {
+    return {
+      notFound: true
+    };
+  }
+  const product = await client.product.findUnique({
+    where: {
+      id: Number(id)
+    },
+    include: {
+      user: {
+        select: {
+          id: true,
+          name: true,
+          avatar: true
+        }
+      }
+    }
+  });
+  if (!product) {
+    return {
+      notFound: true
+    };
+  }
+  const terms = product?.name.split(' ').map((word) => ({
+    name: {
+      contains: word
+    }
+  }));
+  const relatedProducts = await client.product.findMany({
+    where: {
+      OR: terms,
+      AND: {
+        id: {
+          not: product?.id
+        }
+      }
+    }
+  });
+  return {
+    props: {
+      product: JSON.parse(JSON.stringify(product)),
+      relatedProducts: JSON.parse(JSON.stringify(relatedProducts))
+    }
+  };
 };
 
 export default ItemDetail;

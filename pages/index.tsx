@@ -1,7 +1,7 @@
 /* eslint-disable no-void */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import type { NextPage } from 'next';
+import type { GetStaticProps, NextPage } from 'next';
 import Head from 'next/head';
 import FloatingButton from '@components/floating-button';
 import Item from '@components/item';
@@ -10,6 +10,7 @@ import Layout from '@/components/layout';
 import useInfiniteScroll from '@/libs/client/useInfiniteScroll';
 import useSWRInfinite from 'swr/infinite';
 import { useEffect } from 'react';
+import client from '@/libs/server/client';
 
 export interface ProductWithCount extends Product {
   _count: {
@@ -30,8 +31,10 @@ const getKey = (pageIndex: number, previousPageData: ProductsResponse) => {
 };
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
-const Home: NextPage = () => {
-  const { data, setSize } = useSWRInfinite<ProductsResponse>(getKey, fetcher);
+const Home: NextPage<ProductsResponse> = (props) => {
+  const { data, setSize } = useSWRInfinite<ProductsResponse>(getKey, fetcher, {
+    fallbackData: [props]
+  });
 
   const page = useInfiniteScroll();
   useEffect(() => {
@@ -77,6 +80,36 @@ const Home: NextPage = () => {
       </Layout>
     </>
   );
+};
+
+export const getStaticProps: GetStaticProps = async () => {
+  console.log('BUILDING HOME. STATICALLY');
+  const limit = 10;
+  const productQueries = await client.product.findMany({
+    take: limit,
+    orderBy: {
+      createdAt: 'desc'
+    },
+    include: {
+      _count: {
+        select: {
+          records: {
+            where: {
+              kind: { equals: 'Fav' }
+            }
+          }
+        }
+      }
+    }
+  });
+  const products = productQueries.map((product) => {
+    return { ...product, _count: { favs: product._count.records } };
+  });
+  return {
+    props: {
+      products: JSON.parse(JSON.stringify(products))
+    }
+  };
 };
 
 export default Home;

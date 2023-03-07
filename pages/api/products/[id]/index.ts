@@ -25,6 +25,7 @@ async function handler(
       }
     }
   });
+  if (!product) res.status(404).json({ ok: false, error: 'Not found product' });
   const terms = product?.name.split(' ').map((word) => ({
     name: {
       contains: word
