@@ -46,17 +46,16 @@ async function handler(
     }
   });
   if (!post) res.status(404).json({ ok: false, error: 'Not found post' });
-  const isWondering = Boolean(
-    await client.wondering.findFirst({
-      where: {
-        postId: Number(id),
-        userId: user?.id
-      },
-      select: {
-        id: true
-      }
-    })
-  );
+  const alreadyExists = await client.wondering.findFirst({
+    where: {
+      userId: user?.id,
+      postId: Number(id)
+    },
+    select: {
+      id: true
+    }
+  });
+  const isWondering = Boolean(alreadyExists);
   res.json({
     ok: true,
     post,

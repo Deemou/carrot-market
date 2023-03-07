@@ -3,7 +3,7 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-void */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
-import type { NextPage } from 'next';
+import type { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
@@ -14,6 +14,7 @@ import { useEffect } from 'react';
 import cls from '@libs/client/utils';
 import Layout from '@/components/layout';
 import TextArea from '@components/textarea';
+import client from '@/libs/server/client';
 
 interface AnswerWithUser extends Answer {
   user: User;
@@ -43,17 +44,21 @@ interface AnswerResponse {
   response: Answer;
 }
 
-const CommunityPostDetail: NextPage = () => {
+const CommunityPostDetail: NextPage<CommunityPostResponse> = (props) => {
   const router = useRouter();
   const { register, handleSubmit, reset } = useForm<AnswerForm>();
   const { data, mutate } = useSWR<CommunityPostResponse>(
-    router.query.id ? `/api/posts/${router.query.id}` : null
+    `/api/posts/${router.query.id}`,
+    {
+      fallbackData: props
+    }
   );
-  const [wonder, { loading }] = useMutation(
+  const [toggleWonder, { loading }] = useMutation(
     `/api/posts/${router.query.id}/wonder`
   );
   const [sendAnswer, { data: answerData, loading: answerLoading }] =
     useMutation<AnswerResponse>(`/api/posts/${router.query.id}/answers`);
+
   const onWonderClick = () => {
     if (!data) return;
     void mutate(
@@ -73,18 +78,13 @@ const CommunityPostDetail: NextPage = () => {
       false
     );
     if (!loading) {
-      wonder({});
+      toggleWonder({});
     }
   };
   const onValid = (form: AnswerForm) => {
     if (answerLoading) return;
     sendAnswer(form);
   };
-  useEffect(() => {
-    if (data && !data.ok) {
-      void router.replace('/community');
-    }
-  }, [data, router]);
   useEffect(() => {
     if (answerData && answerData.ok) {
       reset();
@@ -192,6 +192,68 @@ const CommunityPostDetail: NextPage = () => {
       </div>
     </Layout>
   );
+};
+
+export const getStaticPaths: GetStaticPaths = () => {
+  return {
+    paths: [],
+    fallback: 'blocking'
+  };
+};
+
+export const getStaticProps: GetStaticProps = async (ctx) => {
+  console.log('BUILDING POST DETAIL. STATICALLY');
+  const id = ctx?.params?.id;
+  if (!Number(id)) {
+    return {
+      notFound: true
+    };
+  }
+  const post = await client.post.findUnique({
+    where: {
+      id: Number(id)
+    },
+    include: {
+      user: {
+        select: {
+          id: true,
+          name: true,
+          avatar: true
+        }
+      },
+      answers: {
+        select: {
+          answer: true,
+          id: true,
+          createdAt: true,
+          user: {
+            select: {
+              id: true,
+              name: true,
+              avatar: true
+            }
+          }
+        }
+      },
+      _count: {
+        select: {
+          answers: true,
+          wonderings: true
+        }
+      }
+    }
+  });
+  if (!post) {
+    return {
+      notFound: true
+    };
+  }
+  return {
+    props: {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      post: JSON.parse(JSON.stringify(post))
+    }
+  };
 };
 
 export default CommunityPostDetail;

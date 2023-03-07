@@ -20,6 +20,7 @@ async function handler(
       id: true
     }
   });
+
   if (alreadyExists) {
     await client.wondering.delete({
       where: {
@@ -41,10 +42,13 @@ async function handler(
         }
       }
     });
+
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+    await res.revalidate(`/community/${id}`);
+    res.json({
+      ok: true
+    });
   }
-  res.json({
-    ok: true
-  });
 }
 
 export default withApiSession(

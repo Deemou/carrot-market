@@ -2,7 +2,6 @@
 /* eslint-disable no-underscore-dangle */
 import type { NextPage } from 'next';
 import Link from 'next/link';
-import useSWR from 'swr';
 import { Post, User } from '@prisma/client';
 import client from '@libs/server/client';
 import Layout from '@/components/layout';
@@ -108,7 +107,12 @@ const Community: NextPage<PostsResponse> = ({ posts }) => {
 
 export async function getStaticProps() {
   console.log('BUILDING COMM. STATICALLY');
-  const posts = await client.post.findMany({ include: { user: true } });
+  const posts = await client.post.findMany({
+    orderBy: {
+      createdAt: 'desc'
+    },
+    include: { user: true }
+  });
   return {
     props: {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment

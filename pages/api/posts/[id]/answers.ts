@@ -29,7 +29,10 @@ async function handler(
       answer
     }
   });
+
   console.log(newAnswer);
+  // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+  await res.revalidate(`/community/${id}`);
   res.json({
     ok: true,
     answer: newAnswer
