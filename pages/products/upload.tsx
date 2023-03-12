@@ -69,11 +69,17 @@ const Upload: NextPage = () => {
           type="text"
         />
         <Input
-          register={register('price', { required: true })}
+          register={register('price', {
+            required: true,
+            min: {
+              value: 0,
+              message: 'Price must be at least 0.'
+            }
+          })}
           required
           label="Price"
           name="price"
-          type="text"
+          type="number"
           kind="price"
         />
         <TextArea
