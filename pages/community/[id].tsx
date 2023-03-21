@@ -166,7 +166,7 @@ const CommunityPostDetail: NextPage<CommunityPostResponse> = (props) => {
                   {answer.user.name}
                 </span>
                 <span className="block text-xs ">
-                  {answer.createdAt.toString()}
+                  {answer.createdAt.toString().slice(0, 10)}
                 </span>
                 <p className="mt-2">{answer.answer} </p>
               </div>
