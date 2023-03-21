@@ -100,9 +100,7 @@ const CommunityPostDetail: NextPage<CommunityPostResponse> = (props) => {
         <div className="mb-3 flex cursor-pointer items-center space-x-3  border-b px-4 pb-3">
           <div className="h-10 w-10 rounded-full bg-slate-300" />
           <div>
-            <p className="white text-sm font-medium">
-              {data?.post?.user?.name}
-            </p>
+            <p className="text-sm font-medium">{data?.post?.user?.name}</p>
             <Link
               href={`/users/profiles/${data?.post?.user?.id}`}
               className="text-xs font-medium text-gray-500"
@@ -112,7 +110,7 @@ const CommunityPostDetail: NextPage<CommunityPostResponse> = (props) => {
           </div>
         </div>
         <div>
-          <div className="white mt-2 px-4">
+          <div className="mt-2 px-4">
             <span className="font-medium text-orange-500">Q.</span>{' '}
             {data?.post?.question}
           </div>
@@ -164,13 +162,13 @@ const CommunityPostDetail: NextPage<CommunityPostResponse> = (props) => {
             <div key={answer.id} className="flex items-start space-x-3">
               <div className="h-8 w-8 rounded-full bg-slate-200" />
               <div>
-                <span className="white block text-sm font-medium">
+                <span className="block text-sm font-medium">
                   {answer.user.name}
                 </span>
-                <span className="white block text-xs ">
+                <span className="block text-xs ">
                   {answer.createdAt.toString()}
                 </span>
-                <p className="white mt-2">{answer.answer} </p>
+                <p className="mt-2">{answer.answer} </p>
               </div>
             </div>
           ))}

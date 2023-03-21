@@ -94,7 +94,7 @@ export default function ChatRoom({ title, chatId }: ChatProps) {
 
   return (
     <div>
-      <h2 className="text-2xl font-bold text-gray-900">{title}</h2>
+      <h2 className="text-2xl font-bold">{title}</h2>
       <div
         id={scrollId}
         className="h-[50vh] space-y-4 overflow-y-scroll py-5 px-4 pb-16"

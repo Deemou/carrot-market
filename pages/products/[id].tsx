@@ -49,9 +49,7 @@ const ItemDetail: NextPage<ItemDetailResponse> = (props) => {
           <div className="flex cursor-pointer items-center space-x-3 border-t border-b py-3">
             <div className="h-12 w-12 rounded-full bg-slate-300" />
             <div>
-              <p className="white text-sm font-medium">
-                {data?.product?.user?.name}
-              </p>
+              <p className="text-sm font-medium">{data?.product?.user?.name}</p>
               <Link
                 href={`/users/profiles/${data?.product?.user?.id}`}
                 className="text-xs font-medium text-gray-500"
@@ -61,11 +59,9 @@ const ItemDetail: NextPage<ItemDetailResponse> = (props) => {
             </div>
           </div>
           <div className="mt-5">
-            <h1 className="white text-3xl font-bold">{data?.product?.name}</h1>
-            <span className="white mt-3 block text-2xl">
-              ${data?.product?.price}
-            </span>
-            <p className=" white my-6">{data?.product?.description}</p>
+            <h1 className="text-3xl font-bold">{data?.product?.name}</h1>
+            <span className="mt-3 block text-2xl">${data?.product?.price}</span>
+            <p className=" my-6">{data?.product?.description}</p>
             <div className="flex items-center justify-between space-x-2">
               <Button large text="Talk to seller" />
               <button
@@ -112,15 +108,13 @@ const ItemDetail: NextPage<ItemDetailResponse> = (props) => {
           </div>
         </div>
         <div>
-          <h2 className="white text-2xl font-bold">Similar items</h2>
+          <h2 className="text-2xl font-bold">Similar items</h2>
           <div className=" mt-6 grid grid-cols-2 gap-4">
             {data?.relatedProducts?.map((product) => (
               <div key={product.id}>
                 <div className="mb-4 h-56 w-full bg-slate-300" />
-                <h3 className="white -mb-1">{product.name}</h3>
-                <span className="white text-sm font-medium">
-                  ${product.price}
-                </span>
+                <h3 className="-mb-1">{product.name}</h3>
+                <span className="text-sm font-medium">${product.price}</span>
               </div>
             ))}
           </div>

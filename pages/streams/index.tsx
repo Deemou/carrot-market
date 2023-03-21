@@ -34,7 +34,7 @@ const Streams: NextPage = () => {
             className="block px-4  pt-4"
           >
             <div className="aspect-video w-full rounded-md bg-slate-300 shadow-sm" />
-            <h1 className="white mt-2 text-2xl font-bold">{stream.name}</h1>
+            <h1 className="mt-2 text-2xl font-bold">{stream.name}</h1>
           </Link>
         ))}
         {data && <PaginationBar currentPage={page} lastPage={data.lastPage} />}
