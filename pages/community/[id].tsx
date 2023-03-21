@@ -5,6 +5,7 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
 import { Answer, Post, User } from '@prisma/client';
@@ -98,7 +99,19 @@ const CommunityPostDetail: NextPage<CommunityPostResponse> = (props) => {
           동네질문
         </span>
         <div className="mb-3 flex cursor-pointer items-center space-x-3  border-b px-4 pb-3">
-          <div className="h-10 w-10 rounded-full bg-slate-300" />
+          {data?.post?.user?.avatar ? (
+            <div className="relative h-14 w-14">
+              <Image
+                src={data.post.user.avatar}
+                fill
+                alt="avatar"
+                priority
+                className="rounded-full bg-transparent object-cover"
+              />
+            </div>
+          ) : (
+            <div className="h-14 w-14 rounded-full bg-orange-500" />
+          )}
           <div>
             <p className="text-sm font-medium">{data?.post?.user?.name}</p>
             <Link
@@ -160,7 +173,19 @@ const CommunityPostDetail: NextPage<CommunityPostResponse> = (props) => {
         <div className="my-5 space-y-5 px-4">
           {data?.post?.answers?.map((answer) => (
             <div key={answer.id} className="flex items-start space-x-3">
-              <div className="h-8 w-8 rounded-full bg-slate-200" />
+              {answer.user.avatar ? (
+                <div className="relative h-10 w-10">
+                  <Image
+                    src={answer.user.avatar}
+                    fill
+                    alt="avatar"
+                    priority
+                    className="rounded-full bg-transparent object-cover"
+                  />
+                </div>
+              ) : (
+                <div className="h-10 w-10 rounded-full bg-orange-500" />
+              )}
               <div>
                 <span className="block text-sm font-medium">
                   {answer.user.name}

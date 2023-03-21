@@ -4,6 +4,7 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
 import { Product, User } from '@prisma/client';
@@ -47,7 +48,19 @@ const ItemDetail: NextPage<ItemDetailResponse> = (props) => {
         <div className="mb-8">
           <div className="h-96 bg-slate-300" />
           <div className="flex cursor-pointer items-center space-x-3 border-t border-b py-3">
-            <div className="h-12 w-12 rounded-full bg-slate-300" />
+            {data?.product?.user?.avatar ? (
+              <div className="relative h-14 w-14">
+                <Image
+                  src={data.product.user.avatar}
+                  fill
+                  alt="avatar"
+                  priority
+                  className="rounded-full bg-transparent object-cover"
+                />
+              </div>
+            ) : (
+              <div className="h-14 w-14 rounded-full bg-orange-500" />
+            )}
             <div>
               <p className="text-sm font-medium">{data?.product?.user?.name}</p>
               <Link
