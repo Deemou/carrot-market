@@ -16,7 +16,7 @@ const Chats: NextPage = () => {
           >
             <div className="h-12 w-12 rounded-full bg-slate-300" />
             <div>
-              <p className="text-gray-700">Steve Jebs</p>
+              <p className="white">Steve Jebs</p>
               <p className="text-sm  text-gray-500">
                 See you tomorrow in the corner at 2pm!
               </p>

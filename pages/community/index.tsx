@@ -38,7 +38,7 @@ const Community: NextPage<PostsResponse> = ({ posts }) => {
             <span className="ml-4 flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-800">
               동네질문
             </span>
-            <div className="mt-2 px-4 text-gray-700">
+            <div className="white mt-2 px-4">
               <span className="font-medium text-orange-500">Q.</span>{' '}
               {post.question}
             </div>
