@@ -125,9 +125,14 @@ const ItemDetail: NextPage<ItemDetailResponse> = (props) => {
           <div className=" mt-6 grid grid-cols-2 gap-4">
             {data?.relatedProducts?.map((product) => (
               <div key={product.id}>
-                <div className="mb-4 h-56 w-full bg-slate-300" />
-                <h3 className="-mb-1">{product.name}</h3>
-                <span className="text-sm font-medium">${product.price}</span>
+                <Link
+                  href={`/products/${product.id}`}
+                  className="cursor-pointer"
+                >
+                  <div className="mb-4 h-56 w-full bg-slate-300" />
+                  <h3 className="-mb-1">{product.name}</h3>
+                  <span className="text-sm font-medium">${product.price}</span>
+                </Link>
               </div>
             ))}
           </div>
