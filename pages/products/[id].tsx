@@ -47,7 +47,7 @@ const ItemDetail: NextPage<ItemDetailResponse> = (props) => {
       <div className="px-4  py-4">
         <div className="mb-8">
           <div className="h-96 bg-slate-300" />
-          <div className="flex cursor-pointer items-center space-x-3 border-t border-b py-3">
+          <div className="flex items-center space-x-3 border-t border-b py-3">
             {data?.product?.user?.avatar ? (
               <div className="relative h-14 w-14">
                 <Image

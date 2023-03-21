@@ -98,7 +98,7 @@ const CommunityPostDetail: NextPage<CommunityPostResponse> = (props) => {
         <span className="my-3 ml-4 inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-800">
           동네질문
         </span>
-        <div className="mb-3 flex cursor-pointer items-center space-x-3  border-b px-4 pb-3">
+        <div className="mb-3 flex items-center space-x-3  border-b px-4 pb-3">
           {data?.post?.user?.avatar ? (
             <div className="relative h-14 w-14">
               <Image
