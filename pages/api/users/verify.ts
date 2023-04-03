@@ -37,7 +37,7 @@ async function handler(
   const mailOptions = {
     from: process.env.MAIL_ID,
     to: email,
-    subject: 'Tweeter email verification',
+    subject: 'Carrot market email verification',
     text: `Verification Code : ${payload}`
   };
   const result = await smtpTransport.sendMail(
