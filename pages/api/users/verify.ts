@@ -34,25 +34,39 @@ async function handler(
   });
   console.log('token:', token);
 
+  await new Promise((resolve, reject) => {
+    // verify connection configuration
+    smtpTransport.verify(function (error, success) {
+      if (error) {
+        console.log(error);
+        reject(error);
+      } else {
+        console.log('Server is ready to take our messages');
+        resolve(success);
+      }
+    });
+  });
+
   const mailOptions = {
     from: process.env.MAIL_ID,
     to: email,
     subject: 'Carrot market email verification',
     text: `Verification Code : ${payload}`
   };
-  const result = await smtpTransport.sendMail(
-    mailOptions,
-    (error, responses) => {
+
+  await new Promise((resolve, reject) => {
+    // send mail
+    smtpTransport.sendMail(mailOptions, (error, responses) => {
       if (error) {
         console.log(error);
-        return null;
+        reject(error);
+      } else {
+        console.log(responses);
+        resolve(responses);
       }
-      console.log(responses);
-      return null;
-    }
-  );
+    });
+  });
   smtpTransport.close();
-  console.log(result);
 
   req.session.auth = {
     email
