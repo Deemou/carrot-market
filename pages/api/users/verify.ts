@@ -53,19 +53,20 @@ async function handler(
     subject: 'Carrot market email verification',
     text: `Verification Code : ${payload}`
   };
-  const result = await smtpTransport.sendMail(
-    mailOptions,
-    (error, responses) => {
+
+  await new Promise((resolve, reject) => {
+    // send mail
+    smtpTransport.sendMail(mailOptions, (error, responses) => {
       if (error) {
         console.log(error);
-        return null;
+        reject(error);
+      } else {
+        console.log(responses);
+        resolve(responses);
       }
-      console.log(responses);
-      return null;
-    }
-  );
+    });
+  });
   smtpTransport.close();
-  console.log(result);
 
   req.session.auth = {
     email
