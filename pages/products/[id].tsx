@@ -64,7 +64,7 @@ const ItemDetail: NextPage<ItemDetailResponse> = (props) => {
             <div>
               <p className="text-sm font-medium">{data?.product?.user?.name}</p>
               <Link
-                href={`/users/profiles/${data?.product?.user?.id}`}
+                href={`/profile/${data?.product?.user?.id}`}
                 className="text-xs font-medium text-gray-500"
               >
                 View profile &rarr;
