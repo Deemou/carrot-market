@@ -1,6 +1,6 @@
 import React from 'react';
 import Head from 'next/head';
-import TabBar from './tabBar';
+import TabBar from './tab-bar';
 import Header from './header';
 
 interface LayoutProps {
