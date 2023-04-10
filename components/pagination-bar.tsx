@@ -10,7 +10,7 @@ interface PaginationProps {
 }
 type Direction = 'prev' | 'next';
 
-export default function usePagination({
+export default function PaginationBar({
   currentPage,
   lastPage
 }: PaginationProps) {
