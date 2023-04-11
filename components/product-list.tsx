@@ -29,7 +29,7 @@ export default function ProductList({ kind }: ProductListProps) {
 
   const { data } = useSWR<ProductListResponse>(requestUrl);
   return data ? (
-    <div>
+    <div className="space-y-5 divide-y pb-10">
       {data?.products?.map((record) => (
         <Item
           id={record.product.id}
