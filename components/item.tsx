@@ -1,21 +1,31 @@
+import Image from 'next/image';
 import Link from 'next/link';
 
 interface ItemProps {
   title: string;
   id: number;
   price: number;
+  image: string;
   hearts: number;
 }
 
-export default function Item({ title, price, hearts, id }: ItemProps) {
+export default function Item({ id, title, price, image, hearts }: ItemProps) {
   return (
     <Link
       href={`/products/${id}`}
-      className="flex cursor-pointer justify-between px-4 pt-5"
+      className="flex cursor-pointer justify-between pt-5"
     >
       <div className="flex space-x-4">
-        <div className="h-20 w-20 rounded-md bg-gray-400" />
-        <div className="flex flex-col pt-2">
+        <div className="relative h-20 w-20">
+          <Image
+            src={image}
+            fill
+            alt="product"
+            priority
+            className="object-center"
+          />
+        </div>
+        <div className="flex flex-col justify-between">
           <h3 className="text-lg font-medium ">{title}</h3>
           <span className="mt-1 font-medium ">${price}</span>
         </div>
@@ -37,22 +47,6 @@ export default function Item({ title, price, hearts, id }: ItemProps) {
             ></path>
           </svg>
           <span className="">{hearts}</span>
-        </div>
-        <div className="flex items-center space-x-0.5 text-sm  ">
-          <svg
-            className="h-4 w-4"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-            ></path>
-          </svg>
         </div>
       </div>
     </Link>

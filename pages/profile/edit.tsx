@@ -60,12 +60,6 @@ const EditProfile: NextPage = () => {
   const onValid = ({ email, phone, name }: EditProfileForm) => {
     if (loading) return;
 
-    if (email === '' && phone === '') {
-      setError('formErrors', {
-        message: 'Email OR Phone number are required. You need to choose one.'
-      });
-    }
-
     if (!imageFile || imageFile.length < 1) {
       editProfile({ email, phone, name });
       return;
@@ -154,7 +148,7 @@ const EditProfile: NextPage = () => {
           )}
           <label
             htmlFor="picture"
-            className="cursor-pointer rounded-md border border-gray-300 py-2 px-3 text-sm font-medium shadow-sm hover:bg-gray-50 focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
+            className="cursor-pointer rounded-md border border-gray-200 py-1.5 px-3 text-sm font-medium hover:bg-gray-200 hover:text-black"
           >
             Change
             <input
@@ -164,23 +158,18 @@ const EditProfile: NextPage = () => {
               accept="image/*"
               className="hidden"
             />
-            {errors.avatar?.message && (
-              <span className="my-2 block text-center font-medium text-red-500">
-                {errors.avatar.message}
-              </span>
-            )}
           </label>
         </div>
         <Input
           register={register('name')}
-          required={false}
+          required
           label="Name"
           name="name"
           type="text"
         />
         <Input
           register={register('email')}
-          required={false}
+          required
           label="Email address"
           name="email"
           type="email"

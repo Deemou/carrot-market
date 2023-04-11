@@ -10,7 +10,7 @@ interface PaginationProps {
 }
 type Direction = 'prev' | 'next';
 
-export default function usePagination({
+export default function PaginationBar({
   currentPage,
   lastPage
 }: PaginationProps) {
@@ -74,7 +74,7 @@ export default function usePagination({
         )}
       >
         <button
-          className="aspect-square w-10 rounded-md bg-zinc-400 font-medium "
+          className="aspect-square h-10 rounded-md bg-red-500 font-medium "
           onClick={() => {
             onClickPage(1);
           }}
@@ -100,8 +100,10 @@ export default function usePagination({
         return (
           <button
             className={cls(
-              'aspect-square w-10 rounded-md font-medium ',
-              page === currentPage ? 'bg-black' : 'bg-zinc-400'
+              'aspect-square h-10 rounded-md font-medium ',
+              page === currentPage
+                ? 'border border-white bg-black'
+                : 'bg-red-500'
             )}
             onClick={() => {
               onClickPage(page);
@@ -133,7 +135,7 @@ export default function usePagination({
           ></path>
         </svg>
         <button
-          className="aspect-square w-10 rounded-md bg-zinc-400 font-medium "
+          className="aspect-square h-10 rounded-md bg-red-500 font-medium "
           onClick={() => {
             onClickPage(lastPage);
           }}

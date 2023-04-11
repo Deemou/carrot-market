@@ -1,15 +1,19 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import type { NextPage } from 'next';
-import Link from 'next/link';
 import Image from 'next/image';
-import useUser from '@libs/client/useUser';
 import useSWR from 'swr';
 import { Review, User } from '@prisma/client';
 import cls from '@libs/client/utils';
 import Layout from '@/components/layout';
+import { useRouter } from 'next/router';
 import Tab from '@/components/profile/tab';
 
+interface UserResponse {
+  ok: boolean;
+  user: User;
+}
 interface ReviewWithUser extends Review {
   createdBy: User;
 }
@@ -19,16 +23,19 @@ interface ReviewsResponse {
 }
 
 const Profile: NextPage = () => {
-  const { user } = useUser();
-  const { data } = useSWR<ReviewsResponse>('/api/reviews');
+  const router = useRouter();
+  const { data: userData } = useSWR<UserResponse>(
+    `/api/users/${router.query.id}`
+  );
+  const { data: reviewData } = useSWR<ReviewsResponse>('/api/reviews');
   return (
     <Layout seoTitle="Profile">
       <div className="px-4">
         <div className="mt-4 flex items-center space-x-3">
-          {user?.avatar ? (
+          {userData?.user.avatar ? (
             <div className="relative h-14 w-14">
               <Image
-                src={user.avatar}
+                src={userData.user.avatar}
                 fill
                 alt="avatar"
                 priority
@@ -39,14 +46,11 @@ const Profile: NextPage = () => {
             <div className="h-14 w-14 rounded-full bg-orange-500" />
           )}
           <div className="flex flex-col">
-            <span className="text-lg font-medium ">{user?.name}</span>
-            <Link href="/profile/edit" className=" text-gray-400">
-              Edit profile &rarr;
-            </Link>
+            <span className="text-lg font-medium ">{userData?.user.name}</span>
           </div>
         </div>
-        <div className="mt-10 flex">
-          <Tab href="/profile/sold" text="판매중인 상품" className="w-1/3">
+        <div className="mt-10 flex justify-around">
+          <Tab href="/userData/sold" text="판매중인 상품">
             <svg
               className="h-6 w-6"
               fill="none"
@@ -62,40 +66,8 @@ const Profile: NextPage = () => {
               ></path>
             </svg>
           </Tab>
-          <Tab href="/profile/bought" text="구매내역" className="w-1/3">
-            <svg
-              className="h-6 w-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
-              ></path>
-            </svg>
-          </Tab>
-          <Tab href="/profile/loved" text="관심목록" className="w-1/3">
-            <svg
-              className="h-6 w-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-              ></path>
-            </svg>
-          </Tab>
         </div>
-        {data?.reviews?.map((review) => (
+        {reviewData?.reviews?.map((review) => (
           <div key={review.id} className="mt-12">
             <div className="flex items-center space-x-4">
               <div className="h-12 w-12 rounded-full bg-slate-500" />
