@@ -28,21 +28,37 @@ const Community: NextPage<PostsResponse> = ({ posts }) => {
   // );
   return (
     <Layout seoTitle="Community">
-      <div className="space-y-4 divide-y-[2px]">
+      <FloatingButton href="/community/write">
+        <svg
+          className="h-6 w-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+          ></path>
+        </svg>
+      </FloatingButton>
+      <div className="mt-16 space-y-4 divide-y-[2px]">
         {posts?.map((post) => (
           <Link
             key={post.id}
             href={`/community/${post.id}`}
             className="flex cursor-pointer flex-col items-start pt-4"
           >
-            <span className="ml-4 flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-800">
+            <span className="flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-800">
               동네질문
             </span>
-            <div className="mt-2 px-4">
+            <div className="mt-2">
               <span className="font-medium text-orange-500">Q.</span>{' '}
               {post.question}
             </div>
-            <div className="mt-5 flex w-full items-center justify-between px-4 text-xs font-medium text-gray-500">
+            <div className="mt-5 flex w-full items-center justify-between text-xs font-medium text-gray-500">
               <span>{post.user.name}</span>
               <span>{post.createdAt.toString().slice(0, 10)}</span>
             </div>
@@ -84,22 +100,6 @@ const Community: NextPage<PostsResponse> = ({ posts }) => {
             </div>
           </Link>
         ))}
-        <FloatingButton href="/community/write">
-          <svg
-            className="h-6 w-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
-            ></path>
-          </svg>
-        </FloatingButton>
       </div>
     </Layout>
   );

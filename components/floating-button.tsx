@@ -11,7 +11,7 @@ export default function FloatingButton({ children, href }: IFloatingButton) {
   return (
     <Link
       href={href}
-      className="fixed bottom-24 right-5 flex aspect-square h-14 cursor-pointer items-center justify-center rounded-xl border border-white bg-black hover:bg-gray-200 hover:text-black"
+      className="fixed flex aspect-square h-14 cursor-pointer items-center justify-center rounded-xl border border-white bg-black hover:bg-gray-200 hover:text-black"
     >
       {children}
     </Link>

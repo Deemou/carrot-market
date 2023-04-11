@@ -11,7 +11,7 @@ export default function Item({ title, price, hearts, id }: ItemProps) {
   return (
     <Link
       href={`/products/${id}`}
-      className="flex cursor-pointer justify-between px-4 pt-5"
+      className="flex cursor-pointer justify-between pt-5"
     >
       <div className="flex space-x-4">
         <div className="h-20 w-20 rounded-md bg-gray-400" />
