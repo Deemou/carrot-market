@@ -37,7 +37,7 @@ const Write: NextPage = () => {
     <Layout seoTitle="Write Community Post">
       <form
         onSubmit={(...args) => void handleSubmit(onValid)(...args)}
-        className="space-y-4 p-4"
+        className="space-y-4 p-4 py-10"
       >
         <TextArea
           register={register('question', { required: true, minLength: 5 })}
