@@ -36,14 +36,8 @@ const imageSize = imageSizeKB * 1024;
 
 const EditProfile: NextPage = () => {
   const { user } = useUser();
-  const {
-    register,
-    setValue,
-    handleSubmit,
-    setError,
-    watch,
-    formState: { errors }
-  } = useForm<EditProfileForm>();
+  const { register, setValue, handleSubmit, setError, watch } =
+    useForm<EditProfileForm>();
   const [imageFile, setImageFile] = useState<FileList>();
   const [avatarPreview, setAvatarPreview] = useState('');
   const avatarWatch = watch('avatar');
@@ -60,10 +54,11 @@ const EditProfile: NextPage = () => {
   const onValid = ({ email, phone, name }: EditProfileForm) => {
     if (loading) return;
 
-    if (email === '' && phone === '') {
+    if (email === '') {
       setError('formErrors', {
-        message: 'Email OR Phone number are required. You need to choose one.'
+        message: 'Email is required.'
       });
+      return;
     }
 
     if (!imageFile || imageFile.length < 1) {
@@ -164,23 +159,18 @@ const EditProfile: NextPage = () => {
               accept="image/*"
               className="hidden"
             />
-            {errors.avatar?.message && (
-              <span className="my-2 block text-center font-medium text-red-500">
-                {errors.avatar.message}
-              </span>
-            )}
           </label>
         </div>
         <Input
           register={register('name')}
-          required={false}
+          required
           label="Name"
           name="name"
           type="text"
         />
         <Input
           register={register('email')}
-          required={false}
+          required
           label="Email address"
           name="email"
           type="email"
@@ -193,11 +183,6 @@ const EditProfile: NextPage = () => {
           type="text"
           kind="phone"
         />
-        {errors.formErrors && (
-          <span className="my-2 block text-center font-medium text-red-500">
-            {errors.formErrors.message}
-          </span>
-        )}
         <Button text={loading ? 'Loading...' : 'Update profile'} />
       </form>
     </Layout>
