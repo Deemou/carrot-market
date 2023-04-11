@@ -60,13 +60,6 @@ const EditProfile: NextPage = () => {
   const onValid = ({ email, phone, name }: EditProfileForm) => {
     if (loading) return;
 
-    if (email === '') {
-      setError('formErrors', {
-        message: 'Email is required.'
-      });
-      return;
-    }
-
     if (!imageFile || imageFile.length < 1) {
       editProfile({ email, phone, name });
       return;
