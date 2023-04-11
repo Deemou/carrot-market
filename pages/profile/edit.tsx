@@ -36,8 +36,14 @@ const imageSize = imageSizeKB * 1024;
 
 const EditProfile: NextPage = () => {
   const { user } = useUser();
-  const { register, setValue, handleSubmit, setError, watch } =
-    useForm<EditProfileForm>();
+  const {
+    register,
+    setValue,
+    handleSubmit,
+    setError,
+    watch,
+    formState: { errors }
+  } = useForm<EditProfileForm>();
   const [imageFile, setImageFile] = useState<FileList>();
   const [avatarPreview, setAvatarPreview] = useState('');
   const avatarWatch = watch('avatar');
@@ -183,6 +189,11 @@ const EditProfile: NextPage = () => {
           type="text"
           kind="phone"
         />
+        {errors.formErrors && (
+          <span className="my-2 block text-center font-medium text-red-500">
+            {errors.formErrors.message}
+          </span>
+        )}
         <Button text={loading ? 'Loading...' : 'Update profile'} />
       </form>
     </Layout>
