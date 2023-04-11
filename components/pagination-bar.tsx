@@ -101,7 +101,9 @@ export default function PaginationBar({
           <button
             className={cls(
               'aspect-square h-10 rounded-md font-medium ',
-              page === currentPage ? 'bg-black' : 'bg-red-500'
+              page === currentPage
+                ? 'border border-white bg-black'
+                : 'bg-red-500'
             )}
             onClick={() => {
               onClickPage(page);
