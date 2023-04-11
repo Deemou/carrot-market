@@ -154,7 +154,7 @@ const EditProfile: NextPage = () => {
           )}
           <label
             htmlFor="picture"
-            className="cursor-pointer rounded-md border border-gray-300 py-2 px-3 text-sm font-medium shadow-sm hover:bg-gray-50 focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
+            className="cursor-pointer rounded-md border border-gray-200 py-1.5 px-3 text-sm font-medium hover:bg-gray-200 hover:text-black"
           >
             Change
             <input

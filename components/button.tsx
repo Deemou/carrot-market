@@ -1,19 +1,27 @@
-/* eslint-disable react/button-has-type */
 import cls from '@libs/client/utils';
 
 interface ButtonProps {
   large?: boolean;
+  long?: boolean;
   text: string;
   [key: string]: any;
 }
 
-export default function Button({ large, onClick, text, ...rest }: ButtonProps) {
+export default function Button({
+  large,
+  long,
+  onClick,
+  text,
+  ...rest
+}: ButtonProps) {
   return (
     <button
+      type="submit"
       {...rest}
       className={cls(
-        'w-full rounded-md border border-transparent  bg-orange-500 px-4 font-medium  shadow-sm hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2',
-        large ? 'py-3 text-base' : 'py-2 text-sm '
+        'rounded-md border border-gray-200 px-3 text-sm font-medium hover:bg-gray-200 hover:text-black',
+        large ? 'py-2.5' : 'py-1.5',
+        long ? 'w-full' : ''
       )}
     >
       {text}
@@ -22,5 +30,6 @@ export default function Button({ large, onClick, text, ...rest }: ButtonProps) {
 }
 
 Button.defaultProps = {
-  large: false
+  large: false,
+  long: true
 };
