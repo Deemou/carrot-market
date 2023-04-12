@@ -65,7 +65,7 @@ export default function TabBar() {
         </svg>
         <span>동네생활</span>
       </Link>
-      <Link
+      {/* <Link
         href="/chats"
         className={cls(
           'flex flex-col items-center space-y-2 ',
@@ -89,7 +89,7 @@ export default function TabBar() {
           ></path>
         </svg>
         <span>채팅</span>
-      </Link>
+      </Link> */}
       <Link
         href="/streams"
         className={cls(
