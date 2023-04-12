@@ -2,13 +2,13 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import type { NextPage } from 'next';
-import Image from 'next/image';
 import useSWR from 'swr';
 import { Review, User } from '@prisma/client';
 import cls from '@libs/client/utils';
 import Layout from '@/components/layout';
 import { useRouter } from 'next/router';
 import Tab from '@/components/profile/tab';
+import Avatar from '@/components/avatar';
 
 interface UserResponse {
   ok: boolean;
@@ -25,32 +25,23 @@ interface ReviewsResponse {
 const Profile: NextPage = () => {
   const router = useRouter();
   const { data: userData } = useSWR<UserResponse>(
-    `/api/users/${router.query.id}`
+    router.query.id ? `/api/users/${router.query.id}` : null
   );
   const { data: reviewData } = useSWR<ReviewsResponse>('/api/reviews');
   return (
     <Layout seoTitle="Profile">
       <div className="px-4">
         <div className="mt-4 flex items-center space-x-3">
-          {userData?.user.avatar ? (
-            <div className="relative h-14 w-14">
-              <Image
-                src={userData.user.avatar}
-                fill
-                alt="avatar"
-                priority
-                className="rounded-full bg-transparent object-cover"
-              />
-            </div>
-          ) : (
-            <div className="h-14 w-14 rounded-full bg-orange-500" />
-          )}
+          <Avatar url={userData?.user?.avatar} large />
           <div className="flex flex-col">
             <span className="text-lg font-medium ">{userData?.user.name}</span>
           </div>
         </div>
         <div className="mt-10 flex justify-around">
-          <Tab href={`/profile/${userData?.user.id}/sold`} text="판매중인 상품">
+          <Tab
+            href={`/profile/${userData?.user?.id}/sold`}
+            text="판매중인 상품"
+          >
             <svg
               className="h-6 w-6"
               fill="none"

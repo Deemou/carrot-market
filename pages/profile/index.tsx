@@ -2,13 +2,13 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import type { NextPage } from 'next';
 import Link from 'next/link';
-import Image from 'next/image';
 import useUser from '@libs/client/useUser';
 import useSWR from 'swr';
 import { Review, User } from '@prisma/client';
 import cls from '@libs/client/utils';
 import Layout from '@/components/layout';
 import Tab from '@/components/profile/tab';
+import Avatar from '@/components/avatar';
 
 interface ReviewWithUser extends Review {
   createdBy: User;
@@ -25,19 +25,7 @@ const Profile: NextPage = () => {
     <Layout seoTitle="Profile">
       <div className="px-4">
         <div className="mt-4 flex items-center space-x-3">
-          {user?.avatar ? (
-            <div className="relative h-14 w-14">
-              <Image
-                src={user.avatar}
-                fill
-                alt="avatar"
-                priority
-                className="rounded-full bg-transparent object-cover"
-              />
-            </div>
-          ) : (
-            <div className="h-14 w-14 rounded-full bg-orange-500" />
-          )}
+          <Avatar url={user?.avatar} large />
           <div className="flex flex-col">
             <span className="text-lg font-medium ">{user?.name}</span>
             <Link href="/profile/edit" className=" text-gray-400">

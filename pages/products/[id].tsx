@@ -13,6 +13,7 @@ import cls from '@libs/client/utils';
 import Layout from '@/components/layout';
 import Button from '@components/button';
 import client from '@/libs/server/client';
+import Avatar from '@/components/avatar';
 
 interface ProductWithUser extends Product {
   user: User;
@@ -57,23 +58,9 @@ const ItemDetail: NextPage<ItemDetailResponse> = (props) => {
               />
             </div>
             <div className="flex items-center space-x-3 border-t border-b py-3">
-              {data?.product?.user?.avatar ? (
-                <div className="relative h-14 w-14">
-                  <Image
-                    src={data.product.user.avatar}
-                    fill
-                    alt="avatar"
-                    priority
-                    className="rounded-full bg-transparent object-cover"
-                  />
-                </div>
-              ) : (
-                <div className="h-14 w-14 rounded-full bg-orange-500" />
-              )}
+              <Avatar url={data?.product?.user?.avatar} large />
               <div>
-                <p className="text-sm font-medium">
-                  {data?.product?.user?.name}
-                </p>
+                <p className="font-medium">{data?.product?.user?.name}</p>
                 <Link
                   href={`/profile/${data?.product?.user?.id}`}
                   className="text-xs font-medium text-gray-500"
