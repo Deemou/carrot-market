@@ -70,8 +70,8 @@ const ItemDetail: NextPage<ItemDetailResponse> = (props) => {
               </div>
             </div>
             <div className="mt-5">
-              <h1 className="text-3xl font-bold">{data?.product?.name}</h1>
-              <span className="mt-3 block text-2xl">
+              <h1 className="text-2xl font-bold">{data?.product?.name}</h1>
+              <span className="mt-3 block text-lg">
                 ${data?.product?.price}
               </span>
               <p className=" my-6">{data?.product?.description}</p>
@@ -121,7 +121,7 @@ const ItemDetail: NextPage<ItemDetailResponse> = (props) => {
             </div>
           </div>
           <div>
-            <h2 className="text-2xl font-bold">Similar items</h2>
+            <h2 className="text-xl font-bold">Similar items</h2>
             <div className=" mt-6 grid grid-cols-2 gap-10">
               {data?.relatedProducts?.map((product) => (
                 <div key={product.id}>
