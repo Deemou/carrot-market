@@ -11,12 +11,14 @@ async function handler(
 ) {
   const {
     session: { user },
-    query: { kind }
+    query: { kind, id }
   } = req;
+
+  const userId = Number(id) || user?.id;
 
   const recordQueries = await client.record.findMany({
     where: {
-      userId: user?.id,
+      userId,
       kind: kind as Kind
     },
     include: {

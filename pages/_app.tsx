@@ -2,6 +2,7 @@ import '../styles/globals.scss';
 import type { AppProps } from 'next/app';
 import { SWRConfig } from 'swr';
 import useUser from '@/libs/client/useUser';
+import { RecoilRoot } from 'recoil';
 
 function LoginCheck() {
   const { user } = useUser();
@@ -16,12 +17,12 @@ function MyApp({ Component, pageProps }: AppProps) {
         fetcher: (url: string) => fetch(url).then((response) => response.json())
       }}
     >
-      <div className="min-h-screen w-full bg-black py-4">
-        <div className="mx-auto w-full max-w-xl">
+      <RecoilRoot>
+        <div className="min-h-full w-full bg-black py-4">
           <LoginCheck />
           <Component {...pageProps} />
         </div>
-      </div>
+      </RecoilRoot>
     </SWRConfig>
   );
 }

@@ -13,6 +13,7 @@ import cls from '@libs/client/utils';
 import Layout from '@/components/layout';
 import Button from '@components/button';
 import client from '@/libs/server/client';
+import Avatar from '@/components/avatar';
 
 interface ProductWithUser extends Product {
   user: User;
@@ -57,23 +58,9 @@ const ItemDetail: NextPage<ItemDetailResponse> = (props) => {
               />
             </div>
             <div className="flex items-center space-x-3 border-t border-b py-3">
-              {data?.product?.user?.avatar ? (
-                <div className="relative h-14 w-14">
-                  <Image
-                    src={data.product.user.avatar}
-                    fill
-                    alt="avatar"
-                    priority
-                    className="rounded-full bg-transparent object-cover"
-                  />
-                </div>
-              ) : (
-                <div className="h-14 w-14 rounded-full bg-orange-500" />
-              )}
+              <Avatar url={data?.product?.user?.avatar} large />
               <div>
-                <p className="text-sm font-medium">
-                  {data?.product?.user?.name}
-                </p>
+                <p className="font-medium">{data?.product?.user?.name}</p>
                 <Link
                   href={`/profile/${data?.product?.user?.id}`}
                   className="text-xs font-medium text-gray-500"
@@ -135,14 +122,22 @@ const ItemDetail: NextPage<ItemDetailResponse> = (props) => {
           </div>
           <div>
             <h2 className="text-2xl font-bold">Similar items</h2>
-            <div className=" mt-6 grid grid-cols-2 gap-4">
+            <div className=" mt-6 grid grid-cols-2 gap-10">
               {data?.relatedProducts?.map((product) => (
                 <div key={product.id}>
                   <Link
                     href={`/products/${product.id}`}
-                    className="cursor-pointer"
+                    className="w-10/12 cursor-pointer"
                   >
-                    <div className="mb-4 h-56 w-full bg-slate-300" />
+                    <div className="relative mb-4 aspect-square">
+                      <Image
+                        src={product.image}
+                        fill
+                        alt="product"
+                        priority
+                        className="object-center"
+                      />
+                    </div>
                     <h3 className="-mb-1">{product.name}</h3>
                     <span className="text-sm font-medium">
                       ${product.price}

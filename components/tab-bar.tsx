@@ -2,11 +2,14 @@ import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import cls from '@libs/client/utils';
+import { useRecoilValue } from 'recoil';
+import { isMobile } from '@/atoms';
 
 const loginUrl = '/login';
 const signUpUrl = '/sign-up';
 
 export default function TabBar() {
+  const mobile = useRecoilValue(isMobile);
   const router = useRouter();
 
   function isAuthPages() {
@@ -14,7 +17,12 @@ export default function TabBar() {
   }
 
   return isAuthPages() ? null : (
-    <nav className="fixed bottom-0 flex w-full max-w-xl justify-between border-t bg-black px-10 pb-5 pt-3 text-xs ">
+    <nav
+      className={cls(
+        'fixed bottom-0 flex w-full max-w-xl -translate-x-[1px] justify-between border-t bg-black px-10 pb-5 pt-3 text-xs ',
+        mobile ? '' : 'border-x ring-1 ring-white'
+      )}
+    >
       <Link
         href="/"
         className={cls(
@@ -65,7 +73,7 @@ export default function TabBar() {
         </svg>
         <span>동네생활</span>
       </Link>
-      <Link
+      {/* <Link
         href="/chats"
         className={cls(
           'flex flex-col items-center space-y-2 ',
@@ -89,7 +97,7 @@ export default function TabBar() {
           ></path>
         </svg>
         <span>채팅</span>
-      </Link>
+      </Link> */}
       <Link
         href="/streams"
         className={cls(

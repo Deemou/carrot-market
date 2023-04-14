@@ -1,7 +1,6 @@
 /* eslint-disable no-void */
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import Image from 'next/image';
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 import useUser from '@libs/client/useUser';
@@ -17,6 +16,7 @@ import {
 import Layout from '@/components/layout';
 import Button from '@components/button';
 import Input from '@components/input';
+import Avatar from '@/components/avatar';
 
 interface EditProfileForm {
   email?: string;
@@ -133,19 +133,7 @@ const EditProfile: NextPage = () => {
         className="space-y-4 py-10 px-4"
       >
         <div className="flex items-center space-x-3">
-          {avatarPreview ? (
-            <div className="relative h-14 w-14">
-              <Image
-                src={avatarPreview}
-                fill
-                alt="avatar"
-                priority
-                className="rounded-full bg-transparent object-cover"
-              />
-            </div>
-          ) : (
-            <div className="h-14 w-14 rounded-full bg-orange-500" />
-          )}
+          <Avatar url={avatarPreview} large />
           <label
             htmlFor="picture"
             className="cursor-pointer rounded-md border border-gray-200 py-1.5 px-3 text-sm font-medium hover:bg-gray-200 hover:text-black"

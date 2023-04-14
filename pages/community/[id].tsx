@@ -5,7 +5,6 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import Link from 'next/link';
-import Image from 'next/image';
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
 import { Answer, Post, User } from '@prisma/client';
@@ -16,6 +15,7 @@ import cls from '@libs/client/utils';
 import Layout from '@/components/layout';
 import TextArea from '@components/textarea';
 import client from '@/libs/server/client';
+import Avatar from '@/components/avatar';
 
 interface AnswerWithUser extends Answer {
   user: User;
@@ -98,20 +98,8 @@ const CommunityPostDetail: NextPage<CommunityPostResponse> = (props) => {
         <span className="my-3 ml-4 inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-800">
           동네질문
         </span>
-        <div className="mb-3 flex items-center space-x-3  border-b px-4 pb-3">
-          {data?.post?.user?.avatar ? (
-            <div className="relative h-14 w-14">
-              <Image
-                src={data.post.user.avatar}
-                fill
-                alt="avatar"
-                priority
-                className="rounded-full bg-transparent object-cover"
-              />
-            </div>
-          ) : (
-            <div className="h-14 w-14 rounded-full bg-orange-500" />
-          )}
+        <div className="mb-3 flex items-center space-x-3 border-b px-4 pb-3">
+          <Avatar url={data?.post?.user?.avatar} large />
           <div>
             <p className="text-sm font-medium">{data?.post?.user?.name}</p>
             <Link
@@ -173,19 +161,7 @@ const CommunityPostDetail: NextPage<CommunityPostResponse> = (props) => {
         <div className="my-5 space-y-5 px-4">
           {data?.post?.answers?.map((answer) => (
             <div key={answer.id} className="flex items-start space-x-3">
-              {answer.user.avatar ? (
-                <div className="relative h-10 w-10">
-                  <Image
-                    src={answer.user.avatar}
-                    fill
-                    alt="avatar"
-                    priority
-                    className="rounded-full bg-transparent object-cover"
-                  />
-                </div>
-              ) : (
-                <div className="h-10 w-10 rounded-full bg-orange-500" />
-              )}
+              <Avatar url={answer.user.avatar} />
               <div>
                 <span className="block text-sm font-medium">
                   {answer.user.name}
