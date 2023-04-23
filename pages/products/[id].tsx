@@ -14,6 +14,7 @@ import Layout from '@/components/layout';
 import Button from '@components/button';
 import client from '@/libs/server/client';
 import Avatar from '@/components/avatar';
+import Card from '@/components/profile/card';
 
 interface ProductWithUser extends Product {
   user: User;
@@ -46,7 +47,7 @@ const ItemDetail: NextPage<ItemDetailResponse> = (props) => {
   return (
     <Layout seoTitle="Product Detail">
       {data && (
-        <div className="px-4  py-4">
+        <div className="px-4 py-4">
           <div className="mb-8">
             <div className="relative h-56">
               <Image
@@ -57,36 +58,27 @@ const ItemDetail: NextPage<ItemDetailResponse> = (props) => {
                 className="object-center"
               />
             </div>
-            <div className="flex items-center space-x-3 border-t border-b py-3">
-              <Avatar url={data?.product?.user?.avatar} large />
-              <div>
-                <p className="font-medium">{data?.product?.user?.name}</p>
-                <Link
-                  href={`/profile/${data?.product?.user?.id}`}
-                  className="text-xs font-medium text-gray-500"
-                >
-                  View profile &rarr;
-                </Link>
-              </div>
-            </div>
+            <Card
+              avatar={data.product.user.avatar}
+              userId={data.product.user.id}
+              userName={data.product.user.name}
+            ></Card>
             <div className="mt-5">
-              <h1 className="text-2xl font-bold">{data?.product?.name}</h1>
-              <span className="mt-3 block text-lg">
-                ${data?.product?.price}
-              </span>
-              <p className=" my-6">{data?.product?.description}</p>
+              <h1 className="text-2xl font-bold">{data.product.name}</h1>
+              <span className="mt-3 block text-lg">${data.product.price}</span>
+              <p className=" my-6">{data.product.description}</p>
               <div className="flex items-center justify-between space-x-2">
                 <Button large text="Talk to seller" />
                 <button
                   onClick={onFavClick}
                   className={cls(
                     'flex items-center justify-center rounded-md p-3 hover:bg-gray-100 ',
-                    data?.isLiked
+                    data.isLiked
                       ? 'text-red-500  hover:text-red-600'
                       : 'text-gray-400  hover:text-gray-500'
                   )}
                 >
-                  {data?.isLiked ? (
+                  {data.isLiked ? (
                     <svg
                       className="h-6 w-6"
                       fill="currentColor"
@@ -123,7 +115,7 @@ const ItemDetail: NextPage<ItemDetailResponse> = (props) => {
           <div>
             <h2 className="text-xl font-bold">Similar items</h2>
             <div className=" mt-6 grid grid-cols-2 gap-10">
-              {data?.relatedProducts?.map((product) => (
+              {data.relatedProducts.map((product) => (
                 <div key={product.id}>
                   <Link
                     href={`/products/${product.id}`}
