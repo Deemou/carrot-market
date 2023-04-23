@@ -1,28 +1,62 @@
+/* eslint-disable no-void */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import Link from 'next/link';
 import useUser from '@/libs/client/useUser';
 import cls from '@/libs/client/utils';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import useMutation from '@/libs/client/useMutation';
+import { useRouter } from 'next/router';
 import Avatar from '../avatar';
 
 interface CardProps {
   avatar: string | null;
   userId: number;
   userName: string;
+  postType: string;
+  postId: number;
 }
 
-export default function Card({ avatar, userId, userName }: CardProps) {
+interface Response {
+  ok: boolean;
+}
+
+export default function Card({
+  avatar,
+  userId,
+  userName,
+  postType,
+  postId
+}: CardProps) {
   const { user } = useUser();
+  const router = useRouter();
   const [isMenuClicked, setIsMenuClicked] = useState(false);
+
+  const postUrl = `/api/${postType}/${postId}`;
+  const deleteUrl = `${postUrl}/delete`;
+
+  const [deletePost, { loading: deleteLoading, data: deletetData }] =
+    useMutation<Response>(deleteUrl);
+
   const onMenuClick = () => {
-    console.log('onMenu');
     setIsMenuClicked(true);
   };
   const onOverlayClick = () => {
     setIsMenuClicked(false);
-    console.log('onOverlay');
   };
+
+  const onDeleteClick = () => {
+    if (deleteLoading) return;
+    deletePost({});
+  };
+
+  useEffect(() => {
+    if (deletetData?.ok) {
+      if (postType === 'products') void router.push('/');
+      else if (postType === 'posts') void router.push('/community');
+    }
+  }, [deletetData, postType, router]);
+
   return (
     <div className="flex justify-between border-t border-b py-3">
       <div className="flex items-center space-x-3 py-3">
@@ -75,7 +109,10 @@ export default function Card({ avatar, userId, userName }: CardProps) {
                   </svg>
                   <span>Edit</span>
                 </div>
-                <div className="flex cursor-pointer flex-row space-x-3 px-3 py-1.5 hover:bg-[#080808]">
+                <div
+                  onClick={onDeleteClick}
+                  className="flex cursor-pointer flex-row space-x-3 px-3 py-1.5 hover:bg-[#080808]"
+                >
                   <svg
                     fill="#ff0000"
                     baseProfile="tiny"

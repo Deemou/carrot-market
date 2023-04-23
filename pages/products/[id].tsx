@@ -13,7 +13,6 @@ import cls from '@libs/client/utils';
 import Layout from '@/components/layout';
 import Button from '@components/button';
 import client from '@/libs/server/client';
-import Avatar from '@/components/avatar';
 import Card from '@/components/profile/card';
 
 interface ProductWithUser extends Product {
@@ -62,6 +61,8 @@ const ItemDetail: NextPage<ItemDetailResponse> = (props) => {
               avatar={data.product.user.avatar}
               userId={data.product.user.id}
               userName={data.product.user.name}
+              postType="products"
+              postId={data.product.id}
             ></Card>
             <div className="mt-5">
               <h1 className="text-2xl font-bold">{data.product.name}</h1>

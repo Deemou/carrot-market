@@ -4,7 +4,6 @@
 /* eslint-disable no-void */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
 import { Answer, Post, User } from '@prisma/client';
@@ -104,6 +103,8 @@ const CommunityPostDetail: NextPage<CommunityPostResponse> = (props) => {
             avatar={data.post.user.avatar}
             userId={data.post.user.id}
             userName={data.post.user.name}
+            postType="posts"
+            postId={data.post.id}
           ></Card>
           <div>
             <div className="mt-2">
