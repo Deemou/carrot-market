@@ -8,8 +8,8 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import Layout from '@/components/layout';
 import Button from '@components/button';
-import Input from '@components/input';
 import { useForm } from 'react-hook-form';
+import TextArea from '@/components/textarea';
 
 interface EditPostForm {
   question: string;
@@ -63,12 +63,12 @@ const Edit: NextPage = () => {
           onSubmit={(...args) => void handleSubmit(onValid)(...args)}
           className="space-y-4 py-10 px-4"
         >
-          <Input
-            register={register('question')}
+          <TextArea
+            register={register('question', { required: true, minLength: 5 })}
             required
-            label="Question"
+            placeholder="Ask a question!"
             name="question"
-            type="text"
+            label="Question"
           />
           <Button text={editLoading ? 'Loading...' : 'Update'} />
         </form>
