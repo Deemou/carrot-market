@@ -91,4 +91,14 @@ textarea {
   @apply text-black;
 }
 
+body {
+  @apply w-screen;
+  @apply overflow-x-hidden;
+}
+
+.disable-scrolling {
+  @apply h-full;
+  @apply overflow-hidden;
+}
+
 @import './blog.scss';

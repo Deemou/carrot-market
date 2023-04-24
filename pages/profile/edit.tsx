@@ -175,7 +175,7 @@ const EditProfile: NextPage = () => {
             {errors.formErrors.message}
           </span>
         )}
-        <Button text={loading ? 'Loading...' : 'Update profile'} />
+        <Button text={loading ? 'Loading...' : 'Update'} />
       </form>
     </Layout>
   );

@@ -16,7 +16,7 @@ export default function Item({ id, title, price, image, hearts }: ItemProps) {
       className="flex cursor-pointer justify-between pt-5"
     >
       <div className="flex space-x-4">
-        <div className="relative h-20 w-20">
+        <div className="relative aspect-square w-20 shrink-0">
           <Image
             src={image}
             fill

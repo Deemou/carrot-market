@@ -17,7 +17,7 @@ export default function Layout({ children, seoTitle }: LayoutProps) {
   return (
     <div
       className={cls(
-        'mx-auto min-h-screen w-full max-w-xl',
+        'mx-auto min-h-[90vh] w-full max-w-xl',
         mobile ? '' : 'border ring-1 ring-white'
       )}
     >

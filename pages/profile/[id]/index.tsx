@@ -34,7 +34,7 @@ const Profile: NextPage = () => {
         <div className="mt-4 flex items-center space-x-3">
           <Avatar url={userData?.user?.avatar} large />
           <div className="flex flex-col">
-            <span className="text-lg font-medium ">{userData?.user.name}</span>
+            <span className="font-medium ">{userData?.user?.name}</span>
           </div>
         </div>
         <div className="mt-10 flex justify-around">

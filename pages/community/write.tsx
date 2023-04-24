@@ -43,8 +43,10 @@ const Write: NextPage = () => {
           register={register('question', { required: true, minLength: 5 })}
           required
           placeholder="Ask a question!"
+          name="question"
+          label="Question"
         />
-        <Button text={loading ? 'Loading...' : 'Submit'} />
+        <Button text={loading ? 'Loading...' : 'Upload'} />
       </form>
     </Layout>
   );
