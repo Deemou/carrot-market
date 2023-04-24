@@ -70,7 +70,7 @@ const Edit: NextPage = () => {
             name="question"
             type="text"
           />
-          <Button text={editLoading ? 'Loading...' : 'Update post'} />
+          <Button text={editLoading ? 'Loading...' : 'Update'} />
         </form>
       )}
     </Layout>

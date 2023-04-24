@@ -205,7 +205,7 @@ const Edit: NextPage = () => {
             name="description"
             label="Description"
           />
-          <Button text={editLoading ? 'Loading...' : 'Edit Item'} />
+          <Button text={editLoading ? 'Loading...' : 'Update'} />
         </form>
       )}
     </Layout>
