@@ -35,7 +35,7 @@ export default function Card({
   const postUrl = `/api/${postType}/${postId}`;
   const deleteUrl = `${postUrl}/delete`;
 
-  const [deletePost, { loading: deleteLoading, data: deletetData }] =
+  const [deletePost, { loading: deleteLoading, data: deleteData }] =
     useMutation<Response>(deleteUrl);
 
   const onMenuClick = () => {
@@ -49,13 +49,18 @@ export default function Card({
     if (deleteLoading) return;
     deletePost({});
   };
+  const onEditClick = () => {
+    if (postType === 'products') void router.push(`/products/${postId}/edit/`);
+    else if (postType === 'posts')
+      void router.push(`/community/${postId}/edit`);
+  };
 
   useEffect(() => {
-    if (deletetData?.ok) {
+    if (deleteData?.ok) {
       if (postType === 'products') void router.push('/');
       else if (postType === 'posts') void router.push('/community');
     }
-  }, [deletetData, postType, router]);
+  }, [deleteData, postType, router]);
 
   return (
     <div className="flex justify-between border-t border-b py-3">
@@ -97,7 +102,11 @@ export default function Card({
                 className="fixed top-0 left-0 z-40 h-screen w-full opacity-0"
               ></div>
               <div className="absolute top-2 right-0 z-50 rounded-md bg-black ring-2 ring-gray-900">
-                <div className="flex cursor-pointer flex-row space-x-3 px-3 py-1.5 hover:bg-[#080808]">
+                {/* edit */}
+                <div
+                  onClick={onEditClick}
+                  className="flex cursor-pointer flex-row space-x-3 px-3 py-1.5 hover:bg-[#080808]"
+                >
                   <svg
                     fill="#ffffff"
                     height="24"
@@ -109,6 +118,7 @@ export default function Card({
                   </svg>
                   <span>Edit</span>
                 </div>
+                {/* delete */}
                 <div
                   onClick={onDeleteClick}
                   className="flex cursor-pointer flex-row space-x-3 px-3 py-1.5 hover:bg-[#080808]"
