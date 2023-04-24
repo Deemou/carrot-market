@@ -46,10 +46,12 @@ export default function Card({
     setIsMenuClicked(false);
   };
   const onDeleteMenuClick = () => {
+    document.body.classList.add('disable-scrolling');
     setIsMenuClicked(false);
     setIsDeleteMenuClicked(true);
   };
   const onDeleteOverlayClick = () => {
+    document.body.classList.remove('disable-scrolling');
     setIsDeleteMenuClicked(false);
     setIsMenuClicked(true);
   };
