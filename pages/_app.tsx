@@ -18,7 +18,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       }}
     >
       <RecoilRoot>
-        <div className="min-h-full w-full bg-black py-4">
+        <div className="min-h-screen w-full bg-black py-4">
           <LoginCheck />
           <Component {...pageProps} />
         </div>

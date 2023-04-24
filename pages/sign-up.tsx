@@ -87,7 +87,7 @@ const SignUp: NextPage = () => {
     }
   }, [accountData, router, setError]);
   return (
-    <div className="mt-16 px-4">
+    <div className="mx-auto mt-16 w-full max-w-xl px-4">
       <h3 className="text-center text-3xl font-bold ">
         Sign up for Carrot Market
       </h3>
