@@ -1,19 +1,14 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import type { NextPage } from 'next';
+import type { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import useSWR from 'swr';
 import { Review, User } from '@prisma/client';
 import cls from '@libs/client/utils';
 import Layout from '@/components/layout';
-import { useRouter } from 'next/router';
 import Tab from '@/components/profile/tab';
 import Avatar from '@/components/avatar';
+import client from '@/libs/server/client';
 
-interface UserResponse {
-  ok: boolean;
-  user: User;
-}
 interface ReviewWithUser extends Review {
   createdBy: User;
 }
@@ -22,26 +17,19 @@ interface ReviewsResponse {
   reviews: ReviewWithUser[];
 }
 
-const Profile: NextPage = () => {
-  const router = useRouter();
-  const { data: userData } = useSWR<UserResponse>(
-    router.query.id ? `/api/users/${router.query.id}` : null
-  );
+const Profile: NextPage<{ profile: User }> = ({ profile }) => {
   const { data: reviewData } = useSWR<ReviewsResponse>('/api/reviews');
   return (
     <Layout seoTitle="Profile">
       <div className="px-4">
         <div className="mt-4 flex items-center space-x-3">
-          <Avatar url={userData?.user?.avatar} large />
+          <Avatar url={profile.avatar} large />
           <div className="flex flex-col">
-            <span className="font-medium ">{userData?.user?.name}</span>
+            <span className="font-medium ">{profile.name}</span>
           </div>
         </div>
         <div className="mt-10 flex justify-around">
-          <Tab
-            href={`/profile/${userData?.user?.id}/sold`}
-            text="판매중인 상품"
-          >
+          <Tab href={`/profile/${profile.id}/sold`} text="판매중인 상품">
             <svg
               className="h-6 w-6"
               fill="none"
@@ -93,6 +81,36 @@ const Profile: NextPage = () => {
       </div>
     </Layout>
   );
+};
+
+export const getStaticPaths: GetStaticPaths = () => {
+  return {
+    paths: [],
+    fallback: 'blocking'
+  };
+};
+
+export const getStaticProps: GetStaticProps = async (ctx) => {
+  const id = Number(ctx.params?.id);
+  if (!id) {
+    return {
+      notFound: true
+    };
+  }
+  const profile = await client.user.findUnique({
+    where: { id }
+  });
+  if (!profile) {
+    return {
+      notFound: true
+    };
+  }
+  return {
+    props: {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      profile: JSON.parse(JSON.stringify(profile))
+    }
+  };
 };
 
 export default Profile;
