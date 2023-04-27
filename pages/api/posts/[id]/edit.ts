@@ -42,6 +42,9 @@ async function handler(
       }
     });
 
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+    await res.revalidate(`/community/${id}`);
+
     res.json({
       ok: true
     });

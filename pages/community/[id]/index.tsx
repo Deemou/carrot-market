@@ -196,16 +196,14 @@ export const getStaticPaths: GetStaticPaths = () => {
 
 export const getStaticProps: GetStaticProps = async (ctx) => {
   console.log('BUILDING POST DETAIL. STATICALLY');
-  const id = ctx?.params?.id;
-  if (!Number(id)) {
+  const id = Number(ctx.params?.id);
+  if (!id) {
     return {
       notFound: true
     };
   }
   const post = await client.post.findUnique({
-    where: {
-      id: Number(id)
-    },
+    where: { id },
     include: {
       user: {
         select: {

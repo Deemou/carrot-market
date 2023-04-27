@@ -154,16 +154,14 @@ export const getStaticPaths: GetStaticPaths = () => {
 };
 
 export const getStaticProps: GetStaticProps = async (ctx) => {
-  const id = ctx?.params?.id;
-  if (!Number(id)) {
+  const id = Number(ctx.params?.id);
+  if (!id) {
     return {
       notFound: true
     };
   }
   const product = await client.product.findUnique({
-    where: {
-      id: Number(id)
-    },
+    where: { id },
     include: {
       user: {
         select: {
