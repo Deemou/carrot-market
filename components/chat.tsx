@@ -97,7 +97,7 @@ export default function ChatRoom({ title, chatId }: ChatProps) {
       <h2 className="text-2xl font-bold">{title}</h2>
       <div
         id={scrollId}
-        className="h-[50vh] space-y-4 overflow-y-scroll py-5 px-4 pb-16"
+        className="h-[50vh] space-y-4 overflow-y-scroll px-4 py-5 pb-16"
       >
         {data
           ?.slice()

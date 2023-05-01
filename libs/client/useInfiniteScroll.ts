@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 
 type Direction = 'up' | 'down';
+
 export default function useInfiniteScroll(
   direction?: Direction,
   scrollId?: string

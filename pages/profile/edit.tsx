@@ -130,13 +130,13 @@ const EditProfile: NextPage = () => {
     <Layout seoTitle="Edit Profile">
       <form
         onSubmit={(...args) => void handleSubmit(onValid)(...args)}
-        className="space-y-4 py-10 px-4"
+        className="space-y-4 px-4 py-10"
       >
         <div className="flex items-center space-x-3">
           <Avatar url={avatarPreview} large />
           <label
             htmlFor="picture"
-            className="cursor-pointer rounded-md border border-gray-200 py-1.5 px-3 text-sm font-medium hover:bg-gray-200 hover:text-black"
+            className="cursor-pointer rounded-md border border-gray-200 px-3 py-1.5 text-sm font-medium hover:bg-gray-200 hover:text-black"
           >
             Change
             <input
