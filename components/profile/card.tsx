@@ -88,6 +88,7 @@ export default function Card({
       </div>
       {user && (
         <>
+          {/* menu */}
           <div className={cls('relative', user.id === userId ? '' : 'hidden')}>
             <svg
               onClick={onMenuClick}
@@ -105,13 +106,14 @@ export default function Card({
               <circle cx="99.25" cy="90.358" r="9.824" />
               <circle cx="28.75" cy="90.358" r="9.824" />
             </svg>
-            {/* modal */}
             {isMenuClicked && (
               <div>
+                {/* overlay */}
                 <div
                   onClick={onOverlayClick}
                   className="fixed left-0 top-0 z-10 h-screen w-full opacity-0"
                 ></div>
+                {/* modal */}
                 <div className="absolute right-0 top-2 z-20 rounded-md bg-black ring-2 ring-gray-900">
                   {/* edit */}
                   <div
@@ -162,6 +164,7 @@ export default function Card({
           {/* waring delete */}
           {isDeleteMenuClicked && (
             <div className="fixed left-0 top-0 z-20 flex min-h-screen w-screen">
+              {/* overlay */}
               <div
                 onClick={onDeleteOverlayClick}
                 className="fixed bottom-0 left-0 right-0 top-0 z-30 h-screen w-full bg-slate-100 opacity-10"
