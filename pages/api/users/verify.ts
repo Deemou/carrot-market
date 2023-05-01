@@ -25,14 +25,6 @@ async function handler(
       error: 'Email already taken.'
     });
   }
-  const payload = `${Math.floor(100000 + Math.random() * 900000)}`;
-  const token = await client.token.create({
-    data: {
-      payload,
-      email
-    }
-  });
-  console.log('token:', token);
 
   await new Promise((resolve, reject) => {
     // verify connection configuration
@@ -46,6 +38,15 @@ async function handler(
       }
     });
   });
+
+  const payload = `${Math.floor(100000 + Math.random() * 900000)}`;
+  const token = await client.token.create({
+    data: {
+      payload,
+      email
+    }
+  });
+  console.log('token:', token);
 
   const mailOptions = {
     from: process.env.MAIL_ID,
