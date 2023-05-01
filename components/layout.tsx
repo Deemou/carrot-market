@@ -25,7 +25,7 @@ export default function Layout({ children, seoTitle }: LayoutProps) {
         <title>{message}</title>
       </Head>
       <Header />
-      <div className="px-4 pt-20 pb-24">{children}</div>
+      <div className="px-4 pb-24 pt-20">{children}</div>
       <TabBar />
     </div>
   );

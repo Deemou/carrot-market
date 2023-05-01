@@ -82,7 +82,7 @@ export default function PaginationBar({
           <span>{1}</span>
         </button>
         <svg
-          className="mr-1 ml-3 h-4 w-4"
+          className="ml-3 mr-1 h-4 w-4"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -121,7 +121,7 @@ export default function PaginationBar({
         )}
       >
         <svg
-          className="mr-3 ml-1 h-4 w-4"
+          className="ml-1 mr-3 h-4 w-4"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
