@@ -17,8 +17,8 @@ const cookieOptions = {
   password: process.env.COOKIE_PASSWORD!
 };
 
-export default function withApiSession(fn: any) {
-  return withIronSessionApiRoute(fn, cookieOptions);
+export default function withApiSession(handler: any) {
+  return withIronSessionApiRoute(handler, cookieOptions);
 }
 
 export function withSsrSession(handler: any) {

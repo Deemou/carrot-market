@@ -111,7 +111,7 @@ const CommunityPostDetail: NextPage<CommunityPostResponse> = (props) => {
               <span className="font-medium text-orange-500">Q.</span>{' '}
               {data.post.question}
             </div>
-            <div className="mt-3 flex w-full space-x-5 border-t border-b-[2px] py-2.5  text-gray-700">
+            <div className="mt-3 flex w-full space-x-5 border-b-[2px] border-t py-2.5  text-gray-700">
               <button
                 onClick={onWonderClick}
                 className={cls(
@@ -177,7 +177,7 @@ const CommunityPostDetail: NextPage<CommunityPostResponse> = (props) => {
               required
               register={register('answer', { required: true, minLength: 5 })}
             />
-            <button className="mt-2 w-full rounded-md border border-transparent bg-orange-500 py-2 px-4 text-sm font-medium  shadow-sm hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 ">
+            <button className="mt-2 w-full rounded-md border border-transparent bg-orange-500 px-4 py-2 text-sm font-medium  shadow-sm hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 ">
               {answerLoading ? 'Loading...' : 'Reply'}
             </button>
           </form>

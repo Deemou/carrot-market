@@ -73,7 +73,7 @@ export default function Card({
   }, [deleteData, postType, router]);
 
   return (
-    <div className="flex justify-between border-t border-b py-3">
+    <div className="flex justify-between border-b border-t py-3">
       <div className="flex items-center space-x-3 py-3">
         <Avatar url={avatar} large />
         <div>
@@ -88,6 +88,7 @@ export default function Card({
       </div>
       {user && (
         <>
+          {/* menu */}
           <div className={cls('relative', user.id === userId ? '' : 'hidden')}>
             <svg
               onClick={onMenuClick}
@@ -105,14 +106,15 @@ export default function Card({
               <circle cx="99.25" cy="90.358" r="9.824" />
               <circle cx="28.75" cy="90.358" r="9.824" />
             </svg>
-            {/* modal */}
             {isMenuClicked && (
               <div>
+                {/* overlay */}
                 <div
                   onClick={onOverlayClick}
-                  className="fixed top-0 left-0 z-10 h-screen w-full opacity-0"
+                  className="fixed left-0 top-0 z-10 h-screen w-full opacity-0"
                 ></div>
-                <div className="absolute top-2 right-0 z-20 rounded-md bg-black ring-2 ring-gray-900">
+                {/* modal */}
+                <div className="absolute right-0 top-2 z-20 rounded-md bg-black ring-2 ring-gray-900">
                   {/* edit */}
                   <div
                     onClick={onEditClick}
@@ -161,10 +163,11 @@ export default function Card({
           </div>
           {/* waring delete */}
           {isDeleteMenuClicked && (
-            <div className="fixed top-0 left-0 z-20 flex min-h-screen w-screen">
+            <div className="fixed left-0 top-0 z-20 flex min-h-screen w-screen">
+              {/* overlay */}
               <div
                 onClick={onDeleteOverlayClick}
-                className="fixed top-0 left-0 right-0 bottom-0 z-30 h-screen w-full bg-slate-100 opacity-10"
+                className="fixed bottom-0 left-0 right-0 top-0 z-30 h-screen w-full bg-slate-100 opacity-10"
               ></div>
               {/* modal */}
               <div className="relative z-40 mx-auto w-80 max-w-[80vw] space-y-5 self-center rounded-xl bg-black px-8 py-4 ring-2 ring-gray-900">

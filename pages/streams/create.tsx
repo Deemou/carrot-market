@@ -39,7 +39,7 @@ const Create: NextPage = () => {
     <Layout seoTitle="Create Stream">
       <form
         onSubmit={(...args) => void handleSubmit(onValid)(...args)}
-        className=" space-y-4 py-10 px-4"
+        className=" space-y-4 px-4 py-10"
       >
         <Input
           register={register('name', { required: true })}
