@@ -1,6 +1,3 @@
-/* eslint-disable react/button-has-type */
-/* eslint-disable no-nested-ternary */
-/* eslint-disable react/no-unescaped-entities */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable no-void */
@@ -69,111 +66,27 @@ const SignUp: NextPage = () => {
   };
 
   useEffect(() => {
-    if (emailData && !emailData.ok && emailData.error) {
-      setError('formErrors', { message: emailData.error });
-    }
+    if (!emailData || !emailData.error) return;
+    setError('formErrors', { message: emailData.error });
   }, [emailData, setError]);
   useEffect(() => {
-    if (tokenData && !tokenData.ok && tokenData.error) {
-      setError('formErrors', { message: tokenData.error });
-    }
+    if (!tokenData || !tokenData.error) return;
+    setError('formErrors', { message: tokenData.error });
   }, [tokenData, setError]);
   useEffect(() => {
-    if (accountData && accountData.ok) {
-      void router.replace('/');
-    }
-    if (accountData && !accountData.ok && accountData.error) {
+    if (!accountData) return;
+    if (accountData.ok) void router.replace('/');
+    if (accountData.error)
       setError('formErrors', { message: accountData.error });
-    }
   }, [accountData, router, setError]);
+
   return (
     <div className="mx-auto mt-16 w-full max-w-xl px-4">
       <h3 className="text-center text-3xl font-bold ">
         Sign up for Carrot Market
       </h3>
       <div className="mt-12">
-        {emailData?.ok ? (
-          tokenData?.ok ? (
-            <form
-              onClick={onClick}
-              onSubmit={(...args) =>
-                void accountHandleSubmit(onAccountValid)(...args)
-              }
-              className="mt-8 flex flex-col space-y-4"
-            >
-              <Input
-                register={accountRegister('name', {
-                  required: true,
-                  minLength: {
-                    value: 5,
-                    message: 'Name must be at least 5 characters'
-                  },
-                  maxLength: {
-                    value: 18,
-                    message: 'Name must be up to 18 characters'
-                  }
-                })}
-                name="name"
-                label="Name"
-                type="text"
-                required
-              />
-              {errors.name && (
-                <span className="bloc my-2 text-center font-medium text-red-600">
-                  {errors.name.message}
-                </span>
-              )}
-              <Input
-                register={accountRegister('password', {
-                  required: true,
-                  minLength: {
-                    value: 9,
-                    message: 'Password must be at least 9 characters'
-                  }
-                })}
-                name="password"
-                label="Password"
-                type="password"
-                required
-              />
-              {errors.password && (
-                <span className="my-2 block text-center font-medium text-red-600">
-                  {errors.password.message}
-                </span>
-              )}
-              <Button text={emailLoading ? 'Loading' : 'Create Account'} />
-            </form>
-          ) : (
-            <div>
-              <form
-                onClick={onClick}
-                onSubmit={(...args) =>
-                  void tokenHandleSubmit(onTokenValid)(...args)
-                }
-                className="mt-8 flex flex-col space-y-4"
-              >
-                <Input
-                  register={tokenRegister('token', {
-                    required: true
-                  })}
-                  name="token"
-                  label="Confirmation Token"
-                  type="number"
-                  required
-                />
-                {errors.formErrors && (
-                  <span className="my-2 block text-center font-medium text-red-600">
-                    {errors.formErrors.message}
-                  </span>
-                )}
-                <Button text={tokenLoading ? 'Loading' : 'Confirm Token'} />
-              </form>
-              <span className="my-4 flex justify-center text-lg font-medium text-red-400">
-                We've sent a verification code to your email.
-              </span>
-            </div>
-          )
-        ) : (
+        {!emailData?.ok && (
           <form
             onClick={onClick}
             onSubmit={(...args) =>
@@ -197,6 +110,85 @@ const SignUp: NextPage = () => {
               </span>
             )}
             <Button text={emailLoading ? 'Loading' : 'Verify Email'} />
+          </form>
+        )}
+        {emailData?.ok && !tokenData?.ok && (
+          <form
+            onClick={onClick}
+            onSubmit={(...args) =>
+              void tokenHandleSubmit(onTokenValid)(...args)
+            }
+            className="mt-8 flex flex-col space-y-4"
+          >
+            <Input
+              register={tokenRegister('token', {
+                required: true
+              })}
+              name="token"
+              label="Confirmation Token"
+              type="number"
+              required
+            />
+            {errors.formErrors && (
+              <span className="my-2 block text-center font-medium text-red-600">
+                {errors.formErrors.message}
+              </span>
+            )}
+            <Button text={tokenLoading ? 'Loading' : 'Confirm Token'} />
+            <span className="my-4 flex justify-center text-lg font-medium text-red-400">
+              We&apos;ve sent a verification code to your email.
+            </span>
+          </form>
+        )}
+        {tokenData?.ok && (
+          <form
+            onClick={onClick}
+            onSubmit={(...args) =>
+              void accountHandleSubmit(onAccountValid)(...args)
+            }
+            className="mt-8 flex flex-col space-y-4"
+          >
+            <Input
+              register={accountRegister('name', {
+                required: true,
+                minLength: {
+                  value: 5,
+                  message: 'Name must be at least 5 characters'
+                },
+                maxLength: {
+                  value: 18,
+                  message: 'Name must be up to 18 characters'
+                }
+              })}
+              name="name"
+              label="Name"
+              type="text"
+              required
+            />
+            {errors.name && (
+              <span className="bloc my-2 text-center font-medium text-red-600">
+                {errors.name.message}
+              </span>
+            )}
+            <Input
+              register={accountRegister('password', {
+                required: true,
+                minLength: {
+                  value: 9,
+                  message: 'Password must be at least 9 characters'
+                }
+              })}
+              name="password"
+              label="Password"
+              type="password"
+              required
+            />
+            {errors.password && (
+              <span className="my-2 block text-center font-medium text-red-600">
+                {errors.password.message}
+              </span>
+            )}
+            <Button text={emailLoading ? 'Loading' : 'Create Account'} />
           </form>
         )}
         <div className="flex justify-center p-4">
