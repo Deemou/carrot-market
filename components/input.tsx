@@ -7,6 +7,7 @@ interface InputProps {
   type: string;
   register: UseFormRegisterReturn;
   required?: boolean;
+  onClick?: () => void;
 }
 
 export default function Input({
@@ -15,7 +16,8 @@ export default function Input({
   kind,
   register,
   type,
-  required
+  required,
+  onClick
 }: InputProps) {
   return (
     <div>
@@ -25,6 +27,7 @@ export default function Input({
       {kind === 'text' && (
         <div className="relative flex items-center rounded-md shadow-sm">
           <input
+            onClick={onClick}
             id={name}
             required={required}
             {...register}
@@ -53,5 +56,6 @@ export default function Input({
 
 Input.defaultProps = {
   kind: 'text',
-  required: false
+  required: false,
+  onClick: () => {}
 };
