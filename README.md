@@ -1,11 +1,13 @@
-## 목차
+## Contents
 
-- [소개](#소개)
-- [해결한 주요 문제들](#해결한-주요-문제들)
+- [Introduction](#introduction)
+- [Main Feature](#main-feature)
+- [Environment](#environment)
+- [Main Problems Solved](#main-problems-solved)
 
-## 소개
+## Introduction
 
-Next.js를 이용한 Serverless Marketplace입니다.
+**Carrot Market**은 next.js를 이용한 Serverless Marketplace입니다.
 
 본 서비스를 이용하기 위해서는 계정이 필요합니다.
 <br>
@@ -17,7 +19,7 @@ Next.js를 이용한 Serverless Marketplace입니다.
 <br>
 현재 이용중인 서비스 부분이 다른 색으로 강조됩니다.
 
-### 홈
+### Home
 
 등록되어 있는 상품 리스트가 표시되며, 상품을 등록할 수 있습니다.
 <br>
@@ -25,7 +27,7 @@ Next.js를 이용한 Serverless Marketplace입니다.
 <br>
 '찜' 버튼이 제공됩니다.
 
-### 동네생활
+### Community
 
 질문글을 올리고 답변을 받을 수 있습니다.
 <br>
@@ -33,11 +35,11 @@ Next.js를 이용한 Serverless Marketplace입니다.
 <br>
 '나도 궁금해요' 버튼이 제공됩니다.
 
-### 라이브
+### Live
 
 라이브 스트리밍 예정
 
-### 나의 캐럿
+### My Carrot
 
 유저의 프로필이 표시됩니다.
 <br>
@@ -45,7 +47,31 @@ Next.js를 이용한 Serverless Marketplace입니다.
 <br>
 판매중인 상품, 관심목록을 볼 수 있습니다.
 
-## 해결한 주요 문제들
+## Main Feature
+
+- 로그인 / 회원가입 (Email 인증)
+- 패스워드 해싱
+- 미들웨어 - 봇 여부 체크, 사용자 인증 확인
+- 탭 바 - 서비스간 빠른 이동, 현재 이용중인 서비스 강조
+- 상품 등록, 수정, 삭제, 좋아요 기능
+- 질문 등록, 수정, 삭제, 나도 궁금해요, 답변 기능
+- 상품/질문 삭제 전 경고 모달 창
+- 프로필 - 정보 확인, 변경, 판매중인 상품, 관심목록
+- Infinite Scroll
+- 편리한 페이지네이션 바
+- Static Generation
+- Server Side Rendering
+
+## Environment
+
+- Language: JavaScript, TypeScript
+- Framework: Next.js
+- Library: React.js, Tailwind.css, Sass, SWR, Iron-session, NodeMailer, Bcrypt, Gray-matter, Recoil
+- Database: PlanetScale, Firebase
+- ORM: Prisma
+- Deploy: Vercel
+
+## Main Problems Solved
 
 - [사용자 인증](https://github.com/Deemou/carrot-market/wiki/사용자-인증)
 - [상태 관리](https://github.com/Deemou/carrot-market/wiki/상태-관리)
