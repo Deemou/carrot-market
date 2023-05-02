@@ -1,6 +1,8 @@
 ## Contents
 
 - [Introduction](#introduction)
+- [Main Feature](#main-feature)
+- [Environment](#environment)
 - [Main Problems Solved](#main-problems-solved)
 
 ## Introduction
@@ -44,6 +46,30 @@ Next.js를 이용한 Serverless Marketplace입니다.
 이름, 이메일, 프로필 이미지를 변경할 수 있습니다.
 <br>
 판매중인 상품, 관심목록을 볼 수 있습니다.
+
+## Main Feature
+
+- 로그인 / 회원가입 (Email 인증)
+- 패스워드 해싱
+- 미들웨어 - 봇 여부 체크, 사용자 인증 확인
+- 탭 바 - 서비스간 빠른 이동, 현재 이용중인 서비스 강조
+- 상품 등록, 수정, 삭제, 좋아요 기능
+- 질문 등록, 수정, 삭제, 나도 궁금해요, 답변 기능
+- 상품/질문 삭제 전 경고 모달 창
+- 프로필 - 정보 확인, 변경, 판매중인 상품, 관심목록
+- Infinite Scroll
+- 편리한 페이지네이션 바
+- Static Generation
+- Server Side Rendering
+
+## Environment
+
+- Language: JavaScript, TypeScript
+- Framework: Next.js
+- Library: React.js, Tailwind.css, Sass, SWR, Iron-session, NodeMailer, Bcrypt, Gray-matter, Recoil
+- Database: PlanetScale, Firebase
+- ORM: Prisma
+- Deploy: Vercel
 
 ## Main Problems Solved
 
