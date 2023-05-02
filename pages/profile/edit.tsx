@@ -162,14 +162,15 @@ const EditProfile: NextPage = () => {
           name="email"
           type="email"
         />
-        <Input
+        {/* 휴대폰 임시 비활성화 */}
+        {/* <Input
           register={register('phone')}
           required={false}
           label="Phone number"
           name="phone"
           type="text"
           kind="phone"
-        />
+        /> */}
         {errors.formErrors && (
           <span className="my-2 block text-center font-medium text-red-500">
             {errors.formErrors.message}
