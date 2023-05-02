@@ -20,7 +20,6 @@ import Avatar from '@/components/avatar';
 
 interface EditProfileForm {
   email?: string;
-  phone?: string;
   name?: string;
   avatar?: FileList;
   formErrors?: string;
@@ -51,17 +50,16 @@ const EditProfile: NextPage = () => {
   useEffect(() => {
     if (user?.name) setValue('name', user.name);
     if (user?.email) setValue('email', user.email);
-    if (user?.phone) setValue('phone', user.phone);
     if (user?.avatar) setAvatarPreview(user.avatar);
   }, [user, setValue]);
 
   const [editProfile, { data, loading }] =
     useMutation<EditProfileResponse>(`/api/users/me`);
-  const onValid = ({ email, phone, name }: EditProfileForm) => {
+  const onValid = ({ email, name }: EditProfileForm) => {
     if (loading) return;
 
     if (!imageFile || imageFile.length < 1) {
-      editProfile({ email, phone, name });
+      editProfile({ email, name });
       return;
     }
 
@@ -88,7 +86,6 @@ const EditProfile: NextPage = () => {
         void getDownloadURL(uploadTask.snapshot.ref).then((url) => {
           editProfile({
             email,
-            phone,
             name,
             avatar: url
           });
@@ -162,15 +159,6 @@ const EditProfile: NextPage = () => {
           name="email"
           type="email"
         />
-        {/* 휴대폰 임시 비활성화 */}
-        {/* <Input
-          register={register('phone')}
-          required={false}
-          label="Phone number"
-          name="phone"
-          type="text"
-          kind="phone"
-        /> */}
         {errors.formErrors && (
           <span className="my-2 block text-center font-medium text-red-500">
             {errors.formErrors.message}
