@@ -1,20 +1,23 @@
-## 목차
+## Contents
 
-- [소개](#소개)
-- [해결한 주요 문제들](#해결한-주요-문제들)
+- [Introduction](#introduction)
+- [Main Problems Solved](#main-problems-solved)
 
-## 소개
+## Introduction
 
 Next.js를 이용한 Serverless Marketplace입니다.
 
 본 서비스를 이용하기 위해서는 계정이 필요합니다.
+<br>
 계정이 없는 경우 회원 가입을 해야 하며, 이메일 인증이 필요합니다.
 
 상단의 ‘header’에는 이름이 표시되며, 로그아웃을 할 수 있습니다.
+<br>
 하단의 ‘tab-bar’를 통해 손쉽게 다른 서비스로 이동할 수 있습니다.
+<br>
 현재 이용중인 서비스 부분이 다른 색으로 강조됩니다.
 
-### 홈
+### Home
 
 등록되어 있는 상품 리스트가 표시되며, 상품을 등록할 수 있습니다.
 <br>
@@ -22,7 +25,7 @@ Next.js를 이용한 Serverless Marketplace입니다.
 <br>
 '찜' 버튼이 제공됩니다.
 
-### 동네생활
+### Community
 
 질문글을 올리고 답변을 받을 수 있습니다.
 <br>
@@ -30,11 +33,11 @@ Next.js를 이용한 Serverless Marketplace입니다.
 <br>
 '나도 궁금해요' 버튼이 제공됩니다.
 
-### 라이브
+### Live
 
 라이브 스트리밍 예정
 
-### 나의 캐럿
+### My Carrot
 
 유저의 프로필이 표시됩니다.
 <br>
@@ -42,7 +45,7 @@ Next.js를 이용한 Serverless Marketplace입니다.
 <br>
 판매중인 상품, 관심목록을 볼 수 있습니다.
 
-## 해결한 주요 문제들
+## Main Problems Solved
 
 - [사용자 인증](https://github.com/Deemou/carrot-market/wiki/사용자-인증)
 - [상태 관리](https://github.com/Deemou/carrot-market/wiki/상태-관리)
