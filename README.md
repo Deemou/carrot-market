@@ -7,7 +7,7 @@
 
 ## Introduction
 
-Next.js를 이용한 Serverless Marketplace입니다.
+**Carrot Market**은 next.js를 이용한 Serverless Marketplace입니다.
 
 본 서비스를 이용하기 위해서는 계정이 필요합니다.
 <br>
