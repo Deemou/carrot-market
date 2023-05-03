@@ -2,8 +2,8 @@
 import { useForm } from 'react-hook-form';
 import useMutation from '@/libs/client/useMutation';
 import { Dispatch, SetStateAction, useEffect } from 'react';
-import Button from '../button';
-import TokenInput from '../input/token-input';
+import Button from '@components/button';
+import TokenInput from '@components/input/token-input';
 
 interface ITokenForm {
   token: string;

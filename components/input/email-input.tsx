@@ -1,5 +1,5 @@
 import { UseFormRegister } from 'react-hook-form';
-import Input from '../input';
+import Input from '@components/input';
 
 interface IEmailForm {
   email: string;

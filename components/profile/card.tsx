@@ -7,7 +7,7 @@ import cls from '@/libs/client/utils';
 import { useEffect, useState } from 'react';
 import useMutation from '@/libs/client/useMutation';
 import { useRouter } from 'next/router';
-import Avatar from '../avatar';
+import Avatar from '@components/avatar';
 
 interface CardProps {
   avatar: string | null;

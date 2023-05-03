@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import useMutation from '@/libs/client/useMutation';
 import { Dispatch, SetStateAction, useEffect } from 'react';
 import useUser from '@/libs/client/useUser';
-import EmailInput from '../input/email-input';
+import EmailInput from '@components/input/email-input';
 
 interface IEmailForm {
   email: string;

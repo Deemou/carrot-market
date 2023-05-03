@@ -3,8 +3,7 @@
 import { ProductWithCount } from 'pages';
 import useSWR from 'swr';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
-import Item from './item';
+import Item from '@components/item';
 
 interface ProductListProps {
   kind: 'Fav' | 'Sale' | 'Purchase';
