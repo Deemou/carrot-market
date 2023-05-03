@@ -17,16 +17,18 @@ async function handler(
 
   if (!email) return res.status(400).json({ ok: false });
 
-  const currentUser = await client.user.findUnique({
-    where: {
-      id: user?.id
-    }
-  });
-
-  if (email === currentUser?.email) {
-    return res.json({
-      ok: false
+  if (user) {
+    const currentUser = await client.user.findUnique({
+      where: {
+        id: user?.id
+      }
     });
+
+    if (email === currentUser?.email) {
+      return res.json({
+        ok: false
+      });
+    }
   }
 
   const alreadyExists = Boolean(
@@ -39,7 +41,7 @@ async function handler(
   if (alreadyExists) {
     return res.json({
       ok: false,
-      error: 'Email already taken.'
+      error: 'Email already taken'
     });
   }
 
