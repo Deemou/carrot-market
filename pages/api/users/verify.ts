@@ -10,8 +10,27 @@ async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseType>
 ) {
-  const { email } = req.body;
+  const {
+    session: { user },
+    body: { email }
+  } = req;
+
   if (!email) return res.status(400).json({ ok: false });
+
+  if (user) {
+    const currentUser = await client.user.findUnique({
+      where: {
+        id: user?.id
+      }
+    });
+
+    if (email === currentUser?.email) {
+      return res.json({
+        ok: false
+      });
+    }
+  }
+
   const alreadyExists = Boolean(
     await client.user.findUnique({
       where: {
@@ -22,7 +41,7 @@ async function handler(
   if (alreadyExists) {
     return res.json({
       ok: false,
-      error: 'Email already taken.'
+      error: 'Email already taken'
     });
   }
 

@@ -3,8 +3,8 @@ import Head from 'next/head';
 import cls from '@/libs/client/utils';
 import { useRecoilValue } from 'recoil';
 import { isMobile } from '@/atoms';
-import TabBar from './tab-bar';
-import Header from './header';
+import TabBar from '@components/tab-bar';
+import Header from '@components/header';
 
 interface LayoutProps {
   children: React.ReactNode;

@@ -3,10 +3,11 @@ import type { UseFormRegisterReturn } from 'react-hook-form';
 interface InputProps {
   label: string;
   name: string;
-  kind?: 'text' | 'phone' | 'price';
+  kind?: 'text' | 'price';
   type: string;
   register: UseFormRegisterReturn;
   required?: boolean;
+  onClick?: () => void;
 }
 
 export default function Input({
@@ -15,7 +16,8 @@ export default function Input({
   kind,
   register,
   type,
-  required
+  required,
+  onClick
 }: InputProps) {
   return (
     <div>
@@ -25,6 +27,7 @@ export default function Input({
       {kind === 'text' && (
         <div className="relative flex items-center rounded-md shadow-sm">
           <input
+            onClick={onClick}
             id={name}
             required={required}
             {...register}
@@ -47,25 +50,12 @@ export default function Input({
           />
         </div>
       )}
-      {kind === 'phone' && (
-        <div className="flex rounded-md shadow-sm">
-          <span className="flex select-none items-center justify-center rounded-l-md border border-r-0 border-gray-300 bg-gray-50 px-3 text-sm text-gray-500">
-            +82
-          </span>
-          <input
-            id={name}
-            required={required}
-            {...register}
-            type={type}
-            className="w-full appearance-none rounded-md rounded-l-none border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-orange-500 focus:outline-none focus:ring-orange-500"
-          />
-        </div>
-      )}
     </div>
   );
 }
 
 Input.defaultProps = {
   kind: 'text',
-  required: false
+  required: false,
+  onClick: () => {}
 };

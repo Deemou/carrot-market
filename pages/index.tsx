@@ -1,6 +1,5 @@
 /* eslint-disable no-void */
 /* eslint-disable no-underscore-dangle */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import type { GetStaticProps, NextPage } from 'next';
 import Head from 'next/head';
 import FloatingButton from '@components/floating-button';
@@ -108,6 +107,7 @@ export const getStaticProps: GetStaticProps = async () => {
   });
   return {
     props: {
+      /* eslint-disable @typescript-eslint/no-unsafe-assignment */
       products: JSON.parse(JSON.stringify(products))
     }
   };

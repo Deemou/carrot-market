@@ -10,7 +10,9 @@ async function handler(
   res: NextApiResponse<ResponseType>
 ) {
   const { token } = req.body;
-  const email = req.session.auth?.email;
+  const { user, auth } = req.session;
+
+  const email = auth?.email;
   const foundToken = await client.token.findUnique({
     where: {
       payload: token
@@ -28,6 +30,17 @@ async function handler(
       email: foundToken.email
     }
   });
+
+  if (user) {
+    await client.user.update({
+      where: {
+        id: Number(user.id)
+      },
+      data: {
+        email
+      }
+    });
+  }
 
   return res.json({ ok: true });
 }

@@ -5,7 +5,7 @@ interface ButtonProps {
   large?: boolean;
   long?: boolean;
   text: string;
-  type?: 'button' | 'submit' | 'reset';
+  type?: 'button' | 'submit';
   onClick?: MouseEventHandler<HTMLButtonElement>;
   [key: string]: any;
 }
@@ -20,8 +20,7 @@ export default function Button({
 }: ButtonProps) {
   return (
     <button
-      // eslint-disable-next-line react/button-has-type
-      type={type}
+      type={type === 'button' ? 'button' : 'submit'}
       {...rest}
       onClick={onClick}
       className={cls(

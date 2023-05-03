@@ -1,5 +1,5 @@
 import cls from '@libs/client/utils';
-import Avatar from './avatar';
+import Avatar from '@components/avatar';
 
 interface MessageProps {
   message: string;
