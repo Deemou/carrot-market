@@ -1,97 +1,16 @@
 /* eslint-disable no-void */
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable react/no-unescaped-entities */
-/* eslint-disable react/button-has-type */
 import type { NextPage } from 'next';
-import { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import Button from '@components/button';
-import Input from '@components/input';
-import useMutation from '@libs/client/useMutation';
-import { useRouter } from 'next/router';
 import Link from 'next/link';
-
-interface LoginForm {
-  email: string;
-  password: string;
-  formErrors?: string;
-}
-
-interface MutationResult {
-  ok: boolean;
-  error?: string;
-}
-
-const loginUrl = '/api/users/login';
+import LoginForm from '@/components/form/login-form';
 
 const Enter: NextPage = () => {
-  const [enter, { loading, data }] = useMutation<MutationResult>(loginUrl);
-  const {
-    register,
-    handleSubmit,
-    setError,
-    clearErrors,
-    formState: { errors }
-  } = useForm<LoginForm>();
-
-  const onClick = () => {
-    clearErrors('formErrors');
-  };
-  const onValid = (validForm: LoginForm) => {
-    if (loading) return;
-    enter(validForm);
-  };
-  const router = useRouter();
-  useEffect(() => {
-    if (data && !data.ok && data.error) {
-      setError('formErrors', { message: data.error });
-    }
-  }, [data, setError]);
-  useEffect(() => {
-    if (data?.ok) {
-      // eslint-disable-next-line no-restricted-globals
-      location.reload();
-    }
-  }, [data, router]);
   return (
     <div className="mx-auto mt-16 w-full max-w-xl px-4">
       <h3 className="text-center text-3xl font-bold ">
         Log in to Carrot Market
       </h3>
       <div className="mt-12">
-        <div>
-          <form
-            onClick={onClick}
-            onSubmit={(...args) => void handleSubmit(onValid)(...args)}
-            className="mt-8 flex flex-col space-y-4"
-          >
-            <Input
-              register={register('email', {
-                required: true
-              })}
-              name="email"
-              label="Email address"
-              type="email"
-              required
-            />
-            <Input
-              register={register('password', {
-                required: true
-              })}
-              name="password"
-              label="Password"
-              type="password"
-              required
-            />
-            {errors.formErrors && (
-              <span className="my-2 block text-center font-medium text-red-600">
-                {errors.formErrors.message}
-              </span>
-            )}
-            <Button text={loading ? 'Loading' : 'Continue'} />
-          </form>
-        </div>
+        <LoginForm />
         <div className="mt-8">
           <div className="relative">
             <div className="absolute w-full border-t border-gray-300" />
@@ -100,7 +19,10 @@ const Enter: NextPage = () => {
             </div>
           </div>
           <div className="mt-2 grid grid-cols-2 gap-3">
-            <button className="flex items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-blue-500 shadow-sm hover:bg-gray-50">
+            <button
+              type="button"
+              className="flex items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-blue-500 shadow-sm hover:bg-gray-50"
+            >
               <svg
                 className="h-5 w-5"
                 aria-hidden="true"
@@ -110,7 +32,10 @@ const Enter: NextPage = () => {
                 <path d="M6.29 18.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0020 3.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.073 4.073 0 01.8 7.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 010 16.407a11.616 11.616 0 006.29 1.84" />
               </svg>
             </button>
-            <button className="flex items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-black shadow-sm hover:bg-gray-50">
+            <button
+              type="button"
+              className="flex items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-black shadow-sm hover:bg-gray-50"
+            >
               <svg
                 className="h-5 w-5"
                 aria-hidden="true"
@@ -128,7 +53,9 @@ const Enter: NextPage = () => {
         </div>
         <div className="flex justify-center p-4">
           <Link href="/sign-up" className="cursor-pointer  font-medium ">
-            <span className="">You don't have an account yet? Sign up!</span>
+            <span className="">
+              You don&apos;t have an account yet? Sign up!
+            </span>
           </Link>
         </div>
       </div>
