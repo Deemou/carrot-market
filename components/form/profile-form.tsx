@@ -12,9 +12,9 @@ import {
   getDownloadURL
 } from 'firebase/storage';
 import Button from '@components/button';
-import Input from '@components/input';
 import AvatarInput from '@components/input/avatar-input';
 import { useRouter } from 'next/router';
+import NameInput from '@components/input/name-input';
 
 interface EditProfileForm {
   avatar?: FileList;
@@ -126,29 +126,7 @@ export default function ProfileForm() {
         avatarPreview={avatarPreview}
         register={register('avatar')}
       />
-      <Input
-        onClick={onClick}
-        register={register('name', {
-          required: true,
-          minLength: {
-            value: 5,
-            message: 'Name must be at least 5 characters'
-          },
-          maxLength: {
-            value: 18,
-            message: 'Name must be up to 18 characters'
-          }
-        })}
-        name="name"
-        label="Name"
-        type="text"
-        required
-      />
-      {errors.name && (
-        <span className="my-2 block text-center font-medium text-red-600">
-          {errors.name.message}
-        </span>
-      )}
+      <NameInput onClick={onClick} register={register} errors={errors} />
       <Button text={loading ? 'Loading...' : 'Update'} />
     </form>
   );

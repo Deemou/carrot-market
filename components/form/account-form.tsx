@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import useMutation from '@/libs/client/useMutation';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
+import NameInput from '@components/input/name-input';
 import Button from '../button';
 import Input from '../input';
 
@@ -22,8 +23,8 @@ export default function AccountForm() {
   const [createAccount, { loading: accountLoading, data: accountData }] =
     useMutation<MutationResult>('/api/users/sign-up');
   const {
-    register: accountRegister,
-    handleSubmit: accountHandleSubmit,
+    register,
+    handleSubmit,
     setError,
     clearErrors,
     formState: { errors }
@@ -47,35 +48,13 @@ export default function AccountForm() {
 
   return (
     <form
-      onSubmit={(...args) => void accountHandleSubmit(onAccountValid)(...args)}
+      onSubmit={(...args) => void handleSubmit(onAccountValid)(...args)}
       className="mt-8 flex flex-col space-y-4"
     >
+      <NameInput onClick={onClick} register={register} errors={errors} />
       <Input
         onClick={onClick}
-        register={accountRegister('name', {
-          required: true,
-          minLength: {
-            value: 5,
-            message: 'Name must be at least 5 characters'
-          },
-          maxLength: {
-            value: 18,
-            message: 'Name must be up to 18 characters'
-          }
-        })}
-        name="name"
-        label="Name"
-        type="text"
-        required
-      />
-      {errors.name && (
-        <span className="bloc my-2 text-center font-medium text-red-600">
-          {errors.name.message}
-        </span>
-      )}
-      <Input
-        onClick={onClick}
-        register={accountRegister('password', {
+        register={register('password', {
           required: true,
           minLength: {
             value: 9,
