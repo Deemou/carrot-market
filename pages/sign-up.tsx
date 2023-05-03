@@ -7,6 +7,7 @@ import Link from 'next/link';
 import TokenForm from '@/components/form/token-form';
 import AccountForm from '@/components/form/account-form';
 import EmailForm from '@/components/form/email-form';
+import Button from '@/components/button';
 
 const SignUp: NextPage = () => {
   const [isEmailOk, setIsEmailOk] = useState(false);
@@ -18,7 +19,11 @@ const SignUp: NextPage = () => {
         Sign up for Carrot Market
       </h3>
       <div className="mt-12">
-        {!isEmailOk && <EmailForm setIsEmailOk={setIsEmailOk} />}
+        {!isEmailOk && (
+          <EmailForm setIsEmailOk={setIsEmailOk}>
+            <Button text="Verify Email" />
+          </EmailForm>
+        )}
         {isEmailOk && !isTokenOk && <TokenForm setIsTokenOk={setIsTokenOk} />}
         {isTokenOk && <AccountForm />}
         <div className="flex justify-center p-4">

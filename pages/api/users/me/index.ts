@@ -1,6 +1,5 @@
 /* eslint-disable consistent-return */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 import { NextApiRequest, NextApiResponse } from 'next';
 import withHandler, { ResponseType } from '@libs/server/withHandler';
 import client from '@libs/server/client';
@@ -10,9 +9,15 @@ async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseType>
 ) {
+  const {
+    session: { user }
+  } = req;
+
+  if (!user) return res.status(400).json({ ok: false });
+
   if (req.method === 'GET') {
     const profile = await client.user.findUnique({
-      where: { id: req.session.user?.id }
+      where: { id: user.id }
     });
     res.json({
       ok: true,
@@ -21,58 +26,22 @@ async function handler(
   }
   if (req.method === 'POST') {
     const {
-      session: { user },
-      body: { email, name, avatar }
+      body: { name, avatar }
     } = req;
-    const currentUser = await client.user.findUnique({
+
+    await client.user.update({
       where: {
-        id: user?.id
+        id: user.id
+      },
+      data: {
+        name
       }
     });
-
-    if (email && email !== currentUser?.email) {
-      const alreadyExists = Boolean(
-        await client.user.findUnique({
-          where: {
-            email
-          },
-          select: {
-            id: true
-          }
-        })
-      );
-      if (alreadyExists) {
-        return res.json({
-          ok: false,
-          error: 'Email already taken.'
-        });
-      }
-      await client.user.update({
-        where: {
-          id: user?.id
-        },
-        data: {
-          email
-        }
-      });
-      res.json({ ok: true });
-    }
-
-    if (name) {
-      await client.user.update({
-        where: {
-          id: user?.id
-        },
-        data: {
-          name
-        }
-      });
-    }
 
     if (avatar) {
       await client.user.update({
         where: {
-          id: user?.id
+          id: user.id
         },
         data: { avatar }
       });

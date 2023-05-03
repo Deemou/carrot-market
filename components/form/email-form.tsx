@@ -2,8 +2,8 @@
 import { useForm } from 'react-hook-form';
 import useMutation from '@/libs/client/useMutation';
 import { Dispatch, SetStateAction, useEffect } from 'react';
-import Button from '../button';
-import Input from '../input';
+import useUser from '@/libs/client/useUser';
+import EmailInput from '../input/email-input';
 
 interface IEmailForm {
   email: string;
@@ -17,19 +17,27 @@ interface MutationResult {
 
 interface EmailFormProps {
   setIsEmailOk: Dispatch<SetStateAction<boolean>>;
+  children: React.ReactNode;
 }
 
-export default function EmailForm({ setIsEmailOk }: EmailFormProps) {
+export default function EmailForm({ setIsEmailOk, children }: EmailFormProps) {
+  const { user } = useUser();
+
   const [validateEmail, { loading: emailLoading, data: emailData }] =
     useMutation<MutationResult>('/api/users/verify');
 
   const {
-    register: emailRegister,
-    handleSubmit: emailHandleSubmit,
+    register,
+    setValue,
+    handleSubmit,
     setError,
     clearErrors,
     formState: { errors }
   } = useForm<IEmailForm>();
+
+  useEffect(() => {
+    if (user?.email) setValue('email', user.email);
+  }, [user, setValue]);
 
   const onClick = () => {
     clearErrors('formErrors');
@@ -48,26 +56,16 @@ export default function EmailForm({ setIsEmailOk }: EmailFormProps) {
 
   return (
     <form
-      onSubmit={(...args) => void emailHandleSubmit(onEmailValid)(...args)}
+      onSubmit={(...args) => void handleSubmit(onEmailValid)(...args)}
       className="mt-8 flex flex-col space-y-4"
     >
-      <Input
-        onClick={onClick}
-        register={emailRegister('email', {
-          required: true,
-          validate: {}
-        })}
-        name="email"
-        label="Email address"
-        type="email"
-        required
-      />
+      <EmailInput onClick={onClick} register={register} />
       {errors.formErrors && (
         <span className="my-2 block text-center font-medium text-red-600">
           {errors.formErrors.message}
         </span>
       )}
-      <Button text={emailLoading ? 'Loading' : 'Verify Email'} />
+      {children}
     </form>
   );
 }

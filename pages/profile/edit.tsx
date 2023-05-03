@@ -17,6 +17,8 @@ import Layout from '@/components/layout';
 import Button from '@components/button';
 import Input from '@components/input';
 import Avatar from '@/components/avatar';
+import EmailForm from '@/components/form/email-form';
+import TokenForm from '@/components/form/token-form';
 
 interface EditProfileForm {
   email?: string;
@@ -35,6 +37,9 @@ const imageSize = imageSizeKB * 1024;
 
 const EditProfile: NextPage = () => {
   const { user } = useUser();
+  const [isEmailOk, setIsEmailOk] = useState(false);
+  const [isTokenOk, setIsTokenOk] = useState(false);
+
   const {
     register,
     setValue,
@@ -55,11 +60,11 @@ const EditProfile: NextPage = () => {
 
   const [editProfile, { data, loading }] =
     useMutation<EditProfileResponse>(`/api/users/me`);
-  const onValid = ({ email, name }: EditProfileForm) => {
+  const onValid = ({ name }: EditProfileForm) => {
     if (loading) return;
 
     if (!imageFile || imageFile.length < 1) {
-      editProfile({ email, name });
+      editProfile({ name });
       return;
     }
 
@@ -85,7 +90,6 @@ const EditProfile: NextPage = () => {
       () => {
         void getDownloadURL(uploadTask.snapshot.ref).then((url) => {
           editProfile({
-            email,
             name,
             avatar: url
           });
@@ -123,49 +127,57 @@ const EditProfile: NextPage = () => {
     }
   }, [data, setError]);
 
+  useEffect(() => {
+    if (!isTokenOk) return;
+
+    setIsEmailOk(false);
+    setIsTokenOk(false);
+  }, [isTokenOk]);
+
   return (
     <Layout seoTitle="Edit Profile">
-      <form
-        onSubmit={(...args) => void handleSubmit(onValid)(...args)}
-        className="space-y-4 px-4 py-10"
-      >
-        <div className="flex items-center space-x-3">
-          <Avatar url={avatarPreview} large />
-          <label
-            htmlFor="picture"
-            className="cursor-pointer rounded-md border border-gray-200 px-3 py-1.5 text-sm font-medium hover:bg-gray-200 hover:text-black"
-          >
-            Change
-            <input
-              {...register('avatar')}
-              id="picture"
-              type="file"
-              accept="image/*"
-              className="hidden"
-            />
-          </label>
-        </div>
-        <Input
-          register={register('name')}
-          required
-          label="Name"
-          name="name"
-          type="text"
-        />
-        <Input
-          register={register('email')}
-          required
-          label="Email address"
-          name="email"
-          type="email"
-        />
-        {errors.formErrors && (
-          <span className="my-2 block text-center font-medium text-red-500">
-            {errors.formErrors.message}
-          </span>
+      <div className="px-4 py-10">
+        <form
+          onSubmit={(...args) => void handleSubmit(onValid)(...args)}
+          className="space-y-4"
+        >
+          <div className="flex items-center space-x-3">
+            <Avatar url={avatarPreview} large />
+            <label
+              htmlFor="picture"
+              className="cursor-pointer rounded-md border border-gray-200 px-3 py-1.5 text-sm font-medium hover:bg-gray-200 hover:text-black"
+            >
+              Change
+              <input
+                {...register('avatar')}
+                id="picture"
+                type="file"
+                accept="image/*"
+                className="hidden"
+              />
+            </label>
+          </div>
+          <Input
+            register={register('name')}
+            required
+            label="Name"
+            name="name"
+            type="text"
+          />
+          {errors.formErrors && (
+            <span className="my-2 block text-center font-medium text-red-500">
+              {errors.formErrors.message}
+            </span>
+          )}
+          <Button text={loading ? 'Loading...' : 'Update'} />
+        </form>
+        {!isEmailOk && (
+          <EmailForm setIsEmailOk={setIsEmailOk}>
+            <Button text="Change Email" />
+          </EmailForm>
         )}
-        <Button text={loading ? 'Loading...' : 'Update'} />
-      </form>
+        {isEmailOk && !isTokenOk && <TokenForm setIsTokenOk={setIsTokenOk} />}
+      </div>
     </Layout>
   );
 };
