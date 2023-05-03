@@ -29,6 +29,8 @@ async function handler(
       body: { name, avatar }
     } = req;
 
+    if (!name) return res.status(400).json({ ok: false });
+
     await client.user.update({
       where: {
         id: user.id
