@@ -1,13 +1,7 @@
 import '../styles/globals.scss';
 import type { AppProps } from 'next/app';
 import { SWRConfig } from 'swr';
-import useUser from '@/libs/client/useUser';
 import { RecoilRoot } from 'recoil';
-
-function LoginCheck() {
-  const { user } = useUser();
-  return null;
-}
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -19,7 +13,6 @@ function MyApp({ Component, pageProps }: AppProps) {
     >
       <RecoilRoot>
         <div className="min-h-screen w-full bg-black py-4">
-          <LoginCheck />
           <Component {...pageProps} />
         </div>
       </RecoilRoot>
