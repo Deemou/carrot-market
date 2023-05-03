@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable no-void */
-/* eslint-disable react/button-has-type */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import Link from 'next/link';
@@ -71,6 +70,7 @@ const ItemDetail: NextPage<ItemDetailResponse> = (props) => {
               <div className="flex items-center justify-between space-x-2">
                 <Button large text="Talk to seller" />
                 <button
+                  type="button"
                   onClick={onFavClick}
                   className={cls(
                     'flex items-center justify-center rounded-md p-3 hover:bg-gray-100 ',

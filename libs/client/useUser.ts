@@ -1,4 +1,3 @@
-/* eslint-disable no-void */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
 import { User } from '@prisma/client';

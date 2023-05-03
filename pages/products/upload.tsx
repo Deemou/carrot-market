@@ -1,5 +1,4 @@
 /* eslint-disable no-void */
-/* eslint-disable jsx-a11y/label-has-associated-control */
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
@@ -109,7 +108,10 @@ const Upload: NextPage = () => {
         onSubmit={(...args) => void handleSubmit(onValid)(...args)}
       >
         <div>
-          <label className="relative flex h-56 w-full cursor-pointer items-center justify-center rounded-md border-2 border-gray-300 hover:border-orange-500 hover:text-orange-500">
+          <label
+            htmlFor="picture"
+            className="relative flex h-56 w-full cursor-pointer items-center justify-center rounded-md border-2 border-gray-300 hover:border-orange-500 hover:text-orange-500"
+          >
             {productImagePreview ? (
               <Image
                 src={productImagePreview}

@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import type { NextPage } from 'next';
 import Link from 'next/link';
 import Layout from '@/components/layout';

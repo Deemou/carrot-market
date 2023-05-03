@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-void */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 import { NextPage } from 'next';
@@ -139,7 +138,10 @@ const Edit: NextPage = () => {
           className="space-y-4 px-4 py-10"
         >
           <div>
-            <label className="relative flex h-56 w-full cursor-pointer items-center justify-center rounded-md border-2 border-gray-300 hover:border-orange-500 hover:text-orange-500">
+            <label
+              htmlFor="picture"
+              className="relative flex h-56 w-full cursor-pointer items-center justify-center rounded-md border-2 border-gray-300 hover:border-orange-500 hover:text-orange-500"
+            >
               {productImagePreview ? (
                 <Image
                   src={productImagePreview}

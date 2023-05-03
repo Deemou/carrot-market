@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable no-underscore-dangle */
 import type { NextPage, NextPageContext } from 'next';
 import Layout from '@/components/layout';
@@ -82,6 +80,7 @@ export const getServerSideProps = withSsrSession(async function (
   });
   return {
     props: {
+      /* eslint-disable @typescript-eslint/no-unsafe-assignment */
       products: JSON.parse(JSON.stringify(products))
     }
   };
