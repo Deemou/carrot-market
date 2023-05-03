@@ -37,8 +37,8 @@ export default function ProfileForm() {
     register,
     setValue,
     handleSubmit,
-    setError,
     watch,
+    clearErrors,
     formState: { errors }
   } = useForm<EditProfileForm>();
   const [imageFile, setImageFile] = useState<FileList>();
@@ -52,6 +52,11 @@ export default function ProfileForm() {
 
   const [editProfile, { data, loading }] =
     useMutation<MutationResult>(`/api/users/me`);
+
+  const onClick = () => {
+    clearErrors('formErrors');
+  };
+
   const onValid = ({ name }: EditProfileForm) => {
     if (loading) return;
     if (!imageFile || imageFile.length < 1) {
@@ -105,11 +110,6 @@ export default function ProfileForm() {
     }
   }, [imageFile, avatarWatch]);
 
-  useEffect(() => {
-    if (!data || !data.error) return;
-    setError('formErrors', { message: data.error });
-  }, [data, setError]);
-
   const router = useRouter();
   useEffect(() => {
     if (data?.ok) {
@@ -127,15 +127,26 @@ export default function ProfileForm() {
         register={register('avatar')}
       />
       <Input
-        register={register('name')}
-        required
-        label="Name"
+        onClick={onClick}
+        register={register('name', {
+          required: true,
+          minLength: {
+            value: 5,
+            message: 'Name must be at least 5 characters'
+          },
+          maxLength: {
+            value: 18,
+            message: 'Name must be up to 18 characters'
+          }
+        })}
         name="name"
+        label="Name"
         type="text"
+        required
       />
-      {errors.formErrors && (
-        <span className="my-2 block text-center font-medium text-red-500">
-          {errors.formErrors.message}
+      {errors.name && (
+        <span className="my-2 block text-center font-medium text-red-600">
+          {errors.name.message}
         </span>
       )}
       <Button text={loading ? 'Loading...' : 'Update'} />
