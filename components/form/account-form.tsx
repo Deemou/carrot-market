@@ -4,8 +4,8 @@ import useMutation from '@/libs/client/useMutation';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import NameInput from '@components/input/name-input';
-import Button from '../button';
-import Input from '../input';
+import PasswordInput from '@components/input/password-input';
+import Button from '@components/button';
 
 interface IAccountForm {
   name: string;
@@ -52,25 +52,7 @@ export default function AccountForm() {
       className="mt-8 flex flex-col space-y-4"
     >
       <NameInput onClick={onClick} register={register} errors={errors} />
-      <Input
-        onClick={onClick}
-        register={register('password', {
-          required: true,
-          minLength: {
-            value: 9,
-            message: 'Password must be at least 9 characters'
-          }
-        })}
-        name="password"
-        label="Password"
-        type="password"
-        required
-      />
-      {errors.password && (
-        <span className="my-2 block text-center font-medium text-red-600">
-          {errors.password.message}
-        </span>
-      )}
+      <PasswordInput onClick={onClick} register={register} errors={errors} />
       <Button text={accountLoading ? 'Loading' : 'Create Account'} />
     </form>
   );
