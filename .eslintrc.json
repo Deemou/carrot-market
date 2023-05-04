@@ -45,7 +45,8 @@
           "camelCase"
         ]
       }
-    ]
+    ],
+    "allowForLoopAfterthoughts": true
   },
   "settings": {
     "react": {
