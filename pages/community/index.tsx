@@ -20,12 +20,6 @@ interface PostsResponse {
 }
 
 const Community: NextPage<PostsResponse> = ({ posts }) => {
-  // const { latitude, longitude } = useCoords();
-  // const { data } = useSWR<PostsResponse>(
-  //   latitude && longitude
-  //     ? `/api/posts?latitude=${latitude}&longitude=${longitude}`
-  //     : null
-  // );
   return (
     <Layout seoTitle="Community">
       <FloatingButton href="/community/write">
