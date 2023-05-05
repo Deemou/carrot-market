@@ -19,6 +19,7 @@ import Button from '@components/button';
 import Input from '@components/input';
 import TextArea from '@components/textarea';
 import { getImage } from '@/libs/client/image';
+import PriceInput from '@/components/input/price-input';
 
 interface UploadProductForm {
   name: string;
@@ -151,25 +152,7 @@ const Upload: NextPage = () => {
           name="name"
           type="text"
         />
-        <Input
-          register={register('price', {
-            required: true,
-            min: {
-              value: 0,
-              message: 'Price must be at least 0.'
-            }
-          })}
-          required
-          label="Price"
-          name="price"
-          type="number"
-          kind="price"
-        />
-        {errors.price && (
-          <span className="my-2 block text-center font-medium text-red-600">
-            {errors.price.message}
-          </span>
-        )}
+        <PriceInput register={register} errors={errors} />
         <TextArea
           register={register('description', { required: true })}
           required
