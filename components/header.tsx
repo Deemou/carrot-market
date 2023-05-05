@@ -31,7 +31,7 @@ export default function Header() {
   return (
     <div
       className={cls(
-        'fixed top-0 z-10 flex h-20 w-full max-w-xl -translate-x-[1px] items-center justify-end space-x-3 border-b bg-black p-2 px-4 font-medium',
+        'fixed top-0 z-10 flex h-20 w-full max-w-3xl -translate-x-[1px] items-center justify-end space-x-3 border-b bg-black p-2 px-4 font-medium',
         mobile ? '' : 'border-x ring-1 ring-white'
       )}
     >

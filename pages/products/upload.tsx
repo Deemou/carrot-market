@@ -18,6 +18,8 @@ import Layout from '@/components/layout';
 import Button from '@components/button';
 import Input from '@components/input';
 import TextArea from '@components/textarea';
+import { getImage } from '@/libs/client/image';
+import PriceInput from '@/components/input/price-input';
 
 interface UploadProductForm {
   name: string;
@@ -31,7 +33,7 @@ interface UploadProductMutation {
   product: Product;
 }
 
-const imageSizeKB = 500;
+const imageSizeKB = 1000;
 const imageSize = imageSizeKB * 1024;
 
 const Upload: NextPage = () => {
@@ -48,13 +50,15 @@ const Upload: NextPage = () => {
 
   const [uploadProduct, { loading, data }] =
     useMutation<UploadProductMutation>('/api/products');
-  const onValid = ({ name, price, description }: UploadProductForm) => {
+
+  const onValid = async ({ name, price, description }: UploadProductForm) => {
     if (loading) return;
     if (!imageFile || imageFile.length < 1) return;
 
+    const image = await getImage(productImagePreview);
     const storageService = getStorage(firebase);
     const imageRef = ref(storageService, `product/${uuidv4()}`);
-    const uploadTask = uploadBytesResumable(imageRef, imageFile[0]);
+    const uploadTask = uploadBytesResumable(imageRef, image);
     uploadTask.on(
       'state_changed',
       (snapshot) => {
@@ -80,17 +84,12 @@ const Upload: NextPage = () => {
   };
 
   useEffect(() => {
-    if (
-      productImageWatch &&
-      productImageWatch?.length > 0 &&
-      productImageWatch[0].size > imageSize
-    ) {
+    if (productImageWatch?.length && productImageWatch[0].size > imageSize) {
       alert(`Please upload an image less than ${imageSizeKB}KB.`);
       return;
     }
-
     setImageFile(productImageWatch);
-    if (imageFile && imageFile.length > 0) {
+    if (imageFile && imageFile.length) {
       setProductImagePreview(URL.createObjectURL(imageFile[0]));
     }
   }, [imageFile, productImageWatch]);
@@ -110,13 +109,14 @@ const Upload: NextPage = () => {
         <div>
           <label
             htmlFor="picture"
-            className="relative flex h-56 w-full cursor-pointer items-center justify-center rounded-md border-2 border-gray-300 hover:border-orange-500 hover:text-orange-500"
+            className="relative mx-auto flex aspect-square max-w-[256px] cursor-pointer items-center justify-center rounded-md border-2 border-gray-300 hover:border-orange-500 hover:text-orange-500"
           >
             {productImagePreview ? (
               <Image
                 src={productImagePreview}
-                fill
                 alt="product"
+                fill
+                sizes="50vw"
                 priority
                 className="object-center"
               />
@@ -152,25 +152,7 @@ const Upload: NextPage = () => {
           name="name"
           type="text"
         />
-        <Input
-          register={register('price', {
-            required: true,
-            min: {
-              value: 0,
-              message: 'Price must be at least 0.'
-            }
-          })}
-          required
-          label="Price"
-          name="price"
-          type="number"
-          kind="price"
-        />
-        {errors.price && (
-          <span className="my-2 block text-center font-medium text-red-600">
-            {errors.price.message}
-          </span>
-        )}
+        <PriceInput register={register} errors={errors} />
         <TextArea
           register={register('description', { required: true })}
           required

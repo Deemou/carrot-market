@@ -19,7 +19,7 @@ export default function TabBar() {
   return isAuthPages() ? null : (
     <nav
       className={cls(
-        'fixed bottom-0 flex w-full max-w-xl -translate-x-[1px] justify-between border-t bg-black px-10 pb-5 pt-3 text-xs ',
+        'fixed bottom-0 flex w-full max-w-3xl -translate-x-[1px] justify-between border-t bg-black px-10 pb-5 pt-3 text-xs ',
         mobile ? '' : 'border-x ring-1 ring-white'
       )}
     >
@@ -73,31 +73,6 @@ export default function TabBar() {
         </svg>
         <span>Community</span>
       </Link>
-      {/* <Link
-        href="/chats"
-        className={cls(
-          'flex flex-col items-center space-y-2 ',
-          router.pathname === '/chats'
-            ? 'text-orange-500'
-            : 'transition-colors hover:text-gray-500'
-        )}
-      >
-        <svg
-          className="h-6 w-6"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-          ></path>
-        </svg>
-        <span>채팅</span>
-      </Link> */}
       <Link
         href="/streams"
         className={cls(

@@ -15,18 +15,19 @@ export default function Item({ id, title, price, image, hearts }: ItemProps) {
       href={`/products/${id}`}
       className="flex cursor-pointer justify-between pt-5"
     >
-      <div className="flex space-x-4">
-        <div className="relative aspect-square w-20 shrink-0">
+      <div className="flex h-24 space-x-4">
+        <div className="relative aspect-square h-24 shrink-0">
           <Image
             src={image}
-            fill
+            width={96}
+            height={96}
             alt="product"
             priority
             className="object-center"
           />
         </div>
         <div className="flex flex-col justify-between">
-          <h3 className="text-lg font-medium ">{title}</h3>
+          <h3 className="h-14 overflow-hidden text-lg font-medium">{title}</h3>
           <span className="mt-1 font-medium ">${price}</span>
         </div>
       </div>

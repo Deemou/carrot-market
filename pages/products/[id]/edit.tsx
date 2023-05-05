@@ -20,6 +20,8 @@ import Button from '@components/button';
 import Input from '@components/input';
 import TextArea from '@components/textarea';
 import Image from 'next/image';
+import { getImage } from '@/libs/client/image';
+import PriceInput from '@/components/input/price-input';
 
 interface EditProductForm {
   name: string;
@@ -37,7 +39,7 @@ interface Response {
   ok: boolean;
 }
 
-const imageSizeKB = 500;
+const imageSizeKB = 1000;
 const imageSize = imageSizeKB * 1024;
 
 const Edit: NextPage = () => {
@@ -69,16 +71,17 @@ const Edit: NextPage = () => {
     if (ProductData?.product) setProductImagePreview(ProductData.product.image);
   }, [setValue, ProductData?.product]);
 
-  const onValid = ({ name, price, description }: EditProductForm) => {
+  const onValid = async ({ name, price, description }: EditProductForm) => {
     if (editLoading) return;
     if (!imageFile || imageFile.length < 1) {
       editProduct({ name, price, description });
       return;
     }
 
+    const image = await getImage(productImagePreview);
     const storageService = getStorage(firebase);
     const imageRef = ref(storageService, `product/${uuidv4()}`);
-    const uploadTask = uploadBytesResumable(imageRef, imageFile[0]);
+    const uploadTask = uploadBytesResumable(imageRef, image);
     uploadTask.on(
       'state_changed',
       (snapshot) => {
@@ -140,13 +143,14 @@ const Edit: NextPage = () => {
           <div>
             <label
               htmlFor="picture"
-              className="relative flex h-56 w-full cursor-pointer items-center justify-center rounded-md border-2 border-gray-300 hover:border-orange-500 hover:text-orange-500"
+              className="relative mx-auto flex aspect-square max-w-[256px] cursor-pointer items-center justify-center rounded-md border-2 border-gray-300 hover:border-orange-500 hover:text-orange-500"
             >
               {productImagePreview ? (
                 <Image
                   src={productImagePreview}
-                  fill
                   alt="product"
+                  fill
+                  sizes="50vw"
                   priority
                   className="object-center"
                 />
@@ -182,25 +186,7 @@ const Edit: NextPage = () => {
             name="name"
             type="text"
           />
-          <Input
-            register={register('price', {
-              required: true,
-              min: {
-                value: 0,
-                message: 'Price must be at least 0.'
-              }
-            })}
-            required
-            label="Price"
-            name="price"
-            type="number"
-            kind="price"
-          />
-          {errors.price && (
-            <span className="my-2 block text-center font-medium text-red-600">
-              {errors.price.message}
-            </span>
-          )}
+          <PriceInput register={register} errors={errors} />
           <TextArea
             register={register('description', { required: true })}
             required

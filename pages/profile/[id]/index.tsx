@@ -11,7 +11,7 @@ const Profile: NextPage<{ profile: User }> = ({ profile }) => {
     <Layout seoTitle="Profile">
       <div className="px-4">
         <div className="mt-4 flex items-center space-x-3">
-          <Avatar url={profile.avatar} large />
+          <Avatar url={profile.avatar} />
           <div className="flex flex-col">
             <span className="font-medium ">{profile.name}</span>
           </div>

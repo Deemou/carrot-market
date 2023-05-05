@@ -47,14 +47,23 @@ const ItemDetail: NextPage<ItemDetailResponse> = (props) => {
       {data && (
         <div className="px-4 py-4">
           <div className="mb-8">
-            <div className="relative h-56">
-              <Image
-                src={data.product.image}
-                fill
-                alt="product"
-                priority
-                className="object-center"
-              />
+            <div className="relative mb-10 xs:flex xs:justify-between xs:space-x-4">
+              <div className="relative aspect-square w-full max-w-[256px]">
+                <Image
+                  src={data.product.image}
+                  alt="product"
+                  fill
+                  sizes="50vw"
+                  priority
+                  className="object-center"
+                />
+              </div>
+              <div className="w-full max-xs:mt-10 xs:max-w-[50%]">
+                <h1 className="font-bold">{data.product.name}</h1>
+                <span className="mt-3 block text-lg">
+                  ${data.product.price}
+                </span>
+              </div>
             </div>
             <Card
               avatar={data.product.user.avatar}
@@ -64,13 +73,12 @@ const ItemDetail: NextPage<ItemDetailResponse> = (props) => {
               postId={data.product.id}
             ></Card>
             <div className="mt-5">
-              <h1 className="text-2xl font-bold">{data.product.name}</h1>
-              <span className="mt-3 block text-lg">${data.product.price}</span>
-              <p className=" my-6">{data.product.description}</p>
+              <p className=" my-8">{data.product.description}</p>
               <div className="flex items-center justify-between space-x-2">
                 <Button large text="Talk to seller" />
                 <button
                   type="button"
+                  aria-label="like"
                   onClick={onFavClick}
                   className={cls(
                     'flex items-center justify-center rounded-md p-3 hover:bg-gray-100 ',
@@ -115,26 +123,35 @@ const ItemDetail: NextPage<ItemDetailResponse> = (props) => {
           </div>
           <div>
             <h2 className="text-xl font-bold">Similar items</h2>
-            <div className=" mt-6 grid grid-cols-2 gap-10">
+            <div
+              className={cls(
+                'max max-[width:640px]: mt-6 grid grid-cols-3 gap-10 max-sm:grid-cols-2 max-xs:grid-cols-1'
+              )}
+            >
               {data.relatedProducts.map((product) => (
                 <div key={product.id}>
                   <Link
                     href={`/products/${product.id}`}
-                    className="w-10/12 cursor-pointer"
+                    className="cursor-pointer"
                   >
-                    <div className="relative mb-4 aspect-square">
-                      <Image
-                        src={product.image}
-                        fill
-                        alt="product"
-                        priority
-                        className="object-center"
-                      />
+                    <div className="max-w-[256px]">
+                      <div className="relative mb-4 aspect-square">
+                        <Image
+                          src={product.image}
+                          alt="product"
+                          fill
+                          sizes="50vw"
+                          priority
+                          className="object-center"
+                        />
+                      </div>
+                      <div className="flex flex-col">
+                        <h3 className="max-h-12 overflow-hidden">
+                          {product.name}
+                        </h3>
+                        <span className="mt-1">${product.price}</span>
+                      </div>
                     </div>
-                    <h3 className="-mb-1">{product.name}</h3>
-                    <span className="text-sm font-medium">
-                      ${product.price}
-                    </span>
                   </Link>
                 </div>
               ))}

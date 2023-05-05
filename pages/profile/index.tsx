@@ -15,7 +15,7 @@ const Profile: NextPage = () => {
     <Layout seoTitle="Profile">
       <div className="px-4">
         <div className="mt-4 flex items-center space-x-3">
-          <Avatar url={user?.avatar} large />
+          <Avatar url={user?.avatar} />
           <div className="flex flex-col">
             <span className="font-medium ">{user?.name}</span>
             <Link href="/profile/edit" className="text-sm text-gray-400">

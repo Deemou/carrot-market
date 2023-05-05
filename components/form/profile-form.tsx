@@ -15,6 +15,7 @@ import Button from '@components/button';
 import AvatarInput from '@components/input/avatar-input';
 import { useRouter } from 'next/router';
 import NameInput from '@components/input/name-input';
+import { getAvatarImage } from '@/libs/client/image';
 
 interface EditProfileForm {
   avatar?: FileList;
@@ -27,7 +28,7 @@ interface MutationResult {
   error?: string;
 }
 
-const imageSizeKB = 300;
+const imageSizeKB = 1000;
 const imageSize = imageSizeKB * 1024;
 
 export default function ProfileForm() {
@@ -57,16 +58,17 @@ export default function ProfileForm() {
     clearErrors('formErrors');
   };
 
-  const onValid = ({ name }: EditProfileForm) => {
+  const onValid = async ({ name }: EditProfileForm) => {
     if (loading) return;
     if (!imageFile || imageFile.length < 1) {
       editProfile({ name });
       return;
     }
 
+    const image = await getAvatarImage(avatarPreview);
     const storageService = getStorage(firebase);
     const imageRef = ref(storageService, `avatar/${uuidv4()}`);
-    const uploadTask = uploadBytesResumable(imageRef, imageFile[0]);
+    const uploadTask = uploadBytesResumable(imageRef, image);
     uploadTask.on(
       'state_changed',
       (snapshot) => {
