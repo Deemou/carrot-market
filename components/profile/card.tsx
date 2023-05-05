@@ -75,7 +75,7 @@ export default function Card({
   return (
     <div className="flex justify-between border-b border-t py-3">
       <div className="flex items-center space-x-3 py-3">
-        <Avatar url={avatar} large />
+        <Avatar url={avatar} />
         <div>
           <p className="font-medium">{userName}</p>
           <Link
