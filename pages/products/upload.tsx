@@ -83,11 +83,7 @@ const Upload: NextPage = () => {
   };
 
   useEffect(() => {
-    if (
-      productImageWatch &&
-      productImageWatch?.length > 0 &&
-      productImageWatch[0].size > imageSize
-    ) {
+    if (productImageWatch?.length && productImageWatch[0].size > imageSize) {
       alert(`Please upload an image less than ${imageSizeKB}KB.`);
       return;
     }
@@ -112,13 +108,14 @@ const Upload: NextPage = () => {
         <div>
           <label
             htmlFor="picture"
-            className="relative flex h-56 w-full cursor-pointer items-center justify-center rounded-md border-2 border-gray-300 hover:border-orange-500 hover:text-orange-500"
+            className="relative mx-auto flex aspect-square max-w-[256px] cursor-pointer items-center justify-center rounded-md border-2 border-gray-300 hover:border-orange-500 hover:text-orange-500"
           >
             {productImagePreview ? (
               <Image
                 src={productImagePreview}
-                fill
                 alt="product"
+                fill
+                sizes="50vw"
                 priority
                 className="object-center"
               />

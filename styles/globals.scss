@@ -96,6 +96,25 @@ body {
   @apply overflow-x-hidden;
 }
 
+html {
+  font-size: 10px !important;
+}
+@media screen and (min-width: 320px) {
+  html {
+    font-size: 12px !important;
+  }
+}
+@media screen and (min-width: 640px) {
+  html {
+    font-size: 14px !important;
+  }
+}
+@media screen and (min-width: 1024px) {
+  html {
+    font-size: 16px !important;
+  }
+}
+
 .disable-scrolling {
   @apply h-full;
   @apply overflow-hidden;
