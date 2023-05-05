@@ -78,6 +78,7 @@ const ItemDetail: NextPage<ItemDetailResponse> = (props) => {
                 <Button large text="Talk to seller" />
                 <button
                   type="button"
+                  aria-label="like"
                   onClick={onFavClick}
                   className={cls(
                     'flex items-center justify-center rounded-md p-3 hover:bg-gray-100 ',
