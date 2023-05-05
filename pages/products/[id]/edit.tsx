@@ -20,6 +20,7 @@ import Button from '@components/button';
 import Input from '@components/input';
 import TextArea from '@components/textarea';
 import Image from 'next/image';
+import { getImage } from '@/libs/client/image';
 
 interface EditProductForm {
   name: string;
@@ -37,7 +38,7 @@ interface Response {
   ok: boolean;
 }
 
-const imageSizeKB = 500;
+const imageSizeKB = 1000;
 const imageSize = imageSizeKB * 1024;
 
 const Edit: NextPage = () => {
@@ -69,16 +70,17 @@ const Edit: NextPage = () => {
     if (ProductData?.product) setProductImagePreview(ProductData.product.image);
   }, [setValue, ProductData?.product]);
 
-  const onValid = ({ name, price, description }: EditProductForm) => {
+  const onValid = async ({ name, price, description }: EditProductForm) => {
     if (editLoading) return;
     if (!imageFile || imageFile.length < 1) {
       editProduct({ name, price, description });
       return;
     }
 
+    const image = await getImage(productImagePreview);
     const storageService = getStorage(firebase);
     const imageRef = ref(storageService, `product/${uuidv4()}`);
-    const uploadTask = uploadBytesResumable(imageRef, imageFile[0]);
+    const uploadTask = uploadBytesResumable(imageRef, image);
     uploadTask.on(
       'state_changed',
       (snapshot) => {

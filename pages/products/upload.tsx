@@ -18,6 +18,7 @@ import Layout from '@/components/layout';
 import Button from '@components/button';
 import Input from '@components/input';
 import TextArea from '@components/textarea';
+import { getImage } from '@/libs/client/image';
 
 interface UploadProductForm {
   name: string;
@@ -31,7 +32,7 @@ interface UploadProductMutation {
   product: Product;
 }
 
-const imageSizeKB = 500;
+const imageSizeKB = 1000;
 const imageSize = imageSizeKB * 1024;
 
 const Upload: NextPage = () => {
@@ -48,13 +49,15 @@ const Upload: NextPage = () => {
 
   const [uploadProduct, { loading, data }] =
     useMutation<UploadProductMutation>('/api/products');
-  const onValid = ({ name, price, description }: UploadProductForm) => {
+
+  const onValid = async ({ name, price, description }: UploadProductForm) => {
     if (loading) return;
     if (!imageFile || imageFile.length < 1) return;
 
+    const image = await getImage(productImagePreview);
     const storageService = getStorage(firebase);
     const imageRef = ref(storageService, `product/${uuidv4()}`);
-    const uploadTask = uploadBytesResumable(imageRef, imageFile[0]);
+    const uploadTask = uploadBytesResumable(imageRef, image);
     uploadTask.on(
       'state_changed',
       (snapshot) => {
@@ -88,9 +91,8 @@ const Upload: NextPage = () => {
       alert(`Please upload an image less than ${imageSizeKB}KB.`);
       return;
     }
-
     setImageFile(productImageWatch);
-    if (imageFile && imageFile.length > 0) {
+    if (imageFile && imageFile.length) {
       setProductImagePreview(URL.createObjectURL(imageFile[0]));
     }
   }, [imageFile, productImageWatch]);
