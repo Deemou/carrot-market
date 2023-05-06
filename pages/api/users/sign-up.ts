@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/await-thenable */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { NextApiRequest, NextApiResponse } from 'next';
 import withHandler, { ResponseType } from '@libs/server/withHandler';
@@ -15,7 +14,7 @@ async function handler(
   const email = req.session.auth?.email;
 
   if (!name || !password || !email) return res.status(400).json({ ok: false });
-  const hashedPassword = await hashPassword(password);
+  const hashedPassword = hashPassword(password);
 
   const user = await client.user.create({
     data: {

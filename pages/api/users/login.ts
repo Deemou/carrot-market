@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/await-thenable */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { NextApiRequest, NextApiResponse } from 'next';
 import withHandler, { ResponseType } from '@libs/server/withHandler';
@@ -21,7 +20,7 @@ async function handler(
       .status(400)
       .json({ ok: false, error: 'Invalid email or password.' });
 
-  const match = await isSamePassword(password, user.password);
+  const match = isSamePassword(password, user.password);
 
   if (!match)
     return res
