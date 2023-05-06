@@ -1,13 +1,16 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 export async function getImage(imageSrc: string) {
   const width = 256;
   const height = 256;
-  return await resizeImage(imageSrc, width, height);
+  const resizedImages = await resizeImage(imageSrc, width, height);
+  return resizedImages;
 }
 
 export async function getAvatarImage(imageSrc: string) {
   const width = 48;
   const height = 48;
-  return await resizeImage(imageSrc, width, height);
+  const resizedImages = await resizeImage(imageSrc, width, height);
+  return resizedImages;
 }
 
 async function resizeImage(imageSrc: string, width: number, height: number) {
