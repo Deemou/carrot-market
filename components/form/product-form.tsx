@@ -16,7 +16,6 @@ import Input from '@components/input';
 import PriceInput from '@components/input/price-input';
 import TextArea from '@components/textarea';
 import Button from '@components/button';
-import Image from 'next/image';
 import { Product } from '@prisma/client';
 import ImageInput from '../input/image-input';
 
@@ -30,6 +29,11 @@ interface IProductForm {
 interface ProductResponse {
   ok: boolean;
   product: Product;
+}
+
+interface MutationResult {
+  ok: boolean;
+  id: number;
 }
 
 interface ProducFormProps {
@@ -74,7 +78,7 @@ export default function ProductForm({
   }, [setValue, ProductData?.product]);
 
   const [postProduct, { loading, data }] =
-    useMutation<ProductResponse>(requestUrl);
+    useMutation<MutationResult>(requestUrl);
 
   const onValid = async ({ name, price, description }: IProductForm) => {
     if (loading) return;
@@ -125,7 +129,7 @@ export default function ProductForm({
 
   useEffect(() => {
     if (data?.ok) {
-      void router.replace(`/products/${data.product.id}`);
+      void router.replace(`/products/${data.id}`);
     }
   }, [data, router]);
 
