@@ -18,6 +18,7 @@ import TextArea from '@components/textarea';
 import Button from '@components/button';
 import { Product } from '@prisma/client';
 import ImageInput from '../input/image-input';
+import DescriptionInput from '../input/description-input';
 
 interface IProductForm {
   name: string;
@@ -150,12 +151,7 @@ export default function ProductForm({
         type="text"
       />
       <PriceInput register={register} errors={errors} />
-      <TextArea
-        register={register('description', { required: true })}
-        required
-        name="description"
-        label="Description"
-      />
+      <DescriptionInput register={register} required />
       <Button text={loading ? 'Loading...' : buttonText} />
     </form>
   );
