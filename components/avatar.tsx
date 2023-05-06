@@ -1,12 +1,12 @@
 import Image from 'next/image';
 
 interface AvatarProps {
-  url: string;
+  url: string | undefined | null;
 }
 
 export default function Avatar({ url }: AvatarProps) {
   return url ? (
-    <div className={'relative aspect-square h-12'}>
+    <div className="relative aspect-square h-12">
       <Image
         src={url}
         fill
@@ -17,6 +17,6 @@ export default function Avatar({ url }: AvatarProps) {
       />
     </div>
   ) : (
-    <div className={'relative aspect-square h-12 rounded-full bg-orange-500'} />
+    <div className="relative aspect-square h-12 rounded-full bg-orange-500" />
   );
 }
