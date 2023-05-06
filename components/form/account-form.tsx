@@ -19,7 +19,7 @@ interface MutationResult {
 
 export default function AccountForm() {
   const router = useRouter();
-  const [createAccount, { loading: accountLoading, data: accountData }] =
+  const [createAccount, { loading, data }] =
     useMutation<MutationResult>('/api/users/sign-up');
   const {
     register,
@@ -34,16 +34,15 @@ export default function AccountForm() {
   };
 
   const onAccountValid = (validForm: IAccountForm) => {
-    if (accountLoading) return;
+    if (loading) return;
     createAccount(validForm);
   };
 
   useEffect(() => {
-    if (!accountData) return;
-    if (accountData.ok) void router.replace('/');
-    if (accountData.error)
-      setError('formErrors', { message: accountData.error });
-  }, [accountData, router, setError]);
+    if (!data) return;
+    if (data.ok) void router.replace('/');
+    if (data.error) setError('formErrors', { message: data.error });
+  }, [data, router, setError]);
 
   return (
     <form
@@ -52,7 +51,7 @@ export default function AccountForm() {
     >
       <NameInput onClick={onClick} register={register} errors={errors} />
       <PasswordInput onClick={onClick} register={register} errors={errors} />
-      <Button text={accountLoading ? 'Loading' : 'Create Account'} />
+      <Button text={loading ? 'Loading' : 'Create Account'} />
     </form>
   );
 }

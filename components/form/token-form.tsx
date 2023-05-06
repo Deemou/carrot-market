@@ -19,7 +19,7 @@ interface TokenFormProps {
 }
 
 export default function TokenForm({ setIsTokenOk }: TokenFormProps) {
-  const [confirmToken, { loading: tokenLoading, data: tokenData }] =
+  const [confirmToken, { loading, data }] =
     useMutation<MutationResult>('/api/users/confirm');
   const {
     register,
@@ -34,15 +34,15 @@ export default function TokenForm({ setIsTokenOk }: TokenFormProps) {
   };
 
   const onTokenValid = (validForm: ITokenForm) => {
-    if (tokenLoading) return;
+    if (loading) return;
     confirmToken(validForm);
   };
 
   useEffect(() => {
-    if (!tokenData) return;
-    if (tokenData.ok) setIsTokenOk(true);
-    if (tokenData.error) setError('formErrors', { message: tokenData.error });
-  }, [tokenData, setError, setIsTokenOk]);
+    if (!data) return;
+    if (data.ok) setIsTokenOk(true);
+    if (data.error) setError('formErrors', { message: data.error });
+  }, [data, setError, setIsTokenOk]);
 
   return (
     <form
@@ -55,7 +55,7 @@ export default function TokenForm({ setIsTokenOk }: TokenFormProps) {
           {errors.formErrors.message}
         </span>
       )}
-      <Button text={tokenLoading ? 'Loading' : 'Confirm Token'} />
+      <Button text={loading ? 'Loading' : 'Confirm Token'} />
       <span className="my-4 flex justify-center text-lg font-medium text-red-400">
         We&apos;ve sent a verification code to your email.
       </span>

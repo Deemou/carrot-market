@@ -20,11 +20,10 @@ const loginUrl = '/api/users/login';
 
 export default function LoginForm() {
   const router = useRouter();
-  const [enter, { loading: loginLoading, data: loginData }] =
-    useMutation<MutationResult>(loginUrl);
+  const [enter, { loading, data }] = useMutation<MutationResult>(loginUrl);
   const {
-    register: loginRegister,
-    handleSubmit: loginHandleSubmit,
+    register,
+    handleSubmit,
     setError,
     clearErrors,
     formState: { errors }
@@ -35,24 +34,24 @@ export default function LoginForm() {
   };
 
   const onLoginValid = (validForm: ILoginForm) => {
-    if (loginLoading) return;
+    if (loading) return;
     enter(validForm);
   };
 
   useEffect(() => {
-    if (!loginData) return;
-    if (loginData.ok) void router.replace('/');
-    if (loginData.error) setError('formErrors', { message: loginData.error });
-  }, [loginData, router, setError]);
+    if (!data) return;
+    if (data.ok) void router.replace('/');
+    if (data.error) setError('formErrors', { message: data.error });
+  }, [data, router, setError]);
 
   return (
     <form
-      onSubmit={(...args) => void loginHandleSubmit(onLoginValid)(...args)}
+      onSubmit={(...args) => void handleSubmit(onLoginValid)(...args)}
       className="mt-8 flex flex-col space-y-4"
     >
       <Input
         onClick={onClick}
-        register={loginRegister('email', {
+        register={register('email', {
           required: true
         })}
         name="email"
@@ -62,7 +61,7 @@ export default function LoginForm() {
       />
       <Input
         onClick={onClick}
-        register={loginRegister('password', {
+        register={register('password', {
           required: true
         })}
         name="password"
@@ -75,7 +74,7 @@ export default function LoginForm() {
           {errors.formErrors.message}
         </span>
       )}
-      <Button text={loginLoading ? 'Loading' : 'Continue'} />
+      <Button text={loading ? 'Loading' : 'Continue'} />
     </form>
   );
 }
