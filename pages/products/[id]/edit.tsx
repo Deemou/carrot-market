@@ -8,7 +8,7 @@ const Edit: NextPage = () => {
   const requestUrl = `/api/products/${router.query.id}/edit`;
 
   return (
-    <Layout seoTitle="Upload Product">
+    <Layout seoTitle="Edit Product">
       <ProductForm buttonText="Update" requestUrl={requestUrl} />
     </Layout>
   );
