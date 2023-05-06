@@ -1,7 +1,7 @@
 import Image from 'next/image';
 
 interface AvatarProps {
-  url?: string | null;
+  url: string;
 }
 
 export default function Avatar({ url }: AvatarProps) {
@@ -20,7 +20,3 @@ export default function Avatar({ url }: AvatarProps) {
     <div className={'relative aspect-square h-12 rounded-full bg-orange-500'} />
   );
 }
-
-Avatar.defaultProps = {
-  url: ''
-};
