@@ -1,4 +1,3 @@
-/* eslint-disable react/button-has-type */
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import cls from '@/libs/client/utils';
@@ -47,6 +46,7 @@ export default function PaginationBar({
     <div className="item-center flex justify-center space-x-2 py-5">
       <button
         className={currentPage === 1 ? 'hidden' : 'block'}
+        type="button"
         onClick={() => {
           onClickDirection('prev');
         }}
@@ -73,7 +73,8 @@ export default function PaginationBar({
         )}
       >
         <button
-          className="aspect-square h-10 rounded-md bg-red-500 font-medium "
+          className="aspect-square h-10 rounded-md bg-red-500 font-medium"
+          type="button"
           onClick={() => {
             onClickPage(1);
           }}
@@ -99,11 +100,12 @@ export default function PaginationBar({
         return (
           <button
             className={cls(
-              'aspect-square h-10 rounded-md font-medium ',
+              'aspect-square h-10 rounded-md font-medium',
               page === currentPage
                 ? 'border border-white bg-black'
                 : 'bg-red-500'
             )}
+            type="button"
             onClick={() => {
               onClickPage(page);
             }}
@@ -134,7 +136,8 @@ export default function PaginationBar({
           ></path>
         </svg>
         <button
-          className="aspect-square h-10 rounded-md bg-red-500 font-medium "
+          className="aspect-square h-10 rounded-md bg-red-500 font-medium"
+          type="button"
           onClick={() => {
             onClickPage(lastPage);
           }}
@@ -144,6 +147,7 @@ export default function PaginationBar({
       </div>
       <button
         className={currentPage === lastPage ? 'hidden' : 'block'}
+        type="button"
         onClick={() => {
           onClickDirection('next');
         }}
