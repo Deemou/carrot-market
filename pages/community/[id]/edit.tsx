@@ -1,5 +1,3 @@
-/* eslint-disable no-void */
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
 import { NextPage } from 'next';
 import useSWR from 'swr';
 import useMutation from '@/libs/client/useMutation';

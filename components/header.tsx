@@ -24,7 +24,6 @@ export default function Header() {
   };
   useEffect(() => {
     if (logoutData?.ok) {
-      // eslint-disable-next-line no-restricted-globals
       location.reload();
     }
   }, [logoutData]);

@@ -1,5 +1,4 @@
 /* eslint-disable react/button-has-type */
-/* eslint-disable no-void */
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import cls from '@/libs/client/utils';

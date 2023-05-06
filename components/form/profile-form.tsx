@@ -1,4 +1,3 @@
-/* eslint-disable no-void */
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 import useUser from '@libs/client/useUser';

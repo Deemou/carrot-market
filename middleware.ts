@@ -1,4 +1,3 @@
-/* eslint-disable consistent-return */
 import { getIronSession } from 'iron-session/edge';
 import {
   NextFetchEvent,

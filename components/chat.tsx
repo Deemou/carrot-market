@@ -1,5 +1,3 @@
-/* eslint-disable no-void */
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
 import Message from '@components/message';
 import useSWRInfinite from 'swr/infinite';
 import { useForm } from 'react-hook-form';

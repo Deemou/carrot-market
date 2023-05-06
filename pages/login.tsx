@@ -1,4 +1,3 @@
-/* eslint-disable no-void */
 import type { NextPage } from 'next';
 import Link from 'next/link';
 import LoginForm from '@/components/form/login-form';

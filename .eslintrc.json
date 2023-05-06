@@ -53,7 +53,21 @@
       }
     ],
     "no-use-before-define": "off",
-    "@typescript-eslint/no-use-before-define": "off"
+    "@typescript-eslint/no-use-before-define": "off",
+    "@typescript-eslint/restrict-template-expressions": "off",
+    "no-void": "off",
+    "no-underscore-dangle": "off",
+    "no-restricted-globals": [
+      "off"
+    ],
+    "global-require": "off",
+    "@typescript-eslint/no-var-requires": "off",
+    "jsx-a11y/no-static-element-interactions": [
+      "off"
+    ],
+    "consistent-return": [
+      "off"
+    ]
   },
   "settings": {
     "react": {

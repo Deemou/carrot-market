@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 import type { NextPage, NextPageContext } from 'next';
 import Layout from '@/components/layout';
 import { withSsrSession } from '@/libs/server/withSession';

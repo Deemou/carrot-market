@@ -22,7 +22,6 @@ async function handler(
     }
   });
 
-  // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
   await res.revalidate('/');
 
   res.json({ ok: true });

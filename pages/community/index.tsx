@@ -1,5 +1,3 @@
-/* eslint-disable no-void */
-/* eslint-disable no-underscore-dangle */
 import type { NextPage } from 'next';
 import Link from 'next/link';
 import useSWR from 'swr';

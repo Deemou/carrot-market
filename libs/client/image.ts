@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
 export async function getImage(imageSrc: string) {
   const width = 256;
   const height = 256;
@@ -24,6 +23,7 @@ async function getWebpImage(imageSrc: string, width: number, height: number) {
   const canvas = document.createElement('canvas');
   canvas.width = width;
   canvas.height = height;
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
   canvas.getContext('2d')?.drawImage(image, 0, 0, width, height);
 
   // As Base64 string

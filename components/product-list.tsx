@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
-/* eslint-disable no-underscore-dangle */
 import { ProductWithCount } from 'pages';
 import useSWR from 'swr';
 import { useRouter } from 'next/router';

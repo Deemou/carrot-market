@@ -1,5 +1,3 @@
-/* eslint-disable no-void */
-/* eslint-disable no-underscore-dangle */
 import type { GetStaticProps, NextPage } from 'next';
 import Head from 'next/head';
 import FloatingButton from '@components/floating-button';

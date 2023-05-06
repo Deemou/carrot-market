@@ -1,4 +1,3 @@
-/* eslint-disable no-void */
 import { useForm } from 'react-hook-form';
 import useMutation from '@/libs/client/useMutation';
 import { Dispatch, SetStateAction, useEffect } from 'react';
