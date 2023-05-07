@@ -24,7 +24,7 @@ const Loved: NextPage<ProductListResponse> = ({ products }) => {
           <Item
             id={record.product.id}
             key={record.id}
-            title={record.product.name}
+            name={record.product.name}
             price={record.product.price}
             image={record.product.image}
             hearts={record.product._count.favs}

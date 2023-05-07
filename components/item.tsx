@@ -3,13 +3,13 @@ import Link from 'next/link';
 
 interface ItemProps {
   id: number;
-  title: string;
+  name: string;
   price: number;
   image: string;
   hearts: number;
 }
 
-export default function Item({ id, title, price, image, hearts }: ItemProps) {
+export default function Item({ id, name, price, image, hearts }: ItemProps) {
   return (
     <Link
       href={`/products/${id}`}
@@ -27,7 +27,7 @@ export default function Item({ id, title, price, image, hearts }: ItemProps) {
           />
         </div>
         <div className="flex flex-col justify-between">
-          <h3 className="h-14 overflow-hidden text-lg font-medium">{title}</h3>
+          <h3 className="h-14 overflow-hidden text-lg font-medium">{name}</h3>
           <span className="mt-1 font-medium">${price}</span>
         </div>
       </div>
