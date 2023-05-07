@@ -20,6 +20,10 @@ export default function NameInput({
     <>
       <Input
         onClick={onClick}
+        type="text"
+        name="name"
+        label="Name"
+        required
         register={register('name', {
           required: true,
           minLength: {
@@ -31,10 +35,6 @@ export default function NameInput({
             message: 'Name must be up to 18 characters'
           }
         })}
-        name="name"
-        label="Name"
-        type="text"
-        required
       />
       {errors.name && (
         <span className="my-2 block text-center font-medium text-red-600">

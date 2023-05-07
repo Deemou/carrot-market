@@ -7,11 +7,11 @@ import TabBar from '@components/tab-bar';
 import Header from '@components/header';
 
 interface LayoutProps {
-  children: React.ReactNode;
   seoTitle: string;
+  children: React.ReactNode;
 }
 
-export default function Layout({ children, seoTitle }: LayoutProps) {
+export default function Layout({ seoTitle, children }: LayoutProps) {
   const mobile = useRecoilValue(isMobile);
   const message = `${seoTitle} | Carrot Market`;
   return (

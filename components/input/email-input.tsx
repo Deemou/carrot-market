@@ -7,21 +7,21 @@ interface IEmailForm {
 }
 
 interface EmailInputProps {
-  register: UseFormRegister<IEmailForm>;
   onClick?: () => void;
+  register: UseFormRegister<IEmailForm>;
 }
 
 export default function EmailInput({ register, onClick }: EmailInputProps) {
   return (
     <Input
       onClick={onClick}
+      type="email"
+      name="email"
+      label="Email address"
+      required
       register={register('email', {
         required: true
       })}
-      label="Email address"
-      name="email"
-      type="email"
-      required
     />
   );
 }

@@ -42,10 +42,10 @@ export default function ImageInput({
           </svg>
         )}
         <input
-          {...register}
           id="picture"
           type="file"
           accept="image/*"
+          {...register}
           className="hidden"
         />
       </label>

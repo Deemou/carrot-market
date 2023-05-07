@@ -14,7 +14,6 @@ import {
 } from 'firebase/storage';
 import Input from '@components/input';
 import PriceInput from '@components/input/price-input';
-import TextArea from '@components/textarea';
 import Button from '@components/button';
 import { Product } from '@prisma/client';
 import ImageInput from '../input/image-input';
@@ -136,22 +135,22 @@ export default function ProductForm({
 
   return (
     <form
-      className="space-y-4 p-4 py-10"
       onSubmit={(...args) => void handleSubmit(onValid)(...args)}
+      className="space-y-4 p-4 py-10"
     >
       <ImageInput
         imagePreview={productImagePreview}
         register={register('productImage')}
       />
       <Input
-        register={register('name')}
-        required
-        label="Name"
-        name="name"
         type="text"
+        name="name"
+        label="Name"
+        required
+        register={register('name')}
       />
       <PriceInput register={register} errors={errors} />
-      <DescriptionInput register={register} required />
+      <DescriptionInput register={register} />
       <Button text={loading ? 'Loading...' : buttonText} />
     </form>
   );

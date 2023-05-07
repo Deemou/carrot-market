@@ -19,10 +19,10 @@ export default function AvatarInput({
       >
         Change
         <input
-          {...register}
           id="picture"
           type="file"
           accept="image/*"
+          {...register}
           className="hidden"
         />
       </label>

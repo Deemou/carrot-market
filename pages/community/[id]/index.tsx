@@ -110,19 +110,19 @@ const CommunityPostDetail: NextPage<CommunityPostResponse> = (props) => {
             </div>
             <div className="mt-3 flex w-full space-x-5 border-b-[2px] border-t py-2.5  text-gray-700">
               <button
-                type="button"
                 onClick={onWonderClick}
+                type="button"
                 className={cls(
                   'flex items-center space-x-2 text-sm',
                   data.isWondering ? 'text-teal-600' : ''
                 )}
               >
                 <svg
-                  className="h-4 w-4"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
                   xmlns="http://www.w3.org/2000/svg"
+                  className="h-4 w-4"
                 >
                   <path
                     strokeLinecap="round"
@@ -135,11 +135,11 @@ const CommunityPostDetail: NextPage<CommunityPostResponse> = (props) => {
               </button>
               <span className="flex items-center space-x-2 text-sm">
                 <svg
-                  className="h-4 w-4"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
                   xmlns="http://www.w3.org/2000/svg"
+                  className="h-4 w-4"
                 >
                   <path
                     strokeLinecap="round"
@@ -170,14 +170,14 @@ const CommunityPostDetail: NextPage<CommunityPostResponse> = (props) => {
           </div>
           <form onSubmit={(...args) => void handleSubmit(onValid)(...args)}>
             <TextArea
-              name="description"
-              placeholder="Answer this question!"
+              name="answer"
               required
               register={register('answer', { required: true, minLength: 5 })}
+              placeholder="Answer this question!"
             />
             <button
-              className="mt-2 w-full rounded-md border border-transparent bg-orange-500 px-4 py-2 text-sm font-medium  shadow-sm hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
               type="submit"
+              className="mt-2 w-full rounded-md border border-transparent bg-orange-500 px-4 py-2 text-sm font-medium  shadow-sm hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
             >
               {answerLoading ? 'Loading...' : 'Reply'}
             </button>

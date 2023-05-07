@@ -90,15 +90,15 @@ export default function Card({
           <div className={cls('relative', user.id === userId ? '' : 'hidden')}>
             <svg
               onClick={onMenuClick}
-              className="cursor-pointer"
+              id="Layer_1"
               fill="#ffffff"
               width="22px"
               height="22px"
-              id="Layer_1"
               version="1.1"
               viewBox="0 0 128 128"
               xmlSpace="preserve"
               xmlns="http://www.w3.org/2000/svg"
+              className="cursor-pointer"
             >
               <circle cx="64" cy="90.358" r="9.824" />
               <circle cx="99.25" cy="90.358" r="9.824" />
@@ -135,10 +135,10 @@ export default function Card({
                     className="flex cursor-pointer flex-row space-x-3 px-3 py-1.5 hover:bg-[#202020]"
                   >
                     <svg
+                      id="Layer_1"
                       fill="#ff0000"
                       baseProfile="tiny"
                       height="24px"
-                      id="Layer_1"
                       version="1.2"
                       viewBox="0 0 24 24"
                       width="24px"
@@ -177,15 +177,15 @@ export default function Card({
                 </div>
                 <div className="flex flex-col space-y-3 py-2 font-semibold">
                   <button
-                    type="button"
                     onClick={onDeleteClick}
+                    type="button"
                     className="rounded-md bg-red-600 p-2"
                   >
                     Delete
                   </button>
                   <button
-                    type="button"
                     onClick={onDeleteOverlayClick}
+                    type="button"
                     className="rounded-md border p-2 hover:bg-[#202020]"
                   >
                     Cancel

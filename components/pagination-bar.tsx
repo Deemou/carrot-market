@@ -45,18 +45,18 @@ export default function PaginationBar({
   return (
     <div className="item-center flex justify-center space-x-2 py-5">
       <button
-        className={currentPage === 1 ? 'hidden' : 'block'}
-        type="button"
         onClick={() => {
           onClickDirection('prev');
         }}
+        type="button"
+        className={currentPage === 1 ? 'hidden' : 'block'}
       >
         <svg
-          className="h-4 w-4"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
           xmlns="http://www.w3.org/2000/svg"
+          className="h-4 w-4"
         >
           <path
             strokeLinecap="round"
@@ -73,20 +73,20 @@ export default function PaginationBar({
         )}
       >
         <button
-          className="aspect-square h-10 rounded-md bg-red-500 font-medium"
-          type="button"
           onClick={() => {
             onClickPage(1);
           }}
+          type="button"
+          className="aspect-square h-10 rounded-md bg-red-500 font-medium"
         >
           <span>{1}</span>
         </button>
         <svg
-          className="ml-3 mr-1 h-4 w-4"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
           xmlns="http://www.w3.org/2000/svg"
+          className="ml-3 mr-1 h-4 w-4"
         >
           <path
             strokeLinecap="round"
@@ -99,17 +99,17 @@ export default function PaginationBar({
       {pages?.map((page) => {
         return (
           <button
+            onClick={() => {
+              onClickPage(page);
+            }}
+            key={page}
+            type="button"
             className={cls(
               'aspect-square h-10 rounded-md font-medium',
               page === currentPage
                 ? 'border border-white bg-black'
                 : 'bg-red-500'
             )}
-            type="button"
-            onClick={() => {
-              onClickPage(page);
-            }}
-            key={page}
           >
             <span>{page}</span>
           </button>
@@ -122,11 +122,11 @@ export default function PaginationBar({
         )}
       >
         <svg
-          className="ml-1 mr-3 h-4 w-4"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
           xmlns="http://www.w3.org/2000/svg"
+          className="ml-1 mr-3 h-4 w-4"
         >
           <path
             strokeLinecap="round"
@@ -136,28 +136,28 @@ export default function PaginationBar({
           ></path>
         </svg>
         <button
-          className="aspect-square h-10 rounded-md bg-red-500 font-medium"
-          type="button"
           onClick={() => {
             onClickPage(lastPage);
           }}
+          type="button"
+          className="aspect-square h-10 rounded-md bg-red-500 font-medium"
         >
           <span>{lastPage}</span>
         </button>
       </div>
       <button
-        className={currentPage === lastPage ? 'hidden' : 'block'}
-        type="button"
         onClick={() => {
           onClickDirection('next');
         }}
+        type="button"
+        className={currentPage === lastPage ? 'hidden' : 'block'}
       >
         <svg
-          className="h-4 w-4"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
           xmlns="http://www.w3.org/2000/svg"
+          className="h-4 w-4"
         >
           <path
             strokeLinecap="round"

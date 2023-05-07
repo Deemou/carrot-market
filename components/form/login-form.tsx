@@ -51,23 +51,23 @@ export default function LoginForm() {
     >
       <Input
         onClick={onClick}
+        type="email"
+        name="email"
+        label="Email address"
+        required
         register={register('email', {
           required: true
         })}
-        name="email"
-        label="Email address"
-        type="email"
-        required
       />
       <Input
         onClick={onClick}
+        type="password"
+        name="password"
+        label="Password"
+        required
         register={register('password', {
           required: true
         })}
-        name="password"
-        label="Password"
-        type="password"
-        required
       />
       {errors.formErrors && (
         <span className="my-2 block text-center font-medium text-red-600">

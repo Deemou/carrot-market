@@ -9,9 +9,9 @@ export default function Avatar({ url }: AvatarProps) {
     <div className="relative aspect-square h-12">
       <Image
         src={url}
+        alt="avatar"
         fill
         sizes="50vw"
-        alt="avatar"
         priority
         className="rounded-full bg-transparent object-cover"
       />

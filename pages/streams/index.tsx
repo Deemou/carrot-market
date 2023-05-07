@@ -28,11 +28,11 @@ const Streams: NextPage = () => {
     <Layout seoTitle="Streams">
       <FloatingButton href="/streams/create">
         <svg
-          className="h-6 w-6"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
           xmlns="http://www.w3.org/2000/svg"
+          className="h-6 w-6"
         >
           <path
             strokeLinecap="round"
@@ -45,8 +45,8 @@ const Streams: NextPage = () => {
       <div className="mt-16 space-y-5 divide-y-[1px]">
         {data?.streams.map((stream) => (
           <Link
-            key={stream.id}
             href={`/streams/${stream.id}`}
+            key={stream.id}
             className="block pt-4"
           >
             <div className="aspect-video w-full rounded-md bg-slate-300 shadow-sm" />

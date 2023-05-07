@@ -27,11 +27,11 @@ const Community: NextPage<PostsResponse> = (props) => {
     <Layout seoTitle="Community">
       <FloatingButton href="/community/write">
         <svg
-          className="h-6 w-6"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
           xmlns="http://www.w3.org/2000/svg"
+          className="h-6 w-6"
         >
           <path
             strokeLinecap="round"
@@ -45,8 +45,8 @@ const Community: NextPage<PostsResponse> = (props) => {
         {data &&
           data.posts.map((post) => (
             <Link
-              key={post.id}
               href={`/community/${post.id}`}
+              key={post.id}
               className="flex cursor-pointer flex-col items-start pt-4"
             >
               <span className="flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-800">
@@ -60,14 +60,14 @@ const Community: NextPage<PostsResponse> = (props) => {
                 <span>{post.user.name}</span>
                 <span>{post.createdAt.toString().slice(0, 10)}</span>
               </div>
-              <div className="mt-3 flex w-full space-x-5 border-t px-4 py-2.5   text-gray-700">
+              <div className="mt-3 flex w-full space-x-5 border-t px-4 py-2.5 text-gray-700">
                 <span className="flex items-center space-x-2 text-sm">
                   <svg
-                    className="h-4 w-4"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
+                    className="h-4 w-4"
                   >
                     <path
                       strokeLinecap="round"
@@ -80,11 +80,11 @@ const Community: NextPage<PostsResponse> = (props) => {
                 </span>
                 <span className="flex items-center space-x-2 text-sm">
                   <svg
-                    className="h-4 w-4"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
+                    className="h-4 w-4"
                   >
                     <path
                       strokeLinecap="round"

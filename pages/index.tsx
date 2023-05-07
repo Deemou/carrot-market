@@ -46,12 +46,12 @@ const Home: NextPage<ProductsResponse> = (props) => {
       <Layout seoTitle="Home">
         <FloatingButton href="/products/upload">
           <svg
-            className="h-6 w-6"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
             aria-hidden="true"
+            className="h-6 w-6"
           >
             <path
               strokeLinecap="round"

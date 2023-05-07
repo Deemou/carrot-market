@@ -3,19 +3,15 @@ import TextArea from '@components/textarea';
 
 interface DescriptionInputProps {
   register: UseFormRegister<any>;
-  required?: boolean;
 }
 
-export default function DescriptionInput({
-  register,
-  required
-}: DescriptionInputProps) {
+export default function DescriptionInput({ register }: DescriptionInputProps) {
   return (
     <TextArea
-      register={register('description', { required: true })}
       name="description"
       label="Description"
-      required={required}
+      required
+      register={register('description', { required: true })}
     />
   );
 }

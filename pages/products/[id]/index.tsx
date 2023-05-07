@@ -75,9 +75,9 @@ const ItemDetail: NextPage<ItemDetailResponse> = (props) => {
               <div className="flex items-center justify-between space-x-2">
                 <Button large text="Talk to seller" />
                 <button
+                  onClick={onFavClick}
                   type="button"
                   aria-label="like"
-                  onClick={onFavClick}
                   className={cls(
                     'flex items-center justify-center rounded-md p-3 hover:bg-gray-100 ',
                     data.isLiked
@@ -87,10 +87,10 @@ const ItemDetail: NextPage<ItemDetailResponse> = (props) => {
                 >
                   {data.isLiked ? (
                     <svg
-                      className="h-6 w-6"
                       fill="currentColor"
                       viewBox="0 0 20 20"
                       xmlns="http://www.w3.org/2000/svg"
+                      className="h-6 w-6"
                     >
                       <path
                         fillRule="evenodd"
@@ -100,12 +100,12 @@ const ItemDetail: NextPage<ItemDetailResponse> = (props) => {
                     </svg>
                   ) : (
                     <svg
-                      className="h-6 w-6 "
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
                       aria-hidden="true"
+                      className="h-6 w-6 "
                     >
                       <path
                         strokeLinecap="round"

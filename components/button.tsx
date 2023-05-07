@@ -2,27 +2,27 @@ import cls from '@libs/client/utils';
 import { MouseEventHandler } from 'react';
 
 interface ButtonProps {
+  onClick?: MouseEventHandler<HTMLButtonElement>;
+  type?: 'button' | 'submit';
+  text: string;
   large?: boolean;
   long?: boolean;
-  text: string;
-  type?: 'button' | 'submit';
-  onClick?: MouseEventHandler<HTMLButtonElement>;
   [key: string]: any;
 }
 
 export default function Button({
+  onClick,
+  type,
+  text,
   large,
   long,
-  onClick,
-  text,
-  type,
   ...rest
 }: ButtonProps) {
   return (
     <button
+      onClick={onClick}
       type={type === 'button' ? 'button' : 'submit'}
       {...rest}
-      onClick={onClick}
       className={cls(
         'rounded-md border border-gray-200 px-3 text-sm font-medium hover:bg-gray-200 hover:text-black',
         large ? 'py-2.5' : 'py-1.5',
@@ -35,8 +35,8 @@ export default function Button({
 }
 
 Button.defaultProps = {
-  large: false,
-  long: true,
+  onClick: undefined,
   type: 'submit',
-  onClick: undefined
+  large: false,
+  long: true
 };

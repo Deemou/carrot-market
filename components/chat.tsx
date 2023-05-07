@@ -8,8 +8,8 @@ import useInfiniteScroll from '@libs/client/useInfiniteScroll';
 import { Chat } from '@prisma/client';
 
 interface ChatProps {
-  title: string;
   chatId: string | undefined;
+  title: string;
 }
 
 interface MessageForm {
@@ -17,8 +17,8 @@ interface MessageForm {
 }
 
 interface ChatMessage {
-  message: string;
   id: number;
+  message: string;
   user: {
     avatar?: string;
     id: number;
@@ -117,10 +117,11 @@ export default function ChatRoom({ title, chatId }: ChatProps) {
       <div className="inset-x-0 py-2">
         <form
           onSubmit={(...args) => void handleSubmit(onValid)(...args)}
-          className="relative mx-auto flex w-full  max-w-lg items-center"
+          className="relative mx-auto flex w-full max-w-lg items-center"
         >
           <input
             type="text"
+            required
             {...register('message', { required: true })}
             className="w-full rounded-full border-gray-300 pr-12 shadow-sm focus:border-orange-500 focus:outline-none focus:ring-orange-500"
           />

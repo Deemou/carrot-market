@@ -26,11 +26,11 @@ const Profile: NextPage = () => {
         <div className="mt-10 flex">
           <Tab href="/profile/sold" text="판매중인 상품" className="w-1/3">
             <svg
-              className="h-6 w-6"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
             >
               <path
                 strokeLinecap="round"
@@ -42,11 +42,11 @@ const Profile: NextPage = () => {
           </Tab>
           <Tab href="/profile/bought" text="구매내역" className="w-1/3">
             <svg
-              className="h-6 w-6"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
             >
               <path
                 strokeLinecap="round"
@@ -58,11 +58,11 @@ const Profile: NextPage = () => {
           </Tab>
           <Tab href="/profile/loved" text="관심목록" className="w-1/3">
             <svg
-              className="h-6 w-6"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
             >
               <path
                 strokeLinecap="round"

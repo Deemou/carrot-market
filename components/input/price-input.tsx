@@ -14,6 +14,11 @@ export default function PriceInput({ register, errors }: PriceInputProps) {
   return (
     <>
       <Input
+        type="number"
+        kind="price"
+        name="price"
+        label="Price"
+        required
         register={register('price', {
           required: true,
           valueAsNumber: true,
@@ -22,11 +27,6 @@ export default function PriceInput({ register, errors }: PriceInputProps) {
             message: 'Price must be at least 0.'
           }
         })}
-        label="Price"
-        name="price"
-        type="number"
-        kind="price"
-        required
       />
       {errors.price && (
         <span className="my-2 block text-center font-medium text-red-600">

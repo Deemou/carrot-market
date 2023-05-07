@@ -37,9 +37,9 @@ export default function Header() {
       <span>{user && `Hello, ${user.name}!`}</span>
       <Button
         onClick={onClick}
+        type="button"
         text="Log out"
         long={false}
-        type="button"
       ></Button>
     </div>
   );
