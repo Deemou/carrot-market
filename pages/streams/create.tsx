@@ -6,9 +6,9 @@ import useMutation from '@libs/client/useMutation';
 import { Stream } from '@prisma/client';
 import Layout from '@/components/layout';
 import Button from '@components/button';
-import Input from '@components/input';
 import DescriptionInput from '@/components/input/description-input';
 import PriceInput from '@/components/input/price-input';
+import ItemNameInput from '@/components/input/item-name-input';
 
 interface CreateForm {
   name: string;
@@ -45,13 +45,7 @@ const Create: NextPage = () => {
         onSubmit={(...args) => void handleSubmit(onValid)(...args)}
         className=" space-y-4 px-4 py-10"
       >
-        <Input
-          type="text"
-          name="name"
-          label="Name"
-          required
-          register={register('name', { required: true })}
-        />
+        <ItemNameInput register={register} errors={errors} />
         <PriceInput register={register} errors={errors} />
         <DescriptionInput register={register} />
         <Button text={loading ? 'Loading...' : 'Go live'} />

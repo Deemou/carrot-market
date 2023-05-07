@@ -12,12 +12,12 @@ import {
   uploadBytesResumable,
   getDownloadURL
 } from 'firebase/storage';
-import Input from '@components/input';
 import PriceInput from '@components/input/price-input';
 import Button from '@components/button';
 import { Product } from '@prisma/client';
-import ImageInput from '../input/image-input';
-import DescriptionInput from '../input/description-input';
+import ImageInput from '@components/input/image-input';
+import DescriptionInput from '@components/input/description-input';
+import ItemNameInput from '@components/input/item-name-input';
 
 interface IProductForm {
   name: string;
@@ -142,13 +142,7 @@ export default function ProductForm({
         imagePreview={productImagePreview}
         register={register('productImage')}
       />
-      <Input
-        type="text"
-        name="name"
-        label="Name"
-        required
-        register={register('name')}
-      />
+      <ItemNameInput register={register} errors={errors} />
       <PriceInput register={register} errors={errors} />
       <DescriptionInput register={register} />
       <Button text={loading ? 'Loading...' : buttonText} />
