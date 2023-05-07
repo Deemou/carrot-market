@@ -7,7 +7,8 @@ import { Stream } from '@prisma/client';
 import Layout from '@/components/layout';
 import Button from '@components/button';
 import Input from '@components/input';
-import TextArea from '@components/textarea';
+import DescriptionInput from '@/components/input/description-input';
+import PriceInput from '@/components/input/price-input';
 
 interface CreateForm {
   name: string;
@@ -24,7 +25,11 @@ const Create: NextPage = () => {
   const router = useRouter();
   const [createStream, { loading, data }] =
     useMutation<CreateResponse>(`/api/streams`);
-  const { register, handleSubmit } = useForm<CreateForm>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm<CreateForm>();
   const onValid = (form: CreateForm) => {
     if (loading) return;
     createStream(form);
@@ -41,25 +46,14 @@ const Create: NextPage = () => {
         className=" space-y-4 px-4 py-10"
       >
         <Input
-          register={register('name', { required: true })}
-          required
-          label="Name"
+          type="text"
           name="name"
-          type="text"
-        />
-        <Input
-          register={register('price', { required: true, valueAsNumber: true })}
+          label="Name"
           required
-          label="Price"
-          name="price"
-          type="text"
-          kind="price"
+          register={register('name', { required: true })}
         />
-        <TextArea
-          register={register('description', { required: true })}
-          name="description"
-          label="Description"
-        />
+        <PriceInput register={register} errors={errors} />
+        <DescriptionInput register={register} />
         <Button text={loading ? 'Loading...' : 'Go live'} />
       </form>
     </Layout>
