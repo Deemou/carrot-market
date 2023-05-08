@@ -16,9 +16,9 @@ const Profile: NextPage = () => {
       <div className="px-4">
         <div className="mt-4 flex items-center space-x-3">
           <Avatar url={user?.avatar} />
-          <div className="flex flex-col">
-            <span className="font-medium ">{user?.name}</span>
-            <Link href="/profile/edit" className="text-sm text-gray-400">
+          <div className="flex h-12 flex-col justify-between">
+            <h4>{user?.name}</h4>
+            <Link href="/profile/edit" className="text-gray-400">
               Edit profile &rarr;
             </Link>
           </div>

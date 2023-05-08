@@ -72,14 +72,11 @@ export default function Card({
 
   return (
     <div className="flex justify-between border-b border-t py-3">
-      <div className="flex items-center space-x-3 py-3">
+      <div className="my-3 flex items-center space-x-3">
         <Avatar url={avatar} />
-        <div>
-          <p className="font-medium">{userName}</p>
-          <Link
-            href={`/profile/${userId}`}
-            className="text-xs font-medium text-gray-500"
-          >
+        <div className="flex h-12 flex-col justify-between">
+          <h4>{userName}</h4>
+          <Link href={`/profile/${userId}`} className="text-gray-500">
             View profile &rarr;
           </Link>
         </div>
@@ -170,7 +167,7 @@ export default function Card({
               {/* modal */}
               <div className="relative z-40 mx-auto w-80 max-w-[80vw] space-y-5 self-center rounded-xl bg-black px-8 py-4 ring-2 ring-gray-900">
                 <div className="space-y-2">
-                  <h1 className="text-lg font-semibold">Delete Post?</h1>
+                  <h3 className="font-semibold">Delete Post?</h3>
                   <span className="block opacity-50">
                     This can&apos;t be undone.
                   </span>

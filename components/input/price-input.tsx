@@ -29,7 +29,7 @@ export default function PriceInput({ register, errors }: PriceInputProps) {
         })}
       />
       {errors.price && (
-        <span className="my-2 block text-center font-medium text-red-600">
+        <span className="my-2 block text-center text-red-600">
           {errors.price.message}
         </span>
       )}

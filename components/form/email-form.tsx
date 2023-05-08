@@ -60,7 +60,7 @@ export default function EmailForm({ setIsEmailOk, children }: EmailFormProps) {
     >
       <EmailInput onClick={onClick} register={register} />
       {errors.formErrors && (
-        <span className="my-2 block text-center font-medium text-red-600">
+        <span className="my-2 block text-center text-red-600">
           {errors.formErrors.message}
         </span>
       )}

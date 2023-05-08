@@ -20,9 +20,9 @@ export default function Message({
       )}
     >
       <Avatar url={avatarUrl} />
-      <div className="w-1/2 rounded-md border border-gray-300 p-2 text-sm text-gray-700">
-        <p>{message}</p>
-      </div>
+      <span className="w-1/2 rounded-md border border-gray-300 p-2 text-gray-700">
+        <span>{message}</span>
+      </span>
     </div>
   );
 }

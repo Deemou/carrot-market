@@ -18,7 +18,7 @@ const ChatDetail: NextPage = () => {
             <div className="absolute inset-y-0 right-0 flex py-1.5 pr-1.5">
               <button
                 type="button"
-                className="flex items-center rounded-full bg-orange-500 px-3 text-sm  hover:bg-orange-600 focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
+                className="flex items-center rounded-full bg-orange-500 px-2 hover:bg-orange-600 focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
               >
                 &rarr;
               </button>

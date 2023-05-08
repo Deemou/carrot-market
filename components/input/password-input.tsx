@@ -19,10 +19,10 @@ export default function PasswordInput({
   return (
     <>
       <Input
+        onClick={onClick}
         type="password"
         name="password"
         label="Password"
-        onClick={onClick}
         required
         register={register('password', {
           required: true,
@@ -33,7 +33,7 @@ export default function PasswordInput({
         })}
       />
       {errors.password && (
-        <span className="my-2 block text-center font-medium text-red-600">
+        <span className="my-2 block text-center text-red-600">
           {errors.password.message}
         </span>
       )}

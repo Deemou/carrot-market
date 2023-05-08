@@ -91,7 +91,7 @@ export default function ChatRoom({ title, chatId }: ChatProps) {
 
   return (
     <div>
-      <h2 className="text-2xl font-bold">{title}</h2>
+      <h2>{title}</h2>
       <div
         id={scrollId}
         className="h-[50vh] space-y-4 overflow-y-scroll px-4 py-5 pb-16"
@@ -128,7 +128,7 @@ export default function ChatRoom({ title, chatId }: ChatProps) {
           <div className="absolute inset-y-0 right-0 flex py-1.5 pr-1.5">
             <button
               type="submit"
-              className="flex items-center rounded-full bg-orange-500 px-3 text-sm  hover:bg-orange-600 focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
+              className="flex items-center rounded-full bg-orange-500 p-2 hover:bg-orange-600 focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
             >
               &rarr;
             </button>

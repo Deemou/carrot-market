@@ -93,7 +93,7 @@ const CommunityPostDetail: NextPage<CommunityPostResponse> = (props) => {
     <Layout seoTitle="Community Post Detail">
       {data && (
         <div className="px-4">
-          <span className="my-3 inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-800">
+          <span className="my-3 inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-gray-800">
             Question
           </span>
           <Card
@@ -105,15 +105,14 @@ const CommunityPostDetail: NextPage<CommunityPostResponse> = (props) => {
           ></Card>
           <div>
             <div className="mt-2">
-              <span className="font-medium text-orange-500">Q.</span>{' '}
-              {data.post.question}
+              <span className="text-orange-500">Q.</span> {data.post.question}
             </div>
             <div className="mt-3 flex w-full space-x-5 border-b-[2px] border-t py-2.5  text-gray-700">
               <button
                 onClick={onWonderClick}
                 type="button"
                 className={cls(
-                  'flex items-center space-x-2 text-sm',
+                  'flex items-center space-x-2',
                   data.isWondering ? 'text-teal-600' : ''
                 )}
               >
@@ -133,7 +132,7 @@ const CommunityPostDetail: NextPage<CommunityPostResponse> = (props) => {
                 </svg>
                 <span>궁금해요 {data.post._count.wonderings}</span>
               </button>
-              <span className="flex items-center space-x-2 text-sm">
+              <span className="flex items-center space-x-2">
                 <svg
                   fill="none"
                   stroke="currentColor"
@@ -157,13 +156,12 @@ const CommunityPostDetail: NextPage<CommunityPostResponse> = (props) => {
               <div key={answer.id} className="flex items-start space-x-3">
                 <Avatar url={answer.user.avatar} />
                 <div>
-                  <span className="block text-sm font-medium">
-                    {answer.user.name}
-                  </span>
-                  <span className="block text-xs ">
-                    {answer.createdAt.toString().slice(0, 10)}
-                  </span>
-                  <p className="mt-2">{answer.answer} </p>
+                  <div className="flex flex-col">
+                    <span>{answer.user.name}</span>
+                    <span>{answer.createdAt.toString().slice(0, 10)}</span>
+                  </div>
+
+                  <span className="mt-2">{answer.answer} </span>
                 </div>
               </div>
             ))}
@@ -177,7 +175,7 @@ const CommunityPostDetail: NextPage<CommunityPostResponse> = (props) => {
             />
             <button
               type="submit"
-              className="mt-2 w-full rounded-md border border-transparent bg-orange-500 px-4 py-2 text-sm font-medium  shadow-sm hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
+              className="mt-2 w-full rounded-md border border-transparent bg-orange-500 py-2 shadow-sm hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
             >
               {answerLoading ? 'Loading...' : 'Reply'}
             </button>

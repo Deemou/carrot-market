@@ -12,9 +12,7 @@ const SignUp: NextPage = () => {
 
   return (
     <div className="mx-auto mt-16 w-full max-w-xl px-4">
-      <h3 className="text-center text-3xl font-bold ">
-        Sign up for Carrot Market
-      </h3>
+      <h1 className="text-center">Sign up for Carrot Market</h1>
       <div className="mt-12">
         {!isEmailOk && (
           <EmailForm setIsEmailOk={setIsEmailOk}>
@@ -24,7 +22,7 @@ const SignUp: NextPage = () => {
         {isEmailOk && !isTokenOk && <TokenForm setIsTokenOk={setIsTokenOk} />}
         {isTokenOk && <AccountForm />}
         <div className="flex justify-center p-4">
-          <Link href="/login" className="cursor-pointer font-medium ">
+          <Link href="/login" className="cursor-pointer">
             <span className="">You already have an account? Login!</span>
           </Link>
         </div>

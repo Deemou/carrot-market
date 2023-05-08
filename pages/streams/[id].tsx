@@ -26,8 +26,8 @@ const LiveStream: NextPage<StreamResponse> = (props) => {
       <div className="space-y-4 py-10">
         <div className="aspect-video w-full rounded-md bg-slate-300 shadow-sm" />
         <div className="mt-5">
-          <h1 className="text-3xl font-bold">{data?.stream?.name}</h1>
-          <span className="mt-3 block text-2xl">${data?.stream?.price}</span>
+          <h2>{data?.stream?.name}</h2>
+          <span className="mt-3 block">${data?.stream?.price}</span>
           <p className=" my-6">{data?.stream?.description}</p>
         </div>
         <Chat title="Live Chat" chatId={data?.stream?.chat?.id} />

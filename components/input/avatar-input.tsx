@@ -15,7 +15,7 @@ export default function AvatarInput({
       <Avatar url={avatarPreview} />
       <label
         htmlFor="picture"
-        className="cursor-pointer rounded-md border border-gray-200 px-3 py-1.5 text-sm font-medium hover:bg-gray-200 hover:text-black"
+        className="cursor-pointer rounded-md border border-gray-200 px-2 py-1 hover:bg-gray-200 hover:text-black"
       >
         Change
         <input

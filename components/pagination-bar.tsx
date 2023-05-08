@@ -77,7 +77,7 @@ export default function PaginationBar({
             onClickPage(1);
           }}
           type="button"
-          className="aspect-square h-10 rounded-md bg-red-500 font-medium"
+          className="aspect-square h-10 rounded-md bg-red-500"
         >
           <span>{1}</span>
         </button>
@@ -105,7 +105,7 @@ export default function PaginationBar({
             key={page}
             type="button"
             className={cls(
-              'aspect-square h-10 rounded-md font-medium',
+              'aspect-square h-10 rounded-md',
               page === currentPage
                 ? 'border border-white bg-black'
                 : 'bg-red-500'
@@ -140,7 +140,7 @@ export default function PaginationBar({
             onClickPage(lastPage);
           }}
           type="button"
-          className="aspect-square h-10 rounded-md bg-red-500 font-medium"
+          className="aspect-square h-10 rounded-md bg-red-500"
         >
           <span>{lastPage}</span>
         </button>

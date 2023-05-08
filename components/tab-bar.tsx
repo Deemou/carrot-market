@@ -19,7 +19,7 @@ export default function TabBar() {
   return isAuthPages() ? null : (
     <nav
       className={cls(
-        'fixed bottom-0 flex w-full max-w-3xl -translate-x-[1px] justify-between border-t bg-black px-10 pb-5 pt-3 text-xs ',
+        'fixed bottom-0 flex w-full max-w-3xl -translate-x-[1px] justify-between border-t bg-black px-10 py-5',
         mobile ? '' : 'border-x ring-1 ring-white'
       )}
     >

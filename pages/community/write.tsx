@@ -33,7 +33,7 @@ const Write: NextPage = () => {
     }
   }, [data, router]);
   return (
-    <Layout seoTitle="Write Community Post">
+    <Layout seoTitle="Write Post">
       <form
         onSubmit={(...args) => void handleSubmit(onValid)(...args)}
         className="space-y-4 p-4 py-10"

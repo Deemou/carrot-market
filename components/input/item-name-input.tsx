@@ -34,7 +34,7 @@ export default function ItemNameInput({
         })}
       />
       {errors.name && (
-        <span className="my-2 block text-center font-medium text-red-600">
+        <span className="my-2 block text-center text-red-600">
           {errors.name.message}
         </span>
       )}

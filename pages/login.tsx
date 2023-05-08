@@ -5,9 +5,7 @@ import LoginForm from '@/components/form/login-form';
 const Enter: NextPage = () => {
   return (
     <div className="mx-auto mt-16 w-full max-w-xl px-4">
-      <h3 className="text-center text-3xl font-bold ">
-        Log in to Carrot Market
-      </h3>
+      <h1 className="text-center">Log in to Carrot Market</h1>
       <div className="mt-12">
         <LoginForm />
         <div className="mt-8">
@@ -20,7 +18,7 @@ const Enter: NextPage = () => {
           <div className="mt-2 grid grid-cols-2 gap-3">
             <button
               type="button"
-              className="flex items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-blue-500 shadow-sm hover:bg-gray-50"
+              className="flex items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-blue-500 shadow-sm hover:bg-gray-50"
             >
               <svg
                 aria-hidden="true"
@@ -33,7 +31,7 @@ const Enter: NextPage = () => {
             </button>
             <button
               type="button"
-              className="flex items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-black shadow-sm hover:bg-gray-50"
+              className="flex items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-black shadow-sm hover:bg-gray-50"
             >
               <svg
                 aria-hidden="true"
@@ -51,7 +49,7 @@ const Enter: NextPage = () => {
           </div>
         </div>
         <div className="flex justify-center p-4">
-          <Link href="/sign-up" className="cursor-pointer font-medium ">
+          <Link href="/sign-up" className="cursor-pointer">
             <span className="">
               You don&apos;t have an account yet? Sign up!
             </span>

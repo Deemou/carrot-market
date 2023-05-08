@@ -14,14 +14,12 @@ interface Post {
 const Blog: NextPage<{ posts: Post[] }> = ({ posts }) => {
   return (
     <Layout seoTitle="Blog">
-      <h1 className="mb-10 mt-5 text-center text-xl font-semibold ">
-        Latest Posts
-      </h1>
+      <h3 className="mb-10 mt-5 text-center">Latest Posts</h3>
       {posts.map((post, index) => (
         // eslint-disable-next-line react/no-array-index-key
         <div key={index} className="mb-5">
           <Link href={`/blog/${post.slug}`}>
-            <span className="text-lg text-red-500">{post.title}</span>
+            <h3 className="text-red-500">{post.title}</h3>
             <div>
               <span className="">
                 {post.date} / {post.category}

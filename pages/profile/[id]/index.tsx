@@ -11,8 +11,8 @@ const Profile: NextPage<{ profile: User }> = ({ profile }) => {
       <div className="px-4">
         <div className="mt-4 flex items-center space-x-3">
           <Avatar url={profile.avatar} />
-          <div className="flex flex-col">
-            <span className="font-medium ">{profile.name}</span>
+          <div className="h-12">
+            <h4>{profile.name}</h4>
           </div>
         </div>
         <div className="mt-10 flex justify-around">

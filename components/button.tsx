@@ -24,8 +24,8 @@ export default function Button({
       type={type === 'button' ? 'button' : 'submit'}
       {...rest}
       className={cls(
-        'rounded-md border border-gray-200 px-3 text-sm font-medium hover:bg-gray-200 hover:text-black',
-        large ? 'py-2.5' : 'py-1.5',
+        'rounded-md border border-gray-200 px-3 hover:bg-gray-200 hover:text-black',
+        large ? 'py-2' : 'py-1',
         long ? 'w-full' : ''
       )}
     >
