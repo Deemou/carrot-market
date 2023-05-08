@@ -1,6 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable no-void */
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -47,7 +45,7 @@ const ItemDetail: NextPage<ItemDetailResponse> = (props) => {
       {data && (
         <div className="px-4 py-4">
           <div className="mb-8">
-            <div className="relative mb-10 xs:flex xs:justify-between xs:space-x-4">
+            <div className="relative mb-10 w320:flex w320:justify-between w320:space-x-4">
               <div className="relative aspect-square w-full max-w-[256px]">
                 <Image
                   src={data.product.image}
@@ -58,11 +56,9 @@ const ItemDetail: NextPage<ItemDetailResponse> = (props) => {
                   className="object-center"
                 />
               </div>
-              <div className="w-full max-xs:mt-10 xs:max-w-[50%]">
-                <h1 className="font-bold">{data.product.name}</h1>
-                <span className="mt-3 block text-lg">
-                  ${data.product.price}
-                </span>
+              <div className="w-full max-w320:mt-10 w320:max-w-[50%]">
+                <h3 className="overflow-x-hidden">{data.product.name}</h3>
+                <h4 className="mt-3 block">${data.product.price}</h4>
               </div>
             </div>
             <Card
@@ -73,13 +69,15 @@ const ItemDetail: NextPage<ItemDetailResponse> = (props) => {
               postId={data.product.id}
             ></Card>
             <div className="mt-5">
-              <p className=" my-8">{data.product.description}</p>
+              <p className="my-8 overflow-x-hidden">
+                {data.product.description}
+              </p>
               <div className="flex items-center justify-between space-x-2">
                 <Button large text="Talk to seller" />
                 <button
+                  onClick={onFavClick}
                   type="button"
                   aria-label="like"
-                  onClick={onFavClick}
                   className={cls(
                     'flex items-center justify-center rounded-md p-3 hover:bg-gray-100 ',
                     data.isLiked
@@ -89,10 +87,10 @@ const ItemDetail: NextPage<ItemDetailResponse> = (props) => {
                 >
                   {data.isLiked ? (
                     <svg
-                      className="h-6 w-6"
                       fill="currentColor"
                       viewBox="0 0 20 20"
                       xmlns="http://www.w3.org/2000/svg"
+                      className="h-6 w-6"
                     >
                       <path
                         fillRule="evenodd"
@@ -102,12 +100,12 @@ const ItemDetail: NextPage<ItemDetailResponse> = (props) => {
                     </svg>
                   ) : (
                     <svg
-                      className="h-6 w-6 "
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
                       aria-hidden="true"
+                      className="h-6 w-6 "
                     >
                       <path
                         strokeLinecap="round"
@@ -122,10 +120,10 @@ const ItemDetail: NextPage<ItemDetailResponse> = (props) => {
             </div>
           </div>
           <div>
-            <h2 className="text-xl font-bold">Similar items</h2>
+            <h3>Similar items</h3>
             <div
               className={cls(
-                'max max-[width:640px]: mt-6 grid grid-cols-3 gap-10 max-sm:grid-cols-2 max-xs:grid-cols-1'
+                'max max-[width:640px]: mt-6 grid grid-cols-3 gap-10 max-w640:grid-cols-2 max-w320:grid-cols-1'
               )}
             >
               {data.relatedProducts.map((product) => (
@@ -146,9 +144,7 @@ const ItemDetail: NextPage<ItemDetailResponse> = (props) => {
                         />
                       </div>
                       <div className="flex flex-col">
-                        <h3 className="max-h-12 overflow-hidden">
-                          {product.name}
-                        </h3>
+                        <span>{product.name}</span>
                         <span className="mt-1">${product.price}</span>
                       </div>
                     </div>

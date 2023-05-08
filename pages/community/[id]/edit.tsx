@@ -1,5 +1,3 @@
-/* eslint-disable no-void */
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
 import { NextPage } from 'next';
 import useSWR from 'swr';
 import useMutation from '@/libs/client/useMutation';
@@ -64,11 +62,11 @@ const Edit: NextPage = () => {
           className="space-y-4 px-4 py-10"
         >
           <TextArea
-            register={register('question', { required: true, minLength: 5 })}
-            required
-            placeholder="Ask a question!"
             name="question"
             label="Question"
+            required
+            register={register('question', { required: true, minLength: 5 })}
+            placeholder="Ask a question!"
           />
           <Button text={editLoading ? 'Loading...' : 'Update'} />
         </form>

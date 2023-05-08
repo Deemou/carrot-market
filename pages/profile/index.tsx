@@ -16,9 +16,9 @@ const Profile: NextPage = () => {
       <div className="px-4">
         <div className="mt-4 flex items-center space-x-3">
           <Avatar url={user?.avatar} />
-          <div className="flex flex-col">
-            <span className="font-medium ">{user?.name}</span>
-            <Link href="/profile/edit" className="text-sm text-gray-400">
+          <div className="flex h-12 flex-col justify-between">
+            <h4>{user?.name}</h4>
+            <Link href="/profile/edit" className="text-gray-400">
               Edit profile &rarr;
             </Link>
           </div>
@@ -26,11 +26,11 @@ const Profile: NextPage = () => {
         <div className="mt-10 flex">
           <Tab href="/profile/sold" text="판매중인 상품" className="w-1/3">
             <svg
-              className="h-6 w-6"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
             >
               <path
                 strokeLinecap="round"
@@ -42,11 +42,11 @@ const Profile: NextPage = () => {
           </Tab>
           <Tab href="/profile/bought" text="구매내역" className="w-1/3">
             <svg
-              className="h-6 w-6"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
             >
               <path
                 strokeLinecap="round"
@@ -58,11 +58,11 @@ const Profile: NextPage = () => {
           </Tab>
           <Tab href="/profile/loved" text="관심목록" className="w-1/3">
             <svg
-              className="h-6 w-6"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
             >
               <path
                 strokeLinecap="round"

@@ -1,5 +1,3 @@
-/* eslint-disable no-void */
-/* eslint-disable no-underscore-dangle */
 import type { GetStaticProps, NextPage } from 'next';
 import Head from 'next/head';
 import FloatingButton from '@components/floating-button';
@@ -48,12 +46,12 @@ const Home: NextPage<ProductsResponse> = (props) => {
       <Layout seoTitle="Home">
         <FloatingButton href="/products/upload">
           <svg
-            className="h-6 w-6"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
             aria-hidden="true"
+            className="h-6 w-6"
           >
             <path
               strokeLinecap="round"
@@ -69,7 +67,7 @@ const Home: NextPage<ProductsResponse> = (props) => {
               <Item
                 id={product.id}
                 key={product.id}
-                title={product.name}
+                name={product.name}
                 price={product.price}
                 image={product.image}
                 hearts={product._count.favs}

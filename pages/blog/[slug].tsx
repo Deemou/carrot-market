@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
 import { GetStaticProps, NextPage } from 'next';
 import { readdirSync } from 'fs';
 import matter from 'gray-matter';

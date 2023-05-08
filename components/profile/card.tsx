@@ -1,5 +1,3 @@
-/* eslint-disable no-void */
-/* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import Link from 'next/link';
 import useUser from '@/libs/client/useUser';
@@ -74,14 +72,11 @@ export default function Card({
 
   return (
     <div className="flex justify-between border-b border-t py-3">
-      <div className="flex items-center space-x-3 py-3">
+      <div className="my-3 flex items-center space-x-3">
         <Avatar url={avatar} />
-        <div>
-          <p className="font-medium">{userName}</p>
-          <Link
-            href={`/profile/${userId}`}
-            className="text-xs font-medium text-gray-500"
-          >
+        <div className="flex h-12 flex-col justify-between">
+          <h4>{userName}</h4>
+          <Link href={`/profile/${userId}`} className="text-gray-500">
             View profile &rarr;
           </Link>
         </div>
@@ -92,15 +87,15 @@ export default function Card({
           <div className={cls('relative', user.id === userId ? '' : 'hidden')}>
             <svg
               onClick={onMenuClick}
-              className="cursor-pointer"
+              id="Layer_1"
               fill="#ffffff"
               width="22px"
               height="22px"
-              id="Layer_1"
               version="1.1"
               viewBox="0 0 128 128"
               xmlSpace="preserve"
               xmlns="http://www.w3.org/2000/svg"
+              className="cursor-pointer"
             >
               <circle cx="64" cy="90.358" r="9.824" />
               <circle cx="99.25" cy="90.358" r="9.824" />
@@ -137,10 +132,10 @@ export default function Card({
                     className="flex cursor-pointer flex-row space-x-3 px-3 py-1.5 hover:bg-[#202020]"
                   >
                     <svg
+                      id="Layer_1"
                       fill="#ff0000"
                       baseProfile="tiny"
                       height="24px"
-                      id="Layer_1"
                       version="1.2"
                       viewBox="0 0 24 24"
                       width="24px"
@@ -172,22 +167,22 @@ export default function Card({
               {/* modal */}
               <div className="relative z-40 mx-auto w-80 max-w-[80vw] space-y-5 self-center rounded-xl bg-black px-8 py-4 ring-2 ring-gray-900">
                 <div className="space-y-2">
-                  <h1 className="text-lg font-semibold">Delete Post?</h1>
+                  <h3 className="font-semibold">Delete Post?</h3>
                   <span className="block opacity-50">
                     This can&apos;t be undone.
                   </span>
                 </div>
                 <div className="flex flex-col space-y-3 py-2 font-semibold">
                   <button
-                    type="button"
                     onClick={onDeleteClick}
+                    type="button"
                     className="rounded-md bg-red-600 p-2"
                   >
                     Delete
                   </button>
                   <button
-                    type="button"
                     onClick={onDeleteOverlayClick}
+                    type="button"
                     className="rounded-md border p-2 hover:bg-[#202020]"
                   >
                     Cancel

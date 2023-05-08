@@ -24,23 +24,22 @@ export default function Header() {
   };
   useEffect(() => {
     if (logoutData?.ok) {
-      // eslint-disable-next-line no-restricted-globals
       location.reload();
     }
   }, [logoutData]);
   return (
     <div
       className={cls(
-        'fixed top-0 z-10 flex h-20 w-full max-w-3xl -translate-x-[1px] items-center justify-end space-x-3 border-b bg-black p-2 px-4 font-medium',
+        'fixed top-0 z-10 flex h-20 w-full max-w-3xl -translate-x-[1px] items-center justify-end space-x-3 border-b bg-black p-2 px-4',
         mobile ? '' : 'border-x ring-1 ring-white'
       )}
     >
-      <span>{user && `Hello, ${user.name}!`}</span>
+      <h4>{user && `Hello, ${user.name}!`}</h4>
       <Button
         onClick={onClick}
+        type="button"
         text="Log out"
         long={false}
-        type="button"
       ></Button>
     </div>
   );

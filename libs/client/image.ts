@@ -1,13 +1,15 @@
 export async function getImage(imageSrc: string) {
   const width = 256;
   const height = 256;
-  return await resizeImage(imageSrc, width, height);
+  const resizedImages = await resizeImage(imageSrc, width, height);
+  return resizedImages;
 }
 
 export async function getAvatarImage(imageSrc: string) {
   const width = 48;
   const height = 48;
-  return await resizeImage(imageSrc, width, height);
+  const resizedImages = await resizeImage(imageSrc, width, height);
+  return resizedImages;
 }
 
 async function resizeImage(imageSrc: string, width: number, height: number) {
@@ -21,6 +23,7 @@ async function getWebpImage(imageSrc: string, width: number, height: number) {
   const canvas = document.createElement('canvas');
   canvas.width = width;
   canvas.height = height;
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
   canvas.getContext('2d')?.drawImage(image, 0, 0, width, height);
 
   // As Base64 string

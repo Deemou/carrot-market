@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
-/* eslint-disable no-underscore-dangle */
 import { ProductWithCount } from 'pages';
 import useSWR from 'swr';
 import { useRouter } from 'next/router';
@@ -33,7 +31,7 @@ export default function ProductList({ kind }: ProductListProps) {
         <Item
           id={record.product.id}
           key={record.id}
-          title={record.product.name}
+          name={record.product.name}
           price={record.product.price}
           image={record.product.image}
           hearts={record.product._count.favs}

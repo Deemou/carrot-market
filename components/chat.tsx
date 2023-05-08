@@ -1,5 +1,3 @@
-/* eslint-disable no-void */
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
 import Message from '@components/message';
 import useSWRInfinite from 'swr/infinite';
 import { useForm } from 'react-hook-form';
@@ -10,8 +8,8 @@ import useInfiniteScroll from '@libs/client/useInfiniteScroll';
 import { Chat } from '@prisma/client';
 
 interface ChatProps {
-  title: string;
   chatId: string | undefined;
+  title: string;
 }
 
 interface MessageForm {
@@ -19,8 +17,8 @@ interface MessageForm {
 }
 
 interface ChatMessage {
-  message: string;
   id: number;
+  message: string;
   user: {
     avatar?: string;
     id: number;
@@ -93,7 +91,7 @@ export default function ChatRoom({ title, chatId }: ChatProps) {
 
   return (
     <div>
-      <h2 className="text-2xl font-bold">{title}</h2>
+      <h2>{title}</h2>
       <div
         id={scrollId}
         className="h-[50vh] space-y-4 overflow-y-scroll px-4 py-5 pb-16"
@@ -119,17 +117,18 @@ export default function ChatRoom({ title, chatId }: ChatProps) {
       <div className="inset-x-0 py-2">
         <form
           onSubmit={(...args) => void handleSubmit(onValid)(...args)}
-          className="relative mx-auto flex w-full  max-w-lg items-center"
+          className="relative mx-auto flex w-full max-w-lg items-center"
         >
           <input
             type="text"
+            required
             {...register('message', { required: true })}
             className="w-full rounded-full border-gray-300 pr-12 shadow-sm focus:border-orange-500 focus:outline-none focus:ring-orange-500"
           />
           <div className="absolute inset-y-0 right-0 flex py-1.5 pr-1.5">
             <button
               type="submit"
-              className="flex items-center rounded-full bg-orange-500 px-3 text-sm  hover:bg-orange-600 focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
+              className="flex items-center rounded-full bg-orange-500 p-2 hover:bg-orange-600 focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
             >
               &rarr;
             </button>

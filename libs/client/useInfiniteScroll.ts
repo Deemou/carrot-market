@@ -1,4 +1,3 @@
-/* eslint-disable consistent-return */
 import { useEffect, useState } from 'react';
 
 type Direction = 'up' | 'down';

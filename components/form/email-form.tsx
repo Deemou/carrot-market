@@ -1,4 +1,3 @@
-/* eslint-disable no-void */
 import { useForm } from 'react-hook-form';
 import useMutation from '@/libs/client/useMutation';
 import { Dispatch, SetStateAction, useEffect } from 'react';
@@ -23,7 +22,7 @@ interface EmailFormProps {
 export default function EmailForm({ setIsEmailOk, children }: EmailFormProps) {
   const { user } = useUser();
 
-  const [validateEmail, { loading: emailLoading, data: emailData }] =
+  const [validateEmail, { loading, data }] =
     useMutation<MutationResult>('/api/users/verify');
 
   const {
@@ -44,15 +43,15 @@ export default function EmailForm({ setIsEmailOk, children }: EmailFormProps) {
   };
 
   const onEmailValid = (validForm: IEmailForm) => {
-    if (emailLoading) return;
+    if (loading) return;
     validateEmail(validForm);
   };
 
   useEffect(() => {
-    if (!emailData) return;
-    if (emailData.ok) setIsEmailOk(true);
-    if (emailData.error) setError('formErrors', { message: emailData.error });
-  }, [emailData, setError, setIsEmailOk]);
+    if (!data) return;
+    if (data.ok) setIsEmailOk(true);
+    if (data.error) setError('formErrors', { message: data.error });
+  }, [data, setError, setIsEmailOk]);
 
   return (
     <form
@@ -61,7 +60,7 @@ export default function EmailForm({ setIsEmailOk, children }: EmailFormProps) {
     >
       <EmailInput onClick={onClick} register={register} />
       {errors.formErrors && (
-        <span className="my-2 block text-center font-medium text-red-600">
+        <span className="my-2 block text-center text-red-600">
           {errors.formErrors.message}
         </span>
       )}

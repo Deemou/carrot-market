@@ -20,6 +20,10 @@ export default function PasswordInput({
     <>
       <Input
         onClick={onClick}
+        type="password"
+        name="password"
+        label="Password"
+        required
         register={register('password', {
           required: true,
           minLength: {
@@ -27,13 +31,9 @@ export default function PasswordInput({
             message: 'Password must be at least 9 characters'
           }
         })}
-        label="Password"
-        name="password"
-        type="password"
-        required
       />
       {errors.password && (
-        <span className="my-2 block text-center font-medium text-red-600">
+        <span className="my-2 block text-center text-red-600">
           {errors.password.message}
         </span>
       )}

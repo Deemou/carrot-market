@@ -2,11 +2,11 @@ import Link from 'next/link';
 import React from 'react';
 
 interface IFloatingButton {
-  children: React.ReactNode;
   href: string;
+  children: React.ReactNode;
 }
 
-export default function FloatingButton({ children, href }: IFloatingButton) {
+export default function FloatingButton({ href, children }: IFloatingButton) {
   return (
     <Link
       href={href}

@@ -7,12 +7,13 @@ module.exports = {
   theme: {
     extend: {},
     screens: {
-      xs: '320px',
-      sm: '640px',
-      md: '768px',
-      lg: '1024px',
-      xl: '1280px',
-      '2xl': '1536px'
+      w320: '320px',
+      w480: '480px',
+      w640: '640px',
+      w768: '768px',
+      w1024: '1024px',
+      w1280: '1280px',
+      w1536: '1536px'
     }
   },
   darkMode: 'media', // class

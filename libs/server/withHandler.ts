@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable consistent-return */
 import { NextApiHandler } from 'next';
 
 export interface ResponseType {

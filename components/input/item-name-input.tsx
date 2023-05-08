@@ -5,21 +5,18 @@ interface IName {
   name: string;
 }
 
-interface NameInputProps {
-  onClick: () => void;
+interface ItemNameInputProps {
   register: UseFormRegister<any>;
   errors: FieldErrors<IName>;
 }
 
-export default function NameInput({
-  onClick,
+export default function ItemNameInput({
   register,
   errors
-}: NameInputProps) {
+}: ItemNameInputProps) {
   return (
     <>
       <Input
-        onClick={onClick}
         type="text"
         name="name"
         label="Name"
@@ -27,12 +24,12 @@ export default function NameInput({
         register={register('name', {
           required: true,
           minLength: {
-            value: 5,
-            message: 'Name must be at least 5 characters'
+            value: 10,
+            message: 'Name must be at least 10 characters'
           },
           maxLength: {
-            value: 18,
-            message: 'Name must be up to 18 characters'
+            value: 100,
+            message: 'Name must be up to 100 characters'
           }
         })}
       />

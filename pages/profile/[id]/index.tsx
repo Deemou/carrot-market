@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import { User } from '@prisma/client';
 import Layout from '@/components/layout';
@@ -12,18 +11,18 @@ const Profile: NextPage<{ profile: User }> = ({ profile }) => {
       <div className="px-4">
         <div className="mt-4 flex items-center space-x-3">
           <Avatar url={profile.avatar} />
-          <div className="flex flex-col">
-            <span className="font-medium ">{profile.name}</span>
+          <div className="h-12">
+            <h4>{profile.name}</h4>
           </div>
         </div>
         <div className="mt-10 flex justify-around">
           <Tab href={`/profile/${profile.id}/sold`} text="판매중인 상품">
             <svg
-              className="h-6 w-6"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
             >
               <path
                 strokeLinecap="round"

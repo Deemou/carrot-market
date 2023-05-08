@@ -9,14 +9,15 @@ async function handler(
   res: NextApiResponse<ResponseType>
 ) {
   const {
-    query: { id },
     session: { user }
   } = req;
+
+  const id = Number(req.query.id);
 
   if (req.method === 'GET') {
     const product = await client.product.findUnique({
       where: {
-        id: Number(id)
+        id
       }
     });
     if (!product)
@@ -36,7 +37,7 @@ async function handler(
 
     await client.product.update({
       where: {
-        id: Number(id)
+        id
       },
       data: {
         name,
@@ -46,11 +47,11 @@ async function handler(
       }
     });
 
-    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
     await res.revalidate(`/products/${id}`);
 
     res.json({
-      ok: true
+      ok: true,
+      id
     });
   }
 }

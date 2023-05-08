@@ -7,21 +7,21 @@ interface ITokenForm {
 }
 
 interface TokenInputProps {
-  register: UseFormRegister<ITokenForm>;
   onClick?: () => void;
+  register: UseFormRegister<ITokenForm>;
 }
 
-export default function TokenInput({ register, onClick }: TokenInputProps) {
+export default function TokenInput({ onClick, register }: TokenInputProps) {
   return (
     <Input
       onClick={onClick}
+      type="number"
+      name="token"
+      label="Confirmation Token"
+      required
       register={register('token', {
         required: true
       })}
-      label="Confirmation Token"
-      name="token"
-      type="number"
-      required
     />
   );
 }
