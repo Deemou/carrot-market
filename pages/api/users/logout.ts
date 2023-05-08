@@ -2,8 +2,11 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import withHandler, { ResponseType } from '@libs/server/withHandler';
 import withApiSession from '@libs/server/withSession';
 
-function handler(req: NextApiRequest, res: NextApiResponse<ResponseType>) {
-  req.session.destroy();
+async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse<ResponseType>
+) {
+  await req.session.destroy();
 
   res.json({ ok: true });
 }

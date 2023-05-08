@@ -20,7 +20,7 @@ async function handler(
       .status(400)
       .json({ ok: false, error: 'Invalid email or password.' });
 
-  const match = isSamePassword(password, user.password);
+  const match = await isSamePassword(password, user.password);
 
   if (!match)
     return res

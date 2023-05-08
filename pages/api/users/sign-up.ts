@@ -14,7 +14,7 @@ async function handler(
   const email = req.session.auth?.email;
 
   if (!name || !password || !email) return res.status(400).json({ ok: false });
-  const hashedPassword = hashPassword(password);
+  const hashedPassword = await hashPassword(password);
 
   const user = await client.user.create({
     data: {

@@ -67,7 +67,8 @@
     ],
     "consistent-return": [
       "off"
-    ]
+    ],
+    "@typescript-eslint/await-thenable": "off"
   },
   "settings": {
     "react": {
