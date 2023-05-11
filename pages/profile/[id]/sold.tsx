@@ -26,7 +26,7 @@ const Sold: NextPage<ProductListResponse> = ({ products }) => {
             key={record.id}
             name={record.product.name}
             price={record.product.price}
-            image={record.product.image}
+            thumbImage={record.product.thumbImage || record.product.image}
             hearts={record.product._count.favs}
           />
         ))}
