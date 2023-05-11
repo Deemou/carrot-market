@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import useMutation from '@/libs/client/useMutation';
-import { saveImage } from '@/libs/client/image';
+import { saveImage, saveThumbImage } from '@/libs/client/image';
 import { v4 as uuidv4 } from 'uuid';
 import PriceInput from '@components/input/price-input';
 import Button from '@components/button';
@@ -78,13 +78,19 @@ export default function ProductForm({
     if (!imageFile || imageFile.length < 1) return;
 
     const storagePath = `product/${uuidv4()}`;
+    const thumbStoragePath = `product/thumb/${uuidv4()}`;
     const image = await saveImage(productImagePreview, storagePath);
+    const thumbImage = await saveThumbImage(
+      productImagePreview,
+      thumbStoragePath
+    );
 
     postProduct({
       name,
       price,
       description,
-      image
+      image,
+      thumbImage
     });
   };
 

@@ -12,6 +12,12 @@ export async function getImage(imageSrc: string) {
   return resizedImages;
 }
 
+export async function getThumbImage(imageSrc: string) {
+  const smallerLength = 84;
+  const resizedImages = await resizeImage(imageSrc, smallerLength);
+  return resizedImages;
+}
+
 export async function getAvatar(imageSrc: string) {
   const smallerLength = 48;
   const resizedImages = await resizeImage(imageSrc, smallerLength);
@@ -29,6 +35,7 @@ async function getWebpImage(imageSrc: string, smallerLength: number) {
   const canvas = document.createElement('canvas');
   // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
   const { width, height } = getSize(image.width, image.height, smallerLength);
+  console.log(width, height);
   canvas.width = width;
   canvas.height = height;
   // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
@@ -88,6 +95,12 @@ function dataURLToBlob(dataURL: string) {
 
 export async function saveImage(imageSrc: string, storagePath: string) {
   const image = await getImage(imageSrc);
+  const downloadUrl = await uploadAndGetUrl(image, storagePath);
+  return downloadUrl;
+}
+
+export async function saveThumbImage(imageSrc: string, storagePath: string) {
+  const image = await getThumbImage(imageSrc);
   const downloadUrl = await uploadAndGetUrl(image, storagePath);
   return downloadUrl;
 }
