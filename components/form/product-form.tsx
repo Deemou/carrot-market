@@ -82,10 +82,7 @@ export default function ProductForm({
 
   const onValid = async ({ name, price, description }: IProductForm) => {
     if (loading) return;
-    if (!imageFile || imageFile.length < 1) {
-      postProduct({ name, price, description });
-      return;
-    }
+    if (!imageFile || imageFile.length < 1) return;
 
     const image = await getImage(productImagePreview);
     const storageService = getStorage(firebase);
