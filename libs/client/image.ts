@@ -1,26 +1,26 @@
 export async function getImage(imageSrc: string) {
-  const width = 256;
-  const height = 256;
-  const resizedImages = await resizeImage(imageSrc, width, height);
+  const smallerLength = 256;
+  const resizedImages = await resizeImage(imageSrc, smallerLength);
   return resizedImages;
 }
 
 export async function getAvatarImage(imageSrc: string) {
-  const width = 48;
-  const height = 48;
-  const resizedImages = await resizeImage(imageSrc, width, height);
+  const smallerLength = 48;
+  const resizedImages = await resizeImage(imageSrc, smallerLength);
   return resizedImages;
 }
 
-async function resizeImage(imageSrc: string, width: number, height: number) {
-  const dataUrl = await getWebpImage(imageSrc, width, height);
+async function resizeImage(imageSrc: string, smallerLength: number) {
+  const dataUrl = await getWebpImage(imageSrc, smallerLength);
   const resizedImage = dataURLToBlob(dataUrl);
   return resizedImage;
 }
 
-async function getWebpImage(imageSrc: string, width: number, height: number) {
+async function getWebpImage(imageSrc: string, smallerLength: number) {
   const image: any = await createImage(imageSrc);
   const canvas = document.createElement('canvas');
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
+  const { width, height } = getSize(image.width, image.height, smallerLength);
   canvas.width = width;
   canvas.height = height;
   // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
@@ -38,6 +38,21 @@ async function createImage(url: string) {
     image.setAttribute('crossOrigin', 'anonymous'); // needed to avoid cross-origin issues
     image.src = url;
   });
+}
+
+function getSize(
+  imageWidth: number,
+  imageHeight: number,
+  smallerLength: number
+) {
+  let width = smallerLength;
+  let height = smallerLength;
+  const ratio = imageHeight / imageWidth;
+
+  if (ratio > 1) height *= ratio;
+  else width /= ratio;
+
+  return { width, height };
 }
 
 function dataURLToBlob(dataURL: string) {
