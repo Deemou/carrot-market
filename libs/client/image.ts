@@ -1,10 +1,18 @@
+import firebase from '@/libs/server/firebase';
+import {
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL
+} from 'firebase/storage';
+
 export async function getImage(imageSrc: string) {
   const smallerLength = 256;
   const resizedImages = await resizeImage(imageSrc, smallerLength);
   return resizedImages;
 }
 
-export async function getAvatarImage(imageSrc: string) {
+export async function getAvatar(imageSrc: string) {
   const smallerLength = 48;
   const resizedImages = await resizeImage(imageSrc, smallerLength);
   return resizedImages;
@@ -76,4 +84,48 @@ function dataURLToBlob(dataURL: string) {
   }
 
   return new Blob([uInt8Array], { type: contentType });
+}
+
+export async function saveImage(imageSrc: string, storagePath: string) {
+  const image = await getImage(imageSrc);
+  const downloadUrl = await uploadAndGetUrl(image, storagePath);
+  return downloadUrl;
+}
+
+export async function saveAvatar(imageSrc: string, storagePath: string) {
+  const avatar = await getAvatar(imageSrc);
+  const downloadUrl = await uploadAndGetUrl(avatar, storagePath);
+  return downloadUrl;
+}
+
+async function uploadAndGetUrl(image: Blob, storagePath: string) {
+  const storageService = getStorage(firebase);
+  const imageRef = ref(storageService, storagePath);
+  const uploadTask = uploadBytesResumable(imageRef, image);
+
+  return new Promise((resolve, reject) => {
+    uploadTask.on(
+      'state_changed',
+      (snapshot) => {
+        switch (snapshot.state) {
+          case 'paused':
+            console.log('Upload is paused.');
+            break;
+          case 'running':
+            console.log('Upload is running.');
+            break;
+          default:
+        }
+      },
+      (error) => {
+        console.log(error);
+        reject(error);
+      },
+      () => {
+        void getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+          resolve(url);
+        });
+      }
+    );
+  });
 }
