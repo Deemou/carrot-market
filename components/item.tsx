@@ -5,11 +5,17 @@ interface ItemProps {
   id: number;
   name: string;
   price: number;
-  image: string;
+  thumbImage: string;
   hearts: number;
 }
 
-export default function Item({ id, name, price, image, hearts }: ItemProps) {
+export default function Item({
+  id,
+  name,
+  price,
+  thumbImage,
+  hearts
+}: ItemProps) {
   return (
     <Link
       href={`/products/${id}`}
@@ -18,10 +24,10 @@ export default function Item({ id, name, price, image, hearts }: ItemProps) {
       <div className="flex w-full justify-between space-x-4">
         <div className="relative aspect-square h-24 shrink-0">
           <Image
-            src={image}
+            src={thumbImage}
             alt="product"
-            width={96}
-            height={96}
+            fill
+            sizes="50vw"
             priority
             className="object-center"
           />

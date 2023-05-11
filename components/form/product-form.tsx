@@ -3,15 +3,8 @@ import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import useMutation from '@/libs/client/useMutation';
-import { getImage } from '@/libs/client/image';
+import { saveImage, saveThumbImage } from '@/libs/client/image';
 import { v4 as uuidv4 } from 'uuid';
-import firebase from '@/libs/server/firebase';
-import {
-  getStorage,
-  ref,
-  uploadBytesResumable,
-  getDownloadURL
-} from 'firebase/storage';
 import PriceInput from '@components/input/price-input';
 import Button from '@components/button';
 import { Product } from '@prisma/client';
@@ -82,37 +75,23 @@ export default function ProductForm({
 
   const onValid = async ({ name, price, description }: IProductForm) => {
     if (loading) return;
-    if (!imageFile || imageFile.length < 1) {
-      postProduct({ name, price, description });
-      return;
-    }
+    if (!imageFile || imageFile.length < 1) return;
 
-    const image = await getImage(productImagePreview);
-    const storageService = getStorage(firebase);
-    const imageRef = ref(storageService, `product/${uuidv4()}`);
-    const uploadTask = uploadBytesResumable(imageRef, image);
-    uploadTask.on(
-      'state_changed',
-      (snapshot) => {
-        switch (snapshot.state) {
-          case 'paused':
-            console.log('Upload is paused.');
-            break;
-          case 'running':
-            console.log('Upload is running.');
-            break;
-          default:
-        }
-      },
-      (error) => {
-        console.log(error);
-      },
-      () => {
-        void getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-          postProduct({ name, price, description, image: url });
-        });
-      }
+    const storagePath = `product/${uuidv4()}`;
+    const thumbStoragePath = `product/thumb/${uuidv4()}`;
+    const image = await saveImage(productImagePreview, storagePath);
+    const thumbImage = await saveThumbImage(
+      productImagePreview,
+      thumbStoragePath
     );
+
+    postProduct({
+      name,
+      price,
+      description,
+      image,
+      thumbImage
+    });
   };
 
   useEffect(() => {

@@ -3,18 +3,11 @@ import { useEffect, useState } from 'react';
 import useUser from '@libs/client/useUser';
 import useMutation from '@libs/client/useMutation';
 import { v4 as uuidv4 } from 'uuid';
-import firebase from '@libs/server/firebase';
-import {
-  getStorage,
-  ref,
-  uploadBytesResumable,
-  getDownloadURL
-} from 'firebase/storage';
 import Button from '@components/button';
 import AvatarInput from '@components/input/avatar-input';
 import { useRouter } from 'next/router';
 import NameInput from '@components/input/name-input';
-import { getAvatarImage } from '@/libs/client/image';
+import { saveAvatar } from '@/libs/client/image';
 
 interface EditProfileForm {
   avatar?: FileList;
@@ -64,35 +57,13 @@ export default function ProfileForm() {
       return;
     }
 
-    const image = await getAvatarImage(avatarPreview);
-    const storageService = getStorage(firebase);
-    const imageRef = ref(storageService, `avatar/${uuidv4()}`);
-    const uploadTask = uploadBytesResumable(imageRef, image);
-    uploadTask.on(
-      'state_changed',
-      (snapshot) => {
-        switch (snapshot.state) {
-          case 'paused':
-            console.log('Upload is paused.');
-            break;
-          case 'running':
-            console.log('Upload is running.');
-            break;
-          default:
-        }
-      },
-      (error) => {
-        console.log(error);
-      },
-      () => {
-        void getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-          editProfile({
-            avatar: url,
-            name
-          });
-        });
-      }
-    );
+    const storagePath = `avatar/${uuidv4()}`;
+    const avatar = await saveAvatar(avatarPreview, storagePath);
+
+    editProfile({
+      avatar,
+      name
+    });
   };
 
   useEffect(() => {

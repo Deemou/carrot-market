@@ -6,7 +6,7 @@ interface AvatarProps {
 
 export default function Avatar({ url }: AvatarProps) {
   return url ? (
-    <div className="relative aspect-square h-12">
+    <div className="relative aspect-square h-[3.4rem]">
       <Image
         src={url}
         alt="avatar"

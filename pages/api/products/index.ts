@@ -44,7 +44,7 @@ async function handler(
   }
   if (req.method === 'POST') {
     const {
-      body: { name, price, description, image },
+      body: { name, price, description, image, thumbImage },
       session: { user }
     } = req;
     const product = await client.product.create({
@@ -53,6 +53,7 @@ async function handler(
         price: +price,
         description,
         image,
+        thumbImage,
         user: {
           connect: {
             id: user?.id

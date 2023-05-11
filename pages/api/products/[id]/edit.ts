@@ -32,7 +32,7 @@ async function handler(
   }
   if (req.method === 'POST') {
     const {
-      body: { name, price, description, image }
+      body: { name, price, description, image, thumbImage }
     } = req;
 
     await client.product.update({
@@ -43,7 +43,8 @@ async function handler(
         name,
         price: +price,
         description,
-        image
+        image,
+        thumbImage
       }
     });
 
