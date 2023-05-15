@@ -110,6 +110,7 @@ export default function PaginationBar({
                 ? 'border border-white bg-black'
                 : 'bg-red-500'
             )}
+            disabled={page === currentPage}
           >
             <span>{page}</span>
           </button>
