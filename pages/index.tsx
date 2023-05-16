@@ -1,6 +1,4 @@
 import type { GetStaticProps, NextPage } from 'next';
-import Head from 'next/head';
-import FloatingButton from '@components/floating-button';
 import Item from '@components/item';
 import { Product } from '@prisma/client';
 import Layout from '@/components/layout';
@@ -8,6 +6,7 @@ import useInfiniteScroll from '@/libs/client/useInfiniteScroll';
 import useSWRInfinite from 'swr/infinite';
 import { useEffect } from 'react';
 import client from '@/libs/server/client';
+import SearchBar from '@/components/search-bar';
 
 export interface ProductWithCount extends Product {
   _count: {
@@ -39,44 +38,23 @@ const Home: NextPage<ProductsResponse> = (props) => {
   }, [setSize, page]);
 
   return (
-    <>
-      <Head>
-        <title>Home</title>
-      </Head>
-      <Layout seoTitle="Home">
-        <FloatingButton href="/products/upload">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            aria-hidden="true"
-            className="h-6 w-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+    <Layout seoTitle="Home">
+      <SearchBar section="products" />
+      <div className="mt-24 flex flex-col space-y-5 divide-y-[1px]">
+        {data?.map((productsPage) => {
+          return productsPage.products?.map((product) => (
+            <Item
+              id={product.id}
+              key={product.id}
+              name={product.name}
+              price={product.price}
+              thumbImage={product.thumbImage || product.image}
+              hearts={product._count.favs}
             />
-          </svg>
-        </FloatingButton>
-        <div className="mt-16 flex flex-col space-y-5 divide-y-[1px]">
-          {data?.map((productsPage) => {
-            return productsPage.products?.map((product) => (
-              <Item
-                id={product.id}
-                key={product.id}
-                name={product.name}
-                price={product.price}
-                thumbImage={product.thumbImage || product.image}
-                hearts={product._count.favs}
-              />
-            ));
-          })}
-        </div>
-      </Layout>
-    </>
+          ));
+        })}
+      </div>
+    </Layout>
   );
 };
 
