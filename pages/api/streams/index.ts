@@ -9,14 +9,14 @@ async function handler(
   res: NextApiResponse<ResponseType>
 ) {
   if (req.method === 'GET') {
+    const page = Number(req.query.page);
     const limit = 5;
     const streamsCount = await client.stream.count();
-    const page = Number(req.query.page);
     const lastPage = Math.ceil(streamsCount / limit);
     if (page < 1 || page > lastPage) {
       return res.status(404).end();
     }
-    const skip = ((page || 1) - 1) * limit;
+    const skip = (page - 1) * limit;
     const streams = await client.stream.findMany({
       take: limit,
       skip,

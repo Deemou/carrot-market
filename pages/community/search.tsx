@@ -1,9 +1,11 @@
 import type { NextPage } from 'next';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import useSWR from 'swr';
 import { Post, User } from '@prisma/client';
-import client from '@libs/server/client';
 import Layout from '@/components/layout';
+import PaginationBar from '@/components/pagination-bar';
 import SearchBar from '@/components/search-bar';
 
 interface PostWithUser extends Post {
@@ -13,20 +15,31 @@ interface PostWithUser extends Post {
     answers: number;
   };
 }
-
 interface PostsResponse {
+  ok: boolean;
   posts: PostWithUser[];
+  lastPage: number;
 }
 
-const Community: NextPage<PostsResponse> = (props) => {
-  const { data } = useSWR<PostsResponse>('/api/posts', {
-    fallbackData: props
-  });
+const CommunitySearch: NextPage = () => {
+  const router = useRouter();
+  const { q } = router.query;
+  const [page, setPage] = useState<number>(1);
+  const { data } = useSWR<PostsResponse>(
+    q ? `/api/posts/search?q=${q}&page=${page}` : null
+  );
+
+  useEffect(() => {
+    if (router?.query?.page) {
+      setPage(+router.query.page);
+    }
+  }, [page, router]);
 
   return (
-    <Layout seoTitle="Community">
+    <Layout seoTitle="CommunitySearch">
       <SearchBar section="community" />
-      <div className="mt-24 space-y-4 divide-y-[2px]">
+      <h3 className="mb-4 mt-28">Results for : {q}</h3>
+      <div className="flex flex-col space-y-5 divide-y-[1px]">
         {data &&
           data.posts.map((post) => (
             <Link
@@ -82,39 +95,17 @@ const Community: NextPage<PostsResponse> = (props) => {
               </div>
             </Link>
           ))}
+        {!data?.ok && (
+          <div className="mt-10">
+            <h3 className="text-center">No results found</h3>
+          </div>
+        )}
+        {data?.ok && (
+          <PaginationBar currentPage={page} lastPage={data.lastPage} />
+        )}
       </div>
     </Layout>
   );
 };
 
-export async function getStaticProps() {
-  console.log('BUILDING COMM. STATICALLY');
-  const posts = await client.post.findMany({
-    orderBy: {
-      createdAt: 'desc'
-    },
-    include: {
-      user: {
-        select: {
-          id: true,
-          name: true,
-          avatar: true
-        }
-      },
-      _count: {
-        select: {
-          wonderings: true,
-          answers: true
-        }
-      }
-    }
-  });
-  return {
-    props: {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      posts: JSON.parse(JSON.stringify(posts))
-    }
-  };
-}
-
-export default Community;
+export default CommunitySearch;

@@ -32,7 +32,7 @@ export default function Item({
             className="object-center"
           />
         </div>
-        <div className="flex w-10/12 flex-col justify-between max-w640:w-9/12 max-w480:w-8/12 max-w320:w-8/12">
+        <div className="flex w-10/12 flex-col justify-between max-w640:w-9/12 max-w480:w-8/12">
           <h3 className="overflow-hidden">{name}</h3>
           <div className="flex justify-between">
             <span>${price}</span>
