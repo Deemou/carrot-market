@@ -75,7 +75,15 @@ export default function ProductForm({
 
   const onValid = async ({ name, price, description }: IProductForm) => {
     if (loading) return;
-    if (!imageFile || imageFile.length < 1) return;
+    if (!imageFile || imageFile.length < 1) {
+      if (!productImagePreview) return;
+      postProduct({
+        name,
+        price,
+        description
+      });
+      return;
+    }
 
     const storagePath = `product/${uuidv4()}`;
     const thumbStoragePath = `product/thumb/${uuidv4()}`;
