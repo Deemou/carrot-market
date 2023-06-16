@@ -63,11 +63,11 @@ export default function ProductForm({
   });
 
   useEffect(() => {
-    if (ProductData?.product) setValue('name', ProductData.product.name);
-    if (ProductData?.product) setValue('price', ProductData.product.price);
-    if (ProductData?.product)
-      setValue('description', ProductData.product.description);
-    if (ProductData?.product) setProductImagePreview(ProductData.product.image);
+    if (!ProductData?.product) return;
+    setValue('name', ProductData.product.name);
+    setValue('price', ProductData.product.price);
+    setValue('description', ProductData.product.description);
+    setProductImagePreview(ProductData.product.image);
   }, [setValue, ProductData?.product]);
 
   const [postProduct, { loading, data }] =
@@ -75,7 +75,15 @@ export default function ProductForm({
 
   const onValid = async ({ name, price, description }: IProductForm) => {
     if (loading) return;
-    if (!imageFile || imageFile.length < 1) return;
+    if (!imageFile || imageFile.length < 1) {
+      if (!productImagePreview) return;
+      postProduct({
+        name,
+        price,
+        description
+      });
+      return;
+    }
 
     const storagePath = `product/${uuidv4()}`;
     const thumbStoragePath = `product/thumb/${uuidv4()}`;

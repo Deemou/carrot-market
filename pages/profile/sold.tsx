@@ -46,6 +46,9 @@ export const getServerSideProps = withSsrSession(async function (
       userId,
       kind: kind as Kind
     },
+    orderBy: {
+      createdAt: 'desc'
+    },
     include: {
       product: {
         include: {
@@ -53,7 +56,7 @@ export const getServerSideProps = withSsrSession(async function (
             select: {
               records: {
                 where: {
-                  kind: { equals: 'Sale' }
+                  kind: { equals: 'Fav' }
                 }
               }
             }
