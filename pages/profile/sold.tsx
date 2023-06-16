@@ -56,7 +56,7 @@ export const getServerSideProps = withSsrSession(async function (
             select: {
               records: {
                 where: {
-                  kind: { equals: 'Sale' }
+                  kind: { equals: 'Fav' }
                 }
               }
             }
