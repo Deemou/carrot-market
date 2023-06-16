@@ -10,8 +10,8 @@ export default function useInfiniteScroll(
 
   function handleWindowScroll() {
     if (
-      document.documentElement.scrollTop + window.innerHeight ===
-      document.documentElement.scrollHeight
+      document.documentElement.scrollTop + window.innerHeight >=
+      document.documentElement.scrollHeight - 100
     ) {
       setPage((p) => p + 1);
     }
