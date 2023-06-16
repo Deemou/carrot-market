@@ -34,6 +34,11 @@ export const middleware = async (req: NextRequest, ev: NextFetchEvent) => {
     req.nextUrl.pathname = loginUrl;
     return NextResponse.redirect(req.nextUrl);
   }
+
+  if (session.user && isAuthPages()) {
+    req.nextUrl.pathname = '/';
+    return NextResponse.redirect(req.nextUrl);
+  }
 };
 
 export const config = {
