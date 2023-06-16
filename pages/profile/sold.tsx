@@ -46,6 +46,9 @@ export const getServerSideProps = withSsrSession(async function (
       userId,
       kind: kind as Kind
     },
+    orderBy: {
+      createdAt: 'desc'
+    },
     include: {
       product: {
         include: {
