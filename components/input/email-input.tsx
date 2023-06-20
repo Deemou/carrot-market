@@ -8,10 +8,15 @@ interface IEmailForm {
 
 interface EmailInputProps {
   onClick?: () => void;
+  disabled?: boolean;
   register: UseFormRegister<IEmailForm>;
 }
 
-export default function EmailInput({ register, onClick }: EmailInputProps) {
+export default function EmailInput({
+  register,
+  disabled,
+  onClick
+}: EmailInputProps) {
   return (
     <Input
       onClick={onClick}
@@ -19,6 +24,7 @@ export default function EmailInput({ register, onClick }: EmailInputProps) {
       name="email"
       label="Email address"
       required
+      disabled={disabled}
       register={register('email', {
         required: true
       })}
@@ -27,5 +33,6 @@ export default function EmailInput({ register, onClick }: EmailInputProps) {
 }
 
 EmailInput.defaultProps = {
-  onClick: () => {}
+  onClick: () => {},
+  disabled: false
 };

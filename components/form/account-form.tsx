@@ -17,7 +17,11 @@ interface MutationResult {
   error?: string;
 }
 
-export default function AccountForm() {
+interface AccountFormProps {
+  email: string;
+}
+
+export default function AccountForm({ email }: AccountFormProps) {
   const router = useRouter();
   const [createAccount, { loading, data }] =
     useMutation<MutationResult>('/api/users/sign-up');
@@ -35,7 +39,7 @@ export default function AccountForm() {
 
   const onAccountValid = (validForm: IAccountForm) => {
     if (loading) return;
-    createAccount(validForm);
+    createAccount({ email, ...validForm });
   };
 
   useEffect(() => {

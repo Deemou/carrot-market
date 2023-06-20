@@ -12,14 +12,44 @@ datasource db {
   relationMode = "prisma"
 }
 
+model Account {
+  id                Int     @id @default(autoincrement())
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId            Int
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+
+model Session {
+  id           Int      @id @default(autoincrement())
+  sessionToken String   @unique
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId       Int
+
+  @@index([userId])
+}
+
 model User {
   id              Int         @id @default(autoincrement())
   createdAt       DateTime    @default(now())
   updatedAt       DateTime    @updatedAt
+  name            String?
   phone           String?     @unique
-  email           String      @unique
-  password        String
-  name            String
+  email           String?     @unique
+  emailVerified   DateTime?
+  password        String?
   avatar          String?
   products        Product[]
   posts           Post[]
@@ -31,6 +61,16 @@ model User {
   streams         Stream[]
   messages        Message[]
   chats           Chat[]
+  accounts        Account[]
+  sessions        Session[]
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
 }
 
 model Token {

@@ -2,15 +2,15 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import withHandler, { ResponseType } from '@libs/server/withHandler';
 import client from '@libs/server/client';
-import withApiSession from '@libs/server/withSession';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@api/auth/[...nextauth]';
 
 async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseType>
 ) {
-  const {
-    session: { user }
-  } = req;
+  const session = await getServerSession(req, res, authOptions);
+  if (!session) return res.status(400).json({ ok: false });
 
   const id = Number(req.query.id);
 
@@ -22,7 +22,7 @@ async function handler(
     });
     if (!product)
       res.status(404).json({ ok: false, error: 'Not found product' });
-    if (product?.userId !== user?.id)
+    if (product?.userId !== Number(session.user.id))
       res.status(403).json({ ok: false, error: 'Unauthorized' });
 
     res.json({
@@ -30,6 +30,7 @@ async function handler(
       product
     });
   }
+
   if (req.method === 'POST') {
     const {
       body: { name, price, description, image, thumbImage }
@@ -58,9 +59,7 @@ async function handler(
   }
 }
 
-export default withApiSession(
-  withHandler({
-    methods: ['GET', 'POST'],
-    handler
-  })
-);
+export default withHandler({
+  methods: ['GET', 'POST'],
+  handler
+});

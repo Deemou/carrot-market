@@ -6,8 +6,8 @@ import { User } from '@prisma/client';
 import Layout from '@/components/layout';
 import Tab from '@/components/profile/tab';
 import Avatar from '@/components/avatar';
-import { withSsrSession } from '@libs/server/withSession';
 import client from '@libs/server/client';
+import { getSession } from 'next-auth/react';
 
 const Profile: NextPage = () => {
   const { user } = useUser();
@@ -92,11 +92,11 @@ const Page: NextPage<{ profile: User }> = ({ profile }) => {
   );
 };
 
-export const getServerSideProps = withSsrSession(async function (
-  ctx: NextPageContext
-) {
+export const getServerSideProps = async function (ctx: NextPageContext) {
+  const session = await getSession(ctx);
+
   const profile = await client.user.findUnique({
-    where: { id: ctx.req?.session.user?.id }
+    where: { id: Number(session?.user?.id) }
   });
   return {
     props: {
@@ -104,6 +104,6 @@ export const getServerSideProps = withSsrSession(async function (
       profile: JSON.parse(JSON.stringify(profile))
     }
   };
-});
+};
 
 export default Page;

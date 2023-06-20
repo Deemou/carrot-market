@@ -1,11 +1,11 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import Link from 'next/link';
-import useUser from '@/libs/client/useUser';
 import cls from '@/libs/client/utils';
 import { useEffect, useState } from 'react';
 import useMutation from '@/libs/client/useMutation';
 import { useRouter } from 'next/router';
 import Avatar from '@components/avatar';
+import { useSession } from 'next-auth/react';
 
 interface CardProps {
   avatar: string | null;
@@ -26,7 +26,7 @@ export default function Card({
   postType,
   postId
 }: CardProps) {
-  const { user } = useUser();
+  const { data: session } = useSession();
   const router = useRouter();
   const [isMenuClicked, setIsMenuClicked] = useState(false);
   const [isDeleteMenuClicked, setIsDeleteMenuClicked] = useState(false);
@@ -81,10 +81,15 @@ export default function Card({
           </Link>
         </div>
       </div>
-      {user && (
+      {session && (
         <>
           {/* menu */}
-          <div className={cls('relative', user.id === userId ? '' : 'hidden')}>
+          <div
+            className={cls(
+              'relative',
+              Number(session.user.id) === userId ? '' : 'hidden'
+            )}
+          >
             <svg
               onClick={onMenuClick}
               id="Layer_1"

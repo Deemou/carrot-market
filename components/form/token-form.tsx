@@ -15,10 +15,11 @@ interface MutationResult {
 }
 
 interface TokenFormProps {
+  email: string;
   setIsTokenOk: Dispatch<SetStateAction<boolean>>;
 }
 
-export default function TokenForm({ setIsTokenOk }: TokenFormProps) {
+export default function TokenForm({ email, setIsTokenOk }: TokenFormProps) {
   const [confirmToken, { loading, data }] =
     useMutation<MutationResult>('/api/users/confirm');
   const {
@@ -35,7 +36,7 @@ export default function TokenForm({ setIsTokenOk }: TokenFormProps) {
 
   const onTokenValid = (validForm: ITokenForm) => {
     if (loading) return;
-    confirmToken(validForm);
+    confirmToken({ email, ...validForm });
   };
 
   useEffect(() => {

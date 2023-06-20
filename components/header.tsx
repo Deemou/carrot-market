@@ -1,32 +1,16 @@
-import useMutation from '@/libs/client/useMutation';
-import useUser from '@/libs/client/useUser';
-import { useEffect } from 'react';
 import cls from '@/libs/client/utils';
 import { useRecoilValue } from 'recoil';
 import { isMobile } from '@/atoms';
+import { signOut, useSession } from 'next-auth/react';
 import Button from './button';
-
-interface LogoutResponse {
-  ok: boolean;
-}
-
-const logoutUrl = '/api/users/logout';
 
 export default function Header() {
   const mobile = useRecoilValue(isMobile);
-  const { user } = useUser();
-  const [logout, { loading, data: logoutData }] =
-    useMutation<LogoutResponse>(logoutUrl);
-
-  const onClick = () => {
-    if (loading) return;
-    logout({});
+  const { data: session } = useSession();
+  const onClick = async () => {
+    await signOut();
   };
-  useEffect(() => {
-    if (logoutData?.ok) {
-      location.reload();
-    }
-  }, [logoutData]);
+
   return (
     <div
       className={cls(
@@ -34,8 +18,9 @@ export default function Header() {
         mobile ? '' : 'border-x ring-1 ring-white'
       )}
     >
-      <h4>{user && `Hello, ${user.name}!`}</h4>
+      <h4>{session?.user && `Hello, ${session.user.name}!`}</h4>
       <Button
+        // eslint-disable-next-line @typescript-eslint/no-misused-promises
         onClick={onClick}
         type="button"
         text="Log out"

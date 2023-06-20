@@ -1,19 +1,22 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import withHandler, { ResponseType } from '@libs/server/withHandler';
 import client from '@libs/server/client';
-import withApiSession from '@libs/server/withSession';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@api/auth/[...nextauth]';
 import { Kind } from '@prisma/client';
 
 async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseType>
 ) {
+  const session = await getServerSession(req, res, authOptions);
+  if (!session) return res.status(400).json({ ok: false });
+
   const {
-    session: { user },
     query: { kind, id }
   } = req;
 
-  const userId = Number(id) || user?.id;
+  const userId = Number(id) || Number(session.user.id);
 
   const recordQueries = await client.record.findMany({
     where: {
@@ -45,15 +48,14 @@ async function handler(
       }
     };
   });
+
   res.json({
     ok: true,
     products
   });
 }
 
-export default withApiSession(
-  withHandler({
-    methods: ['GET'],
-    handler
-  })
-);
+export default withHandler({
+  methods: ['GET'],
+  handler
+});

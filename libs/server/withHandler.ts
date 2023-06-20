@@ -11,20 +11,15 @@ type method = 'GET' | 'POST' | 'DELETE';
 interface ConfigType {
   methods: method[];
   handler: NextApiHandler;
-  isPrivate?: boolean;
 }
 
 export default function withHandler({
   methods,
-  handler,
-  isPrivate = true
+  handler
 }: ConfigType): NextApiHandler {
   return async (req, res) => {
     if (req.method && !methods.includes(req.method as any)) {
       return res.status(405).end();
-    }
-    if (isPrivate && !req.session.user) {
-      return res.status(401).json({ ok: false, error: 'Plz log in.' });
     }
     try {
       await handler(req, res);

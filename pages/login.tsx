@@ -1,6 +1,7 @@
 import type { NextPage } from 'next';
 import Link from 'next/link';
 import LoginForm from '@/components/form/login-form';
+import { signIn } from 'next-auth/react';
 
 const Enter: NextPage = () => {
   return (
@@ -31,6 +32,8 @@ const Enter: NextPage = () => {
             </button>
             <button
               type="button"
+              // eslint-disable-next-line @typescript-eslint/no-misused-promises
+              onClick={() => signIn('github')}
               className="flex items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-black shadow-sm hover:bg-gray-50"
             >
               <svg

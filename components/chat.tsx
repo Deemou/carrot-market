@@ -2,10 +2,10 @@ import Message from '@components/message';
 import useSWRInfinite from 'swr/infinite';
 import { useForm } from 'react-hook-form';
 import useMutation from '@libs/client/useMutation';
-import useUser from '@libs/client/useUser';
 import { useEffect, useRef, useState } from 'react';
 import useInfiniteScroll from '@libs/client/useInfiniteScroll';
 import { Chat } from '@prisma/client';
+import { useSession } from 'next-auth/react';
 
 interface ChatProps {
   chatId: string | undefined;
@@ -36,8 +36,8 @@ interface ChatResponse {
 }
 
 export default function ChatRoom({ title, chatId }: ChatProps) {
+  const { data: session } = useSession();
   const requestUrl = `/api/chats/${chatId}`;
-  const { user } = useUser();
   const scrollRef = useRef<HTMLDivElement>(null);
   const direction = 'up';
   const scrollId = 'chatBox';
@@ -107,7 +107,7 @@ export default function ChatRoom({ title, chatId }: ChatProps) {
                 <Message
                   key={message.id}
                   message={message.message}
-                  reversed={message.user.id === user?.id}
+                  reversed={message.user.id === Number(session?.user?.id)}
                   avatarUrl={message.user.avatar}
                 />
               ));

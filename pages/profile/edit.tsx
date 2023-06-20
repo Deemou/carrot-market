@@ -7,6 +7,7 @@ import TokenForm from '@/components/form/token-form';
 import ProfileForm from '@/components/form/profile-form';
 
 const EditProfile: NextPage = () => {
+  const [email, setEmail] = useState('');
   const [isEmailOk, setIsEmailOk] = useState(false);
   const [isTokenOk, setIsTokenOk] = useState(false);
 
@@ -21,11 +22,13 @@ const EditProfile: NextPage = () => {
       <div className="px-4 py-10">
         <ProfileForm />
         {!isEmailOk && (
-          <EmailForm setIsEmailOk={setIsEmailOk}>
+          <EmailForm setEmail={setEmail} setIsEmailOk={setIsEmailOk}>
             <Button text="Change Email" />
           </EmailForm>
         )}
-        {isEmailOk && !isTokenOk && <TokenForm setIsTokenOk={setIsTokenOk} />}
+        {isEmailOk && !isTokenOk && (
+          <TokenForm email={email} setIsTokenOk={setIsTokenOk} />
+        )}
       </div>
     </Layout>
   );

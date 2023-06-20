@@ -1,10 +1,10 @@
 import type { NextPage, NextPageContext } from 'next';
 import Layout from '@/components/layout';
-import { withSsrSession } from '@/libs/server/withSession';
 import client from '@/libs/server/client';
 import { Kind } from '@prisma/client';
 import { ProductWithCount } from 'pages';
 import Item from '@/components/item';
+import { getSession } from 'next-auth/react';
 
 interface Record {
   id: number;
@@ -41,10 +41,9 @@ interface MyPageContext extends NextPageContext {
   };
 }
 
-export const getServerSideProps = withSsrSession(async function (
-  ctx: MyPageContext
-) {
-  const userId = Number(ctx.params?.id);
+export const getServerSideProps = async function (ctx: MyPageContext) {
+  const session = await getSession(ctx);
+  const userId = Number(session?.user?.id);
   const kind = 'Sale';
 
   const recordQueries = await client.record.findMany({
@@ -83,6 +82,6 @@ export const getServerSideProps = withSsrSession(async function (
       products: JSON.parse(JSON.stringify(products))
     }
   };
-});
+};
 
 export default Sold;

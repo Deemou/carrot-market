@@ -1,30 +1,30 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import withHandler, { ResponseType } from '@libs/server/withHandler';
 import client from '@libs/server/client';
-import withApiSession from '@libs/server/withSession';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@api/auth/[...nextauth]';
 
 async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseType>
 ) {
-  const {
-    session: { user }
-  } = req;
+  const session = await getServerSession(req, res, authOptions);
+  if (!session) return res.status(400).json({ ok: false });
+
   const reviews = await client.review.findMany({
     where: {
-      createdForId: user?.id
+      createdForId: Number(session.user.id)
     },
     include: { createdBy: { select: { id: true, name: true, avatar: true } } }
   });
+
   res.json({
     ok: true,
     reviews
   });
 }
 
-export default withApiSession(
-  withHandler({
-    methods: ['GET'],
-    handler
-  })
-);
+export default withHandler({
+  methods: ['GET'],
+  handler
+});
