@@ -17,12 +17,14 @@ interface MutationResult {
 interface EmailFormProps {
   setEmail: Dispatch<SetStateAction<string>>;
   setIsEmailOk: Dispatch<SetStateAction<boolean>>;
+  disabled?: boolean;
   children: React.ReactNode;
 }
 
 export default function EmailForm({
   setEmail,
   setIsEmailOk,
+  disabled,
   children
 }: EmailFormProps) {
   const { data: session } = useSession();
@@ -65,11 +67,7 @@ export default function EmailForm({
       onSubmit={(...args) => void handleSubmit(onEmailValid)(...args)}
       className="mt-8 flex flex-col space-y-4"
     >
-      <EmailInput
-        onClick={onClick}
-        disabled={session?.user.provider !== 'credentials'}
-        register={register}
-      />
+      <EmailInput onClick={onClick} disabled={disabled} register={register} />
       {errors.formErrors && (
         <span className="my-2 block text-center text-red-600">
           {errors.formErrors.message}
@@ -79,3 +77,7 @@ export default function EmailForm({
     </form>
   );
 }
+
+EmailForm.defaultProps = {
+  disabled: false
+};

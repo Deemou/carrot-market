@@ -5,8 +5,11 @@ import Button from '@components/button';
 import EmailForm from '@/components/form/email-form';
 import TokenForm from '@/components/form/token-form';
 import ProfileForm from '@/components/form/profile-form';
+import { useSession } from 'next-auth/react';
 
 const EditProfile: NextPage = () => {
+  const { data: session } = useSession();
+
   const [email, setEmail] = useState('');
   const [isEmailOk, setIsEmailOk] = useState(false);
   const [isTokenOk, setIsTokenOk] = useState(false);
@@ -22,7 +25,11 @@ const EditProfile: NextPage = () => {
       <div className="px-4 py-10">
         <ProfileForm />
         {!isEmailOk && (
-          <EmailForm setEmail={setEmail} setIsEmailOk={setIsEmailOk}>
+          <EmailForm
+            disabled={session?.user.provider !== 'credentials'}
+            setEmail={setEmail}
+            setIsEmailOk={setIsEmailOk}
+          >
             <Button text="Change Email" />
           </EmailForm>
         )}
