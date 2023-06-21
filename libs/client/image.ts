@@ -110,7 +110,10 @@ export async function saveAvatar(imageSrc: string, storagePath: string) {
   return downloadUrl;
 }
 
-async function uploadAndGetUrl(image: Blob, storagePath: string) {
+async function uploadAndGetUrl(
+  image: Blob,
+  storagePath: string
+): Promise<string> {
   const storageService = getStorage(firebase);
   const imageRef = ref(storageService, storagePath);
   const uploadTask = uploadBytesResumable(imageRef, image);

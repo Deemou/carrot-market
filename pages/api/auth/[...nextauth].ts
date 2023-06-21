@@ -41,7 +41,8 @@ export const authOptions: NextAuthOptions = {
         return {
           id: user.id.toString(),
           name: user.name,
-          email: user.email
+          email: user.email,
+          avatar: ''
         };
       }
     }),
@@ -52,33 +53,38 @@ export const authOptions: NextAuthOptions = {
         return {
           id: profile.id.toString() as string,
           name: (profile.name ?? profile.login) as string,
-          email: profile.email as string
+          email: profile.email as string,
+          avatar: ''
         };
       }
     })
   ],
   session: { strategy: 'jwt' },
   callbacks: {
-    async jwt({ token, account }) {
-      if (account) {
-        token.accessToken = account.access_token;
-        token.provider = account.provider;
+    async jwt({ token, account, user, trigger, session }) {
+      // This will only be true on the first login
+      if (account && user) {
+        return {
+          ...token,
+          ...user,
+          provider: account.provider,
+          accessToken: account.access_token
+        };
+      }
+      if (trigger === 'update' && session) {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+        return { ...token, ...session?.user };
       }
 
       return token;
     },
     async session({ session, token }) {
-      console.log('provider에서 넘겨받은 정보', session);
-      console.log('token', token);
-      session.user.id = token.sub!;
-      session.accessToken = token.accessToken;
-      session.user.provider = token.provider;
+      session.user = token;
       return session;
     }
   }
 };
 
-// export default NextAuth(authOptions);
 const authHandler: NextApiHandler = (req, res) =>
   NextAuth(req, res, authOptions);
 export default authHandler;

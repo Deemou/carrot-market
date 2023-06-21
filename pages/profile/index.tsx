@@ -1,23 +1,23 @@
 import type { NextPage, NextPageContext } from 'next';
 import Link from 'next/link';
-import useUser from '@libs/client/useUser';
 import { SWRConfig } from 'swr';
 import { User } from '@prisma/client';
 import Layout from '@/components/layout';
 import Tab from '@/components/profile/tab';
 import Avatar from '@/components/avatar';
 import client from '@libs/server/client';
-import { getSession } from 'next-auth/react';
+import { getSession, useSession } from 'next-auth/react';
 
 const Profile: NextPage = () => {
-  const { user } = useUser();
+  const { data: session } = useSession();
+
   return (
     <Layout seoTitle="Profile">
       <div className="px-4">
         <div className="mt-4 flex items-center space-x-3">
-          <Avatar url={user?.avatar} />
+          <Avatar url={session?.user?.avatar} />
           <div className="flex h-12 flex-col justify-between">
-            <h4>{user?.name}</h4>
+            <h4>{session?.user?.name}</h4>
             <Link href="/profile/edit" className="text-gray-400">
               Edit profile &rarr;
             </Link>
