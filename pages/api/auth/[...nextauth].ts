@@ -51,41 +51,17 @@ export const authOptions: NextAuthOptions = {
     GithubProvider({
       clientId: process.env.GITHUB_ID,
       clientSecret: process.env.GITHUB_SECRET,
-      allowDangerousEmailAccountLinking: true,
-      profile(profile) {
-        return {
-          id: String(profile.id),
-          name: (profile.name ?? profile.login) as string,
-          email: profile.email as string,
-          avatar: ''
-        };
-      }
+      allowDangerousEmailAccountLinking: true
     }),
     KakaoProvider({
       clientId: process.env.KAKAO_ID,
       clientSecret: process.env.KAKAO_SECRET,
-      allowDangerousEmailAccountLinking: true,
-      profile(profile) {
-        return {
-          id: String(profile.id),
-          name: profile.kakao_account?.profile?.nickname as string,
-          email: profile.kakao_account?.email as string,
-          avatar: ''
-        };
-      }
+      allowDangerousEmailAccountLinking: true
     }),
     NaverProvider({
       clientId: process.env.NAVER_ID,
       clientSecret: process.env.NAVER_SECRET,
-      allowDangerousEmailAccountLinking: true,
-      profile(profile) {
-        return {
-          id: profile.response.id as string,
-          name: profile.response.nickname as string,
-          email: profile.response.email as string,
-          avatar: ''
-        };
-      }
+      allowDangerousEmailAccountLinking: true
     })
   ],
   session: { strategy: 'jwt' },

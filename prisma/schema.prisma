@@ -52,6 +52,7 @@ model User {
   emailVerified   DateTime?
   password        String?
   avatar          String?
+  image           String?
   products        Product[]
   posts           Post[]
   answers         Answer[]
