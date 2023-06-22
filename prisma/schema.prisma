@@ -49,7 +49,7 @@ model User {
   name            String?
   phone           String?     @unique
   email           String?     @unique
-  emailVerified   DateTime?
+  emailVerified   Boolean?
   password        String?
   avatar          String?
   image           String?

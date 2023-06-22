@@ -69,6 +69,15 @@ export const authOptions: NextAuthOptions = {
     async jwt({ token, account, user, trigger, session }) {
       // This will only be true on the first login
       if (account && user) {
+        if (user.email) {
+          await client.user.update({
+            where: { email: user.email },
+            data: {
+              emailVerified: true
+            }
+          });
+        }
+
         return {
           ...token,
           ...user,
