@@ -51,6 +51,7 @@ export const authOptions: NextAuthOptions = {
     GithubProvider({
       clientId: process.env.GITHUB_ID,
       clientSecret: process.env.GITHUB_SECRET,
+      allowDangerousEmailAccountLinking: true,
       profile(profile) {
         return {
           id: String(profile.id),
@@ -63,6 +64,7 @@ export const authOptions: NextAuthOptions = {
     KakaoProvider({
       clientId: process.env.KAKAO_ID,
       clientSecret: process.env.KAKAO_SECRET,
+      allowDangerousEmailAccountLinking: true,
       profile(profile) {
         return {
           id: String(profile.id),
@@ -75,6 +77,7 @@ export const authOptions: NextAuthOptions = {
     NaverProvider({
       clientId: process.env.NAVER_ID,
       clientSecret: process.env.NAVER_SECRET,
+      allowDangerousEmailAccountLinking: true,
       profile(profile) {
         return {
           id: profile.response.id as string,
