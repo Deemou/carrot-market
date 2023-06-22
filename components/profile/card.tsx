@@ -10,7 +10,7 @@ import { useSession } from 'next-auth/react';
 interface CardProps {
   avatar: string | null;
   userId: number;
-  userName: string;
+  userName: string | null;
   postType: string;
   postId: number;
 }

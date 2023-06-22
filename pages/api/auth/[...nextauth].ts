@@ -7,6 +7,8 @@ import { PrismaAdapter } from '@auth/prisma-adapter';
 import client from '@/libs/server/client';
 import type { Adapter } from 'next-auth/adapters';
 import GithubProvider from 'next-auth/providers/github';
+import KakaoProvider from 'next-auth/providers/kakao';
+import NaverProvider from 'next-auth/providers/naver';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { isSamePassword } from '@/libs/server/hash';
 import { NextApiHandler } from 'next';
@@ -51,9 +53,33 @@ export const authOptions: NextAuthOptions = {
       clientSecret: process.env.GITHUB_SECRET,
       profile(profile) {
         return {
-          id: profile.id.toString() as string,
+          id: String(profile.id),
           name: (profile.name ?? profile.login) as string,
           email: profile.email as string,
+          avatar: ''
+        };
+      }
+    }),
+    KakaoProvider({
+      clientId: process.env.KAKAO_ID,
+      clientSecret: process.env.KAKAO_SECRET,
+      profile(profile) {
+        return {
+          id: String(profile.id),
+          name: profile.kakao_account?.profile?.nickname as string,
+          email: profile.kakao_account?.email as string,
+          avatar: ''
+        };
+      }
+    }),
+    NaverProvider({
+      clientId: process.env.NAVER_ID,
+      clientSecret: process.env.NAVER_SECRET,
+      profile(profile) {
+        return {
+          id: profile.response.id as string,
+          name: profile.response.nickname as string,
+          email: profile.response.email as string,
           avatar: ''
         };
       }
@@ -80,6 +106,7 @@ export const authOptions: NextAuthOptions = {
     },
     async session({ session, token }) {
       session.user = token;
+      console.log('session', session);
       return session;
     }
   }
