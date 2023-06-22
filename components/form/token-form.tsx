@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import useMutation from '@/libs/client/useMutation';
 import { Dispatch, SetStateAction, useEffect } from 'react';
-import Button from '@components/button';
+import Button from '@/components/button/button';
 import TokenInput from '@components/input/token-input';
 import { useSession } from 'next-auth/react';
 

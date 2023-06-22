@@ -6,7 +6,7 @@ import useMutation from '@/libs/client/useMutation';
 import { saveImage, saveThumbImage } from '@/libs/client/image';
 import { v4 as uuidv4 } from 'uuid';
 import PriceInput from '@components/input/price-input';
-import Button from '@components/button';
+import Button from '@/components/button/button';
 import { Product } from '@prisma/client';
 import ImageInput from '@components/input/image-input';
 import DescriptionInput from '@components/input/description-input';

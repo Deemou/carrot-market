@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import useMutation from '@libs/client/useMutation';
 import { Stream } from '@prisma/client';
 import Layout from '@/components/layout';
-import Button from '@components/button';
+import Button from '@/components/button/button';
 import DescriptionInput from '@/components/input/description-input';
 import PriceInput from '@/components/input/price-input';
 import ItemNameInput from '@/components/input/item-name-input';

@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 import { useEffect, useState } from 'react';
 import Layout from '@/components/layout';
-import Button from '@components/button';
+import Button from '@/components/button/button';
 import EmailForm from '@/components/form/email-form';
 import TokenForm from '@/components/form/token-form';
 import ProfileForm from '@/components/form/profile-form';

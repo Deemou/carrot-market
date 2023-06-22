@@ -4,7 +4,7 @@ import Link from 'next/link';
 import TokenForm from '@/components/form/token-form';
 import AccountForm from '@/components/form/account-form';
 import EmailForm from '@/components/form/email-form';
-import Button from '@/components/button';
+import Button from '@/components/button/button';
 
 const SignUp: NextPage = () => {
   const [email, setEmail] = useState('');

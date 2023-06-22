@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import NameInput from '@components/input/name-input';
 import PasswordInput from '@components/input/password-input';
-import Button from '@components/button';
+import Button from '@/components/button/button';
 
 interface IAccountForm {
   name: string;

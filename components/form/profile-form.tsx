@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 import useMutation from '@libs/client/useMutation';
 import { v4 as uuidv4 } from 'uuid';
-import Button from '@components/button';
+import Button from '@/components/button/button';
 import AvatarInput from '@components/input/avatar-input';
 import { useRouter } from 'next/router';
 import NameInput from '@components/input/name-input';

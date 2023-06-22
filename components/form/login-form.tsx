@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 import useMutation from '@/libs/client/useMutation';
 import { useCallback } from 'react';
 import { useRouter } from 'next/router';
-import Button from '@components/button';
+import Button from '@/components/button/button';
 import Input from '@components/input';
 import { signIn } from 'next-auth/react';
 
