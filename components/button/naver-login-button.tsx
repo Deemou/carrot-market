@@ -4,8 +4,8 @@ export default function NaverLoginButton() {
   return (
     <OAuthButton provider="naver" providerText="Naver">
       <svg
-        width="24"
-        height="24"
+        width={22}
+        height={22}
         viewBox="-32 0 512 512"
         version="1.1"
         xmlns="http://www.w3.org/2000/svg"
