@@ -11,13 +11,11 @@ async function handler(
 ) {
   if (req.method === 'GET') {
     const page = Number(req.query.page);
-    console.log('page', page);
     const limit = 10;
     const productCount = await client.product.count();
     const lastPage = Math.ceil(productCount / limit);
-    if (page < 1 || page > lastPage) {
-      return res.status(404).end();
-    }
+    if (page < 1 || page > lastPage) return res.json({ ok: false });
+
     const productQueries = await client.product.findMany({
       take: limit,
       skip: (page - 1) * limit,
@@ -39,12 +37,14 @@ async function handler(
     const products = productQueries.map((product) => {
       return { ...product, _count: { favs: product._count.records } };
     });
+
     res.json({
       ok: true,
       products,
       lastPage
     });
   }
+
   if (req.method === 'POST') {
     const session = await getServerSession(req, res, authOptions);
     const {
