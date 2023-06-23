@@ -1,13 +1,13 @@
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
-import useUser from '@libs/client/useUser';
 import useMutation from '@libs/client/useMutation';
 import { v4 as uuidv4 } from 'uuid';
-import Button from '@components/button';
+import Button from '@/components/button/button';
 import AvatarInput from '@components/input/avatar-input';
 import { useRouter } from 'next/router';
 import NameInput from '@components/input/name-input';
 import { saveAvatar } from '@/libs/client/image';
+import { useSession } from 'next-auth/react';
 
 interface EditProfileForm {
   avatar?: FileList;
@@ -24,7 +24,7 @@ const imageSizeKB = 1000;
 const imageSize = imageSizeKB * 1024;
 
 export default function ProfileForm() {
-  const { user } = useUser();
+  const { data: session, update } = useSession();
 
   const {
     register,
@@ -38,10 +38,20 @@ export default function ProfileForm() {
   const [avatarPreview, setAvatarPreview] = useState('');
   const avatarWatch = watch('avatar');
 
+  const [uName, setUName] = useState('');
+  const [uAvatar, setUAvatar] = useState('');
+  const [isUpdateDone, setIsUpdateDone] = useState(false);
+  const [calledPush, setCalledPush] = useState(false);
+
   useEffect(() => {
-    if (user?.avatar) setAvatarPreview(user.avatar);
+    if (!session) return;
+    const { user } = session;
+    if (user?.avatar) {
+      setAvatarPreview(user.avatar);
+      setUAvatar(user.avatar);
+    }
     if (user?.name) setValue('name', user.name);
-  }, [user, setValue]);
+  }, [setValue, session]);
 
   const [editProfile, { data, loading }] =
     useMutation<MutationResult>(`/api/users/me`);
@@ -54,6 +64,7 @@ export default function ProfileForm() {
     if (loading) return;
     if (!imageFile || imageFile.length < 1) {
       editProfile({ name });
+      setUName(name);
       return;
     }
 
@@ -64,6 +75,8 @@ export default function ProfileForm() {
       avatar,
       name
     });
+    setUName(name);
+    setUAvatar(avatar);
   };
 
   useEffect(() => {
@@ -84,10 +97,30 @@ export default function ProfileForm() {
 
   const router = useRouter();
   useEffect(() => {
+    const handleUpdate = async () => {
+      await update({
+        ...session,
+        user: {
+          ...session?.user,
+          name: uName,
+          avatar: uAvatar
+        }
+      });
+      setIsUpdateDone(true);
+    };
+
     if (data?.ok) {
-      void router.push(`/profile`);
+      void handleUpdate();
     }
-  }, [data, router]);
+  }, [data, session, uAvatar, uName, update]);
+
+  useEffect(() => {
+    if (calledPush) return;
+    if (!isUpdateDone) return;
+
+    void router.push(`/profile`);
+    setCalledPush(true);
+  }, [calledPush, isUpdateDone, router]);
 
   return (
     <form

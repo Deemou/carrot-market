@@ -1,9 +1,10 @@
 import { useForm } from 'react-hook-form';
 import useMutation from '@/libs/client/useMutation';
-import { useEffect } from 'react';
+import { useCallback } from 'react';
 import { useRouter } from 'next/router';
-import Button from '@components/button';
+import Button from '@/components/button/button';
 import Input from '@components/input';
+import { signIn } from 'next-auth/react';
 
 interface ILoginForm {
   email: string;
@@ -33,16 +34,26 @@ export default function LoginForm() {
     clearErrors('formErrors');
   };
 
-  const onLoginValid = (validForm: ILoginForm) => {
-    if (loading) return;
-    enter(validForm);
-  };
+  const onLoginValid = useCallback(
+    async (validForm: ILoginForm) => {
+      try {
+        const { email, password } = validForm;
+        const result = await signIn('credentials', {
+          redirect: false, // 로그인 실패 시 새로고침 여부
+          email,
+          password
+        });
 
-  useEffect(() => {
-    if (!data) return;
-    if (data.ok) void router.replace('/');
-    if (data.error) setError('formErrors', { message: data.error });
-  }, [data, router, setError]);
+        // authorize()에서 호출한 throw new Error("")가 result.error에 저장됨
+        if (result?.error) setError('formErrors', { message: result.error });
+
+        await router.replace('/');
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    [router, setError]
+  );
 
   return (
     <form

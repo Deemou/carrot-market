@@ -4,36 +4,27 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import withHandler, { ResponseType } from '@libs/server/withHandler';
 import client from '@libs/server/client';
 import { hashPassword } from '@/libs/server/hash';
-import withApiSession from '@libs/server/withSession';
 
 async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseType>
 ) {
-  const { name, password } = req.body;
-  const email = req.session.auth?.email;
+  if (req.method === 'POST') {
+    const { name, password, email } = req.body;
 
-  if (!name || !password || !email) return res.status(400).json({ ok: false });
-  const hashedPassword = await hashPassword(password);
+    if (!name || !password || !email)
+      return res.status(400).json({ ok: false });
 
-  const user = await client.user.create({
-    data: {
-      name,
-      password: hashedPassword,
-      email
-    }
-  });
+    const hashedPassword = await hashPassword(password);
 
-  req.session.user = {
-    id: user.id
-  };
-  await req.session.save();
+    await client.user.create({
+      data: { name, email, password: hashedPassword }
+    });
 
-  return res.json({
-    ok: true
-  });
+    return res.json({
+      ok: true
+    });
+  }
 }
 
-export default withApiSession(
-  withHandler({ methods: ['POST'], handler, isPrivate: false })
-);
+export default withHandler({ methods: ['POST'], handler });

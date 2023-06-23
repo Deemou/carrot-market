@@ -1,10 +1,10 @@
-import { getIronSession } from 'iron-session/edge';
 import {
   NextFetchEvent,
   NextRequest,
   NextResponse,
   userAgent
 } from 'next/server';
+import { getToken } from 'next-auth/jwt';
 
 const loginUrl = '/login';
 const signUpUrl = '/sign-up';
@@ -20,18 +20,17 @@ export const middleware = async (req: NextRequest, ev: NextFetchEvent) => {
     });
   }
 
-  const res = NextResponse.next();
-  const session = await getIronSession(req, res, {
-    cookieName: process.env.COOKIE_NAME!,
-    password: process.env.COOKIE_PASSWORD!,
-    cookieOptions: {
-      secure: process.env.NODE_ENV === 'production' // if you are using https
-    }
-  });
+  const secret = process.env.NEXTAUTH_SECRET;
+  const token = await getToken({ req, secret });
 
-  if (!session.user && !isAuthPages()) {
-    req.nextUrl.searchParams.set('from', req.nextUrl.pathname);
+  if (!token && !isAuthPages()) {
+    // req.nextUrl.searchParams.set('from', req.nextUrl.pathname);
     req.nextUrl.pathname = loginUrl;
+    return NextResponse.redirect(req.nextUrl);
+  }
+
+  if (token && isAuthPages()) {
+    req.nextUrl.pathname = '/';
     return NextResponse.redirect(req.nextUrl);
   }
 };

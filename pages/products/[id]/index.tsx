@@ -8,7 +8,7 @@ import { Product, User } from '@prisma/client';
 import useMutation from '@libs/client/useMutation';
 import cls from '@libs/client/utils';
 import Layout from '@/components/layout';
-import Button from '@components/button';
+import Button from '@/components/button/button';
 import client from '@/libs/server/client';
 import Card from '@/components/profile/card';
 

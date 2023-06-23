@@ -2,15 +2,18 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import withHandler, { ResponseType } from '@libs/server/withHandler';
 import client from '@libs/server/client';
-import withApiSession from '@libs/server/withSession';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@api/auth/[...nextauth]';
 
 async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseType>
 ) {
+  const session = await getServerSession(req, res, authOptions);
+  if (!session) return res.status(400).json({ ok: false });
+
   const {
     query: { id },
-    session: { user },
     body: { answer }
   } = req;
 
@@ -18,7 +21,7 @@ async function handler(
     data: {
       user: {
         connect: {
-          id: user?.id
+          id: Number(session.user.id)
         }
       },
       post: {
@@ -39,9 +42,7 @@ async function handler(
   });
 }
 
-export default withApiSession(
-  withHandler({
-    methods: ['POST'],
-    handler
-  })
-);
+export default withHandler({
+  methods: ['POST'],
+  handler
+});

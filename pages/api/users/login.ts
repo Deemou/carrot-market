@@ -4,7 +4,6 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import withHandler, { ResponseType } from '@libs/server/withHandler';
 import client from '@libs/server/client';
 import { isSamePassword } from '@/libs/server/hash';
-import withApiSession from '@libs/server/withSession';
 
 async function handler(
   req: NextApiRequest,
@@ -12,10 +11,12 @@ async function handler(
 ) {
   const { email, password } = req.body;
   if (!email || !password) return res.status(400).json({ ok: false });
+
   const user = await client.user.findUnique({
     where: { email }
   });
-  if (!user)
+
+  if (!user?.password)
     return res
       .status(400)
       .json({ ok: false, error: 'Invalid email or password.' });
@@ -27,14 +28,7 @@ async function handler(
       .status(400)
       .json({ ok: false, error: 'Invalid email or password.' });
 
-  req.session.user = {
-    id: user.id
-  };
-  await req.session.save();
-
   return res.json({ ok: true });
 }
 
-export default withApiSession(
-  withHandler({ methods: ['POST'], handler, isPrivate: false })
-);
+export default withHandler({ methods: ['POST'], handler });

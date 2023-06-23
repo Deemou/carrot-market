@@ -1,4 +1,4 @@
-import FloatingButton from '@components/floating-button';
+import FloatingButton from '@/components/button/floating-button';
 import SearchForm from '@components/form/search-form';
 
 interface SearchBarProps {

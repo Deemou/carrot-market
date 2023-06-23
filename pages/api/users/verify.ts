@@ -3,23 +3,25 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import withHandler, { ResponseType } from '@libs/server/withHandler';
 import client from '@libs/server/client';
 import smtpTransport from '@/libs/server/email';
-import withApiSession from '@libs/server/withSession';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '../auth/[...nextauth]';
 
 async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseType>
 ) {
+  const session = await getServerSession(req, res, authOptions);
+
   const {
-    session: { user },
     body: { email }
   } = req;
 
   if (!email) return res.status(400).json({ ok: false });
 
-  if (user) {
+  if (session) {
     const currentUser = await client.user.findUnique({
       where: {
-        id: user?.id
+        id: Number(session.user.id)
       }
     });
 
@@ -87,16 +89,9 @@ async function handler(
   });
   smtpTransport.close();
 
-  req.session.auth = {
-    email
-  };
-  await req.session.save();
-
   return res.json({
     ok: true
   });
 }
 
-export default withApiSession(
-  withHandler({ methods: ['POST'], handler, isPrivate: false })
-);
+export default withHandler({ methods: ['POST'], handler });

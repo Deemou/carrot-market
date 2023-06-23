@@ -1,8 +1,8 @@
 import { useForm } from 'react-hook-form';
 import useMutation from '@/libs/client/useMutation';
 import { Dispatch, SetStateAction, useEffect } from 'react';
-import useUser from '@/libs/client/useUser';
 import EmailInput from '@components/input/email-input';
+import { useSession } from 'next-auth/react';
 
 interface IEmailForm {
   email: string;
@@ -15,12 +15,19 @@ interface MutationResult {
 }
 
 interface EmailFormProps {
+  setEmail: Dispatch<SetStateAction<string>>;
   setIsEmailOk: Dispatch<SetStateAction<boolean>>;
+  disabled?: boolean;
   children: React.ReactNode;
 }
 
-export default function EmailForm({ setIsEmailOk, children }: EmailFormProps) {
-  const { user } = useUser();
+export default function EmailForm({
+  setEmail,
+  setIsEmailOk,
+  disabled,
+  children
+}: EmailFormProps) {
+  const { data: session } = useSession();
 
   const [validateEmail, { loading, data }] =
     useMutation<MutationResult>('/api/users/verify');
@@ -35,8 +42,9 @@ export default function EmailForm({ setIsEmailOk, children }: EmailFormProps) {
   } = useForm<IEmailForm>();
 
   useEffect(() => {
-    if (user?.email) setValue('email', user.email);
-  }, [user, setValue]);
+    if (!session) return;
+    if (session.user?.email) setValue('email', session.user.email);
+  }, [setValue, session]);
 
   const onClick = () => {
     clearErrors('formErrors');
@@ -44,6 +52,7 @@ export default function EmailForm({ setIsEmailOk, children }: EmailFormProps) {
 
   const onEmailValid = (validForm: IEmailForm) => {
     if (loading) return;
+    setEmail(validForm.email);
     validateEmail(validForm);
   };
 
@@ -58,7 +67,7 @@ export default function EmailForm({ setIsEmailOk, children }: EmailFormProps) {
       onSubmit={(...args) => void handleSubmit(onEmailValid)(...args)}
       className="mt-8 flex flex-col space-y-4"
     >
-      <EmailInput onClick={onClick} register={register} />
+      <EmailInput onClick={onClick} disabled={disabled} register={register} />
       {errors.formErrors && (
         <span className="my-2 block text-center text-red-600">
           {errors.formErrors.message}
@@ -68,3 +77,7 @@ export default function EmailForm({ setIsEmailOk, children }: EmailFormProps) {
     </form>
   );
 }
+
+EmailForm.defaultProps = {
+  disabled: false
+};

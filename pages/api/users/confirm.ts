@@ -3,16 +3,17 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import withHandler, { ResponseType } from '@libs/server/withHandler';
 import client from '@libs/server/client';
-import withApiSession from '@libs/server/withSession';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '../auth/[...nextauth]';
 
 async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseType>
 ) {
-  const { token } = req.body;
-  const { user, auth } = req.session;
+  const session = await getServerSession(req, res, authOptions);
 
-  const email = auth?.email;
+  const { token, email } = req.body;
+
   const foundToken = await client.token.findUnique({
     where: {
       payload: token
@@ -31,10 +32,10 @@ async function handler(
     }
   });
 
-  if (user) {
+  if (session) {
     await client.user.update({
       where: {
-        id: Number(user.id)
+        id: Number(session.user.id)
       },
       data: {
         email
@@ -45,6 +46,4 @@ async function handler(
   return res.json({ ok: true });
 }
 
-export default withApiSession(
-  withHandler({ methods: ['POST'], handler, isPrivate: false })
-);
+export default withHandler({ methods: ['POST'], handler });

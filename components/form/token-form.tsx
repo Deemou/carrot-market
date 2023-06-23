@@ -1,8 +1,9 @@
 import { useForm } from 'react-hook-form';
 import useMutation from '@/libs/client/useMutation';
 import { Dispatch, SetStateAction, useEffect } from 'react';
-import Button from '@components/button';
+import Button from '@/components/button/button';
 import TokenInput from '@components/input/token-input';
+import { useSession } from 'next-auth/react';
 
 interface ITokenForm {
   token: string;
@@ -15,10 +16,13 @@ interface MutationResult {
 }
 
 interface TokenFormProps {
+  email: string;
   setIsTokenOk: Dispatch<SetStateAction<boolean>>;
 }
 
-export default function TokenForm({ setIsTokenOk }: TokenFormProps) {
+export default function TokenForm({ email, setIsTokenOk }: TokenFormProps) {
+  const { data: session, update } = useSession();
+
   const [confirmToken, { loading, data }] =
     useMutation<MutationResult>('/api/users/confirm');
   const {
@@ -35,14 +39,27 @@ export default function TokenForm({ setIsTokenOk }: TokenFormProps) {
 
   const onTokenValid = (validForm: ITokenForm) => {
     if (loading) return;
-    confirmToken(validForm);
+    confirmToken({ email, ...validForm });
   };
 
   useEffect(() => {
+    const handleUpdate = async () => {
+      await update({
+        ...session,
+        user: {
+          ...session?.user,
+          email
+        }
+      });
+    };
+
     if (!data) return;
-    if (data.ok) setIsTokenOk(true);
+    if (data.ok) {
+      setIsTokenOk(true);
+      void handleUpdate();
+    }
     if (data.error) setError('formErrors', { message: data.error });
-  }, [data, setError, setIsTokenOk]);
+  }, [data, email, session, setError, setIsTokenOk, update]);
 
   return (
     <form

@@ -2,7 +2,8 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import withHandler, { ResponseType } from '@libs/server/withHandler';
 import client from '@libs/server/client';
-import withApiSession from '@libs/server/withSession';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '../auth/[...nextauth]';
 
 async function handler(
   req: NextApiRequest,
@@ -13,9 +14,8 @@ async function handler(
     const limit = 10;
     const productCount = await client.product.count();
     const lastPage = Math.ceil(productCount / limit);
-    if (page < 1 || page > lastPage) {
-      return res.status(404).end();
-    }
+    if (page < 1 || page > lastPage) return res.json({ ok: false });
+
     const productQueries = await client.product.findMany({
       take: limit,
       skip: (page - 1) * limit,
@@ -37,17 +37,21 @@ async function handler(
     const products = productQueries.map((product) => {
       return { ...product, _count: { favs: product._count.records } };
     });
+
     res.json({
       ok: true,
       products,
       lastPage
     });
   }
+
   if (req.method === 'POST') {
+    const session = await getServerSession(req, res, authOptions);
     const {
-      body: { name, price, description, image, thumbImage },
-      session: { user }
+      body: { name, price, description, image, thumbImage }
     } = req;
+    if (!session) return res.status(400).json({ ok: false });
+    const { user } = session;
     const product = await client.product.create({
       data: {
         name,
@@ -57,14 +61,14 @@ async function handler(
         thumbImage,
         user: {
           connect: {
-            id: user?.id
+            id: Number(user.id)
           }
         }
       }
     });
     await client.record.create({
       data: {
-        user: { connect: { id: user?.id } },
+        user: { connect: { id: Number(user.id) } },
         product: { connect: { id: Number(product.id) } },
         kind: 'Sale'
       }
@@ -79,9 +83,7 @@ async function handler(
   }
 }
 
-export default withApiSession(
-  withHandler({
-    methods: ['GET', 'POST'],
-    handler
-  })
-);
+export default withHandler({
+  methods: ['GET', 'POST'],
+  handler
+});

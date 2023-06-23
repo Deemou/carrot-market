@@ -2,27 +2,34 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import withHandler, { ResponseType } from '@libs/server/withHandler';
 import client from '@libs/server/client';
-import withApiSession from '@libs/server/withSession';
+import { getServerSession } from 'next-auth/next';
+import { authOptions } from '../../auth/[...nextauth]';
 
 async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseType>
 ) {
-  const {
-    session: { user }
-  } = req;
+  const session = await getServerSession(req, res, authOptions);
 
+  if (!session) {
+    return res.json({ ok: false });
+  }
+
+  const { user } = session;
   if (!user) return res.status(400).json({ ok: false });
+  const id = Number(user.id);
 
   if (req.method === 'GET') {
     const profile = await client.user.findUnique({
-      where: { id: user.id }
+      where: { id }
     });
+
     res.json({
       ok: true,
       profile
     });
   }
+
   if (req.method === 'POST') {
     const {
       body: { name, avatar }
@@ -32,7 +39,7 @@ async function handler(
 
     await client.user.update({
       where: {
-        id: user.id
+        id
       },
       data: {
         name
@@ -42,7 +49,7 @@ async function handler(
     if (avatar) {
       await client.user.update({
         where: {
-          id: user.id
+          id
         },
         data: { avatar }
       });
@@ -52,9 +59,7 @@ async function handler(
   }
 }
 
-export default withApiSession(
-  withHandler({
-    methods: ['GET', 'POST'],
-    handler
-  })
-);
+export default withHandler({
+  methods: ['GET', 'POST'],
+  handler
+});

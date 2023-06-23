@@ -4,20 +4,24 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import withHandler, { ResponseType } from '@libs/server/withHandler';
 import client from '@libs/server/client';
-import withApiSession from '@libs/server/withSession';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@api/auth/[...nextauth]';
 
 async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseType>
 ) {
+  const session = await getServerSession(req, res, authOptions);
+  if (!session) return res.status(400).json({ ok: false });
+
   const {
-    query: { id },
-    session: { user }
+    query: { id }
   } = req;
+
   const alreadyExists = await client.record.findFirst({
     where: {
       productId: Number(id),
-      userId: user?.id,
+      userId: Number(session.user.id),
       kind: 'Fav'
     }
   });
@@ -30,18 +34,17 @@ async function handler(
   } else {
     await client.record.create({
       data: {
-        user: { connect: { id: user?.id } },
+        user: { connect: { id: Number(session.user.id) } },
         product: { connect: { id: Number(id) } },
         kind: 'Fav'
       }
     });
   }
+
   res.json({ ok: true });
 }
 
-export default withApiSession(
-  withHandler({
-    methods: ['POST'],
-    handler
-  })
-);
+export default withHandler({
+  methods: ['POST'],
+  handler
+});

@@ -2,7 +2,8 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import withHandler, { ResponseType } from '@libs/server/withHandler';
 import client from '@libs/server/client';
-import withApiSession from '@libs/server/withSession';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@api/auth/[...nextauth]';
 
 async function handler(
   req: NextApiRequest,
@@ -27,8 +28,10 @@ async function handler(
     res.json({ ok: true, streams, lastPage });
   }
   if (req.method === 'POST') {
+    const session = await getServerSession(req, res, authOptions);
+    if (!session) return res.status(400).json({ ok: false });
+
     const {
-      session: { user },
       body: { name, price, description }
     } = req;
 
@@ -39,7 +42,7 @@ async function handler(
         description,
         user: {
           connect: {
-            id: user?.id
+            id: Number(session.user.id)
           }
         },
         chat: {
@@ -47,13 +50,12 @@ async function handler(
         }
       }
     });
+
     res.json({ ok: true, stream });
   }
 }
 
-export default withApiSession(
-  withHandler({
-    methods: ['GET', 'POST'],
-    handler
-  })
-);
+export default withHandler({
+  methods: ['GET', 'POST'],
+  handler
+});

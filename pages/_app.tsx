@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import '../styles/globals.scss';
 import type { AppProps } from 'next/app';
 import { SWRConfig } from 'swr';
 import { RecoilRoot } from 'recoil';
+import { SessionProvider } from 'next-auth/react';
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (
     <SWRConfig
       value={{
@@ -13,7 +15,9 @@ function MyApp({ Component, pageProps }: AppProps) {
     >
       <RecoilRoot>
         <div className="min-h-screen w-full bg-black py-4">
-          <Component {...pageProps} />
+          <SessionProvider session={session}>
+            <Component {...pageProps} />
+          </SessionProvider>
         </div>
       </RecoilRoot>
     </SWRConfig>
