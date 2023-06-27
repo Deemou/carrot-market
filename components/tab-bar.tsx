@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import cls from '@libs/client/utils';
 import { useRecoilValue } from 'recoil';
-import { isMobile } from '@/atoms';
+import isMobile from '@/atoms';
 
 const loginUrl = '/login';
 const signUpUrl = '/sign-up';

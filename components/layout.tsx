@@ -2,7 +2,7 @@ import React from 'react';
 import Head from 'next/head';
 import cls from '@/libs/client/utils';
 import { useRecoilValue } from 'recoil';
-import { isMobile } from '@/atoms';
+import isMobile from '@/atoms';
 import TabBar from '@components/tab-bar';
 import Header from '@components/header';
 
