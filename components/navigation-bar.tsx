@@ -8,7 +8,7 @@ import isMobile from '@/atoms';
 const loginUrl = '/login';
 const signUpUrl = '/sign-up';
 
-export default function TabBar() {
+export default function NavigationBar() {
   const mobile = useRecoilValue(isMobile);
   const router = useRouter();
 
