@@ -95,7 +95,7 @@ const CommunitySearch: NextPage = () => {
               </div>
             </Link>
           ))}
-        {!data?.ok && (
+        {data && !data.ok && (
           <div className="mt-10">
             <h3 className="text-center">No results found</h3>
           </div>
