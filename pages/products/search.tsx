@@ -5,7 +5,7 @@ import useSWR from 'swr';
 import { Product } from '@prisma/client';
 import Layout from '@/components/layout';
 import SearchBar from '@/components/search-bar';
-import ProductSection from '@/components/section/product-section';
+import ProductListSection from '@/components/section/product-list-section';
 import PaginationBar from '@/components/pagination-bar';
 
 export interface ProductWithCount extends Product {
@@ -37,7 +37,7 @@ const ProductSearch: NextPage = () => {
   return (
     <Layout seoTitle="ProductSearch">
       <SearchBar section="products" />
-      {data && <ProductSection products={data.products} />}
+      {data && <ProductListSection products={data.products} />}
       {!data?.ok && (
         <div className="mt-40">
           <h3 className="text-center">No results found</h3>

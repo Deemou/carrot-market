@@ -7,7 +7,7 @@ import client from '@/libs/server/client';
 import SearchBar from '@/components/search-bar';
 import { useRouter } from 'next/router';
 import PaginationBar from '@/components/pagination-bar';
-import ProductSection from '@/components/section/product-section';
+import ProductListSection from '@/components/section/product-list-section';
 
 export interface ProductWithCount extends Product {
   _count: {
@@ -37,7 +37,7 @@ const Home: NextPage<ProductsResponse> = (props) => {
   return (
     <Layout seoTitle="Home">
       <SearchBar section="products" />
-      {data && <ProductSection products={data.products} />}
+      {data && <ProductListSection products={data.products} />}
       {data?.ok && (
         <PaginationBar currentPage={page} lastPage={data.lastPage} />
       )}

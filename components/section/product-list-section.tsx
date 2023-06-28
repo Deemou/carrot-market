@@ -7,11 +7,13 @@ export interface ProductWithCount extends Product {
   };
 }
 
-interface ProductSectionProps {
+interface ProductListSectionProps {
   products: ProductWithCount[];
 }
 
-export default function ProductSection({ products }: ProductSectionProps) {
+export default function ProductListSection({
+  products
+}: ProductListSectionProps) {
   return (
     <div className="mt-24 space-y-4 divide-y-[2px]">
       {products?.map((product) => (
