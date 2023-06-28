@@ -1,12 +1,13 @@
-import type { GetStaticProps, NextPage } from 'next';
-import Item from '@components/item';
+import type { NextPage, NextPageContext } from 'next';
 import { Product } from '@prisma/client';
 import Layout from '@/components/layout';
-import useInfiniteScroll from '@/libs/client/useInfiniteScroll';
-import useSWRInfinite from 'swr/infinite';
-import { useEffect } from 'react';
+import useSWR from 'swr';
+import { useEffect, useState } from 'react';
 import client from '@/libs/server/client';
 import SearchBar from '@/components/search-bar';
+import { useRouter } from 'next/router';
+import PaginationBar from '@/components/pagination-bar';
+import ProductListSection from '@/components/section/product-list-section';
 
 export interface ProductWithCount extends Product {
   _count: {
@@ -19,50 +20,37 @@ interface ProductsResponse {
   products: ProductWithCount[];
   lastPage: number;
 }
-const requestUrl = '/api/products';
-const getKey = (pageIndex: number, previousPageData: ProductsResponse) => {
-  if (pageIndex === 0) return `${requestUrl}?page=1`;
-  if (pageIndex + 1 > previousPageData.lastPage) return null;
-  return `${requestUrl}?page=${pageIndex + 1}`;
-};
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 const Home: NextPage<ProductsResponse> = (props) => {
-  const { data, setSize } = useSWRInfinite<ProductsResponse>(getKey, fetcher, {
-    fallbackData: [props]
+  const router = useRouter();
+  const [page, setPage] = useState<number>(1);
+  const { data } = useSWR<ProductsResponse>(`/api/products?page=${page}`, {
+    fallbackData: props
   });
 
-  const page = useInfiniteScroll();
   useEffect(() => {
-    void setSize(page);
-  }, [setSize, page]);
+    if (router?.query?.page) {
+      setPage(+router.query.page);
+    }
+  }, [page, router]);
 
   return (
     <Layout seoTitle="Home">
       <SearchBar section="products" />
-      <div className="mt-24 flex flex-col space-y-5 divide-y-[1px]">
-        {data?.map((productsPage) => {
-          return productsPage.products?.map((product) => (
-            <Item
-              id={product.id}
-              key={product.id}
-              name={product.name}
-              price={product.price}
-              thumbImage={product.thumbImage || product.image}
-              hearts={product._count.favs}
-            />
-          ));
-        })}
-      </div>
+      {data && <ProductListSection products={data.products} />}
+      {data?.ok && (
+        <PaginationBar currentPage={page} lastPage={data.lastPage} />
+      )}
     </Layout>
   );
 };
 
-export const getStaticProps: GetStaticProps = async () => {
-  console.log('BUILDING HOME. STATICALLY');
+export const getServerSideProps = async function (ctx: NextPageContext) {
+  const page = Number(ctx.query.page) || 1;
   const limit = 10;
   const productQueries = await client.product.findMany({
     take: limit,
+    skip: (page - 1) * limit,
     orderBy: {
       createdAt: 'desc'
     },

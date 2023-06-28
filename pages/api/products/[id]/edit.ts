@@ -50,7 +50,6 @@ async function handler(
     });
 
     await res.revalidate(`/products/${id}`);
-    await res.revalidate(`/`);
 
     res.json({
       ok: true,

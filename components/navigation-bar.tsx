@@ -3,12 +3,12 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import cls from '@libs/client/utils';
 import { useRecoilValue } from 'recoil';
-import { isMobile } from '@/atoms';
+import isMobile from '@/atoms';
 
 const loginUrl = '/login';
 const signUpUrl = '/sign-up';
 
-export default function TabBar() {
+export default function NavigationBar() {
   const mobile = useRecoilValue(isMobile);
   const router = useRouter();
 
@@ -73,7 +73,7 @@ export default function TabBar() {
         </svg>
         <span>Community</span>
       </Link>
-      <Link
+      {/* <Link
         href="/streams"
         className={cls(
           'flex flex-col items-center space-y-2 ',
@@ -97,7 +97,7 @@ export default function TabBar() {
           ></path>
         </svg>
         <span>Live</span>
-      </Link>
+      </Link> */}
       <Link
         href="/profile"
         className={cls(

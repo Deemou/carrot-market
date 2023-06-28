@@ -123,7 +123,7 @@ const ItemDetail: NextPage<ItemDetailResponse> = (props) => {
             <h3>Similar items</h3>
             <div
               className={cls(
-                'max max-[width:640px]: mt-6 grid grid-cols-3 gap-10 max-w640:grid-cols-2 max-w320:grid-cols-1'
+                'mt-6 grid grid-cols-3 gap-10 max-w640:grid-cols-2 max-w320:grid-cols-1'
               )}
             >
               {data.relatedProducts.map((product) => (

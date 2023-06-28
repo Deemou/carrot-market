@@ -2,8 +2,8 @@ import React from 'react';
 import Head from 'next/head';
 import cls from '@/libs/client/utils';
 import { useRecoilValue } from 'recoil';
-import { isMobile } from '@/atoms';
-import TabBar from '@components/tab-bar';
+import isMobile from '@/atoms';
+import NavigationBar from '@/components/navigation-bar';
 import Header from '@components/header';
 
 interface LayoutProps {
@@ -26,7 +26,7 @@ export default function Layout({ seoTitle, children }: LayoutProps) {
       </Head>
       <Header />
       <div className="px-4 pb-24 pt-20">{children}</div>
-      <TabBar />
+      <NavigationBar />
     </div>
   );
 }

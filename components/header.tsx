@@ -1,6 +1,6 @@
 import cls from '@/libs/client/utils';
 import { useRecoilValue } from 'recoil';
-import { isMobile } from '@/atoms';
+import isMobile from '@/atoms';
 import { signOut, useSession } from 'next-auth/react';
 import Button from './button/button';
 
