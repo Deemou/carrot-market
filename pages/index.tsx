@@ -1,4 +1,4 @@
-import type { GetStaticProps, NextPage } from 'next';
+import type { NextPage, NextPageContext } from 'next';
 import Item from '@components/item';
 import { Product } from '@prisma/client';
 import Layout from '@/components/layout';
@@ -56,11 +56,12 @@ const Home: NextPage<ProductsResponse> = (props) => {
   );
 };
 
-export const getStaticProps: GetStaticProps = async () => {
-  console.log('BUILDING HOME. STATICALLY');
+export const getServerSideProps = async function (ctx: NextPageContext) {
+  const page = Number(ctx.query.page) || 1;
   const limit = 10;
   const productQueries = await client.product.findMany({
     take: limit,
+    skip: (page - 1) * limit,
     orderBy: {
       createdAt: 'desc'
     },
