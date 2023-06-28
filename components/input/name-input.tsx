@@ -27,8 +27,8 @@ export default function NameInput({
         register={register('name', {
           required: true,
           minLength: {
-            value: 5,
-            message: 'Name must be at least 5 characters'
+            value: 3,
+            message: 'Name must be at least 3 characters'
           },
           maxLength: {
             value: 18,
