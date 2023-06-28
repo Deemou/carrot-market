@@ -39,7 +39,6 @@ const CommunitySearch: NextPage = () => {
   return (
     <Layout seoTitle="CommunitySearch">
       <SearchBar section="community" />
-      <h3 className="mt-28">Results for : {q}</h3>
       {data?.ok && <PostSection posts={data.posts}></PostSection>}
       {data && !data.ok && (
         <div className="mt-10">

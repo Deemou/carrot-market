@@ -37,7 +37,6 @@ const ProductSearch: NextPage = () => {
   return (
     <Layout seoTitle="ProductSearch">
       <SearchBar section="products" />
-      <h3 className="mb-4 mt-28">Results for : {q}</h3>
       <div className="flex flex-col space-y-5 divide-y-[1px]">
         {data?.products?.map((product) => (
           <Item
