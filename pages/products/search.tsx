@@ -6,6 +6,7 @@ import { Product } from '@prisma/client';
 import Layout from '@/components/layout';
 import SearchBar from '@/components/search-bar';
 import ProductSection from '@/components/section/product-section';
+import PaginationBar from '@/components/pagination-bar';
 
 export interface ProductWithCount extends Product {
   _count: {
@@ -37,6 +38,9 @@ const ProductSearch: NextPage = () => {
     <Layout seoTitle="ProductSearch">
       <SearchBar section="products" />
       {data && <ProductSection products={data.products} />}
+      {data?.ok && (
+        <PaginationBar currentPage={page} lastPage={data.lastPage} />
+      )}
     </Layout>
   );
 };
