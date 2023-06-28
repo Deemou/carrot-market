@@ -1,13 +1,12 @@
 import type { NextPage } from 'next';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import useSWR from 'swr';
 import { Post, User } from '@prisma/client';
 import Layout from '@/components/layout';
-import PaginationBar from '@/components/pagination-bar';
 import SearchBar from '@/components/search-bar';
 import PostSection from '@/components/section/post-section';
+import PaginationBar from '@/components/pagination-bar';
 
 interface PostWithUser extends Post {
   user: User;
@@ -16,6 +15,7 @@ interface PostWithUser extends Post {
     answers: number;
   };
 }
+
 interface PostsResponse {
   ok: boolean;
   posts: PostWithUser[];
@@ -39,9 +39,9 @@ const CommunitySearch: NextPage = () => {
   return (
     <Layout seoTitle="CommunitySearch">
       <SearchBar section="community" />
-      {data?.ok && <PostSection posts={data.posts}></PostSection>}
-      {data && !data.ok && (
-        <div className="mt-10">
+      {data && <PostSection posts={data.posts} />}
+      {!data?.ok && (
+        <div className="mt-40">
           <h3 className="text-center">No results found</h3>
         </div>
       )}

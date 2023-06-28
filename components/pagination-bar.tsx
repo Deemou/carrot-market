@@ -47,7 +47,7 @@ export default function PaginationBar({
     }
   }, [currentPage, lastPage, pageLimit]);
   return (
-    <div className="item-center flex justify-center space-x-2 py-5">
+    <div className="item-center mt-10 flex justify-center space-x-2 py-5">
       <button
         onClick={() => {
           onClickDirection('prev');

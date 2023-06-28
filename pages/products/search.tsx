@@ -38,6 +38,11 @@ const ProductSearch: NextPage = () => {
     <Layout seoTitle="ProductSearch">
       <SearchBar section="products" />
       {data && <ProductSection products={data.products} />}
+      {!data?.ok && (
+        <div className="mt-40">
+          <h3 className="text-center">No results found</h3>
+        </div>
+      )}
       {data?.ok && (
         <PaginationBar currentPage={page} lastPage={data.lastPage} />
       )}
