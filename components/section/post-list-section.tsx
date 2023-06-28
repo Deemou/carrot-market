@@ -9,11 +9,11 @@ interface PostWithUser extends Post {
   };
 }
 
-interface PostSectionProps {
+interface PostListSectionProps {
   posts: PostWithUser[];
 }
 
-export default function PostSection({ posts }: PostSectionProps) {
+export default function PostListSection({ posts }: PostListSectionProps) {
   return (
     <div className="mt-24 space-y-4 divide-y-[2px]">
       {posts?.map((post) => (

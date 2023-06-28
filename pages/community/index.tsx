@@ -1,11 +1,10 @@
 import type { NextPage } from 'next';
-import Link from 'next/link';
 import useSWR from 'swr';
 import { Post, User } from '@prisma/client';
 import client from '@libs/server/client';
 import Layout from '@/components/layout';
 import SearchBar from '@/components/search-bar';
-import PostSection from '@/components/section/post-section';
+import PostListSection from '@/components/section/post-list-section';
 
 interface PostWithUser extends Post {
   user: User;
@@ -27,7 +26,7 @@ const Community: NextPage<PostsResponse> = (props) => {
   return (
     <Layout seoTitle="Community">
       <SearchBar section="community" />
-      {data && <PostSection posts={data.posts} />}
+      {data && <PostListSection posts={data.posts} />}
     </Layout>
   );
 };

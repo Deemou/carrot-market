@@ -5,7 +5,7 @@ import useSWR from 'swr';
 import { Post, User } from '@prisma/client';
 import Layout from '@/components/layout';
 import SearchBar from '@/components/search-bar';
-import PostSection from '@/components/section/post-section';
+import PostListSection from '@/components/section/post-list-section';
 import PaginationBar from '@/components/pagination-bar';
 
 interface PostWithUser extends Post {
@@ -39,7 +39,7 @@ const CommunitySearch: NextPage = () => {
   return (
     <Layout seoTitle="CommunitySearch">
       <SearchBar section="community" />
-      {data && <PostSection posts={data.posts} />}
+      {data && <PostListSection posts={data.posts} />}
       {!data?.ok && (
         <div className="mt-40">
           <h3 className="text-center">No results found</h3>
