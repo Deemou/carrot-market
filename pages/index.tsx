@@ -1,5 +1,4 @@
 import type { NextPage, NextPageContext } from 'next';
-import Item from '@components/item';
 import { Product } from '@prisma/client';
 import Layout from '@/components/layout';
 import useSWR from 'swr';
@@ -8,6 +7,7 @@ import client from '@/libs/server/client';
 import SearchBar from '@/components/search-bar';
 import { useRouter } from 'next/router';
 import PaginationBar from '@/components/pagination-bar';
+import ProductSection from '@/components/section/product-section';
 
 export interface ProductWithCount extends Product {
   _count: {
@@ -37,18 +37,7 @@ const Home: NextPage<ProductsResponse> = (props) => {
   return (
     <Layout seoTitle="Home">
       <SearchBar section="products" />
-      <div className="flex flex-col space-y-5 divide-y-[1px]">
-        {data?.products?.map((product) => (
-          <Item
-            id={product.id}
-            key={product.id}
-            name={product.name}
-            price={product.price}
-            thumbImage={product.thumbImage || product.image}
-            hearts={product._count.favs}
-          />
-        ))}
-      </div>
+      {data && <ProductSection products={data.products} />}
       {data?.ok && (
         <PaginationBar currentPage={page} lastPage={data.lastPage} />
       )}
