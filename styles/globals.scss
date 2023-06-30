@@ -91,11 +91,6 @@ textarea {
   @apply text-black;
 }
 
-body {
-  @apply w-screen;
-  @apply overflow-x-hidden;
-}
-
 html {
   font-size: 62.5% !important;
   /* font size = 10px */
@@ -137,11 +132,6 @@ h4 {
 
 p {
   font-size: 1.2rem;
-}
-
-.disable-scrolling {
-  @apply h-full;
-  @apply overflow-hidden;
 }
 
 @import './blog.scss';
