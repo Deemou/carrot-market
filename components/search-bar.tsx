@@ -7,7 +7,7 @@ interface SearchBarProps {
 
 export default function SearchBar({ section }: SearchBarProps) {
   return (
-    <div className="fixed top-[5rem] z-10 flex h-24 w-full max-w-3xl -translate-x-[1.1rem] items-center justify-between border bg-black px-4 ring-1 ring-white">
+    <div className="fixed top-[5rem] z-10 mx-[-1rem] flex h-24 w-full max-w-6xl items-center justify-between  bg-black bg-black px-2">
       {section === 'products' && (
         <FloatingButton href="/products/upload">
           <svg

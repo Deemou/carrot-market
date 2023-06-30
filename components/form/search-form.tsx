@@ -26,7 +26,7 @@ export default function SearchForm({ searchUrl }: SearchFormProps) {
   return (
     <form
       onSubmit={(...args) => void handleSubmit(onValid)(...args)}
-      className="relative w-10/12 max-w640:w-9/12 max-w480:w-8/12"
+      className="relative w-5/12 max-w640:w-9/12 max-w480:w-8/12"
     >
       <svg
         onClick={(...args) => void handleSubmit(onValid)(...args)}
@@ -44,7 +44,7 @@ export default function SearchForm({ searchUrl }: SearchFormProps) {
         type="text"
         required
         {...register('query', { required: true, minLength: 2 })}
-        placeholder="Search keyword"
+        placeholder="검색어를 입력해주세요."
         className="w-full rounded-xl"
       />
     </form>
