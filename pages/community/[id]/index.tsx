@@ -60,24 +60,24 @@ const CommunityPostDetail: NextPage<CommunityPostResponse> = (props) => {
 
   const onWonderClick = () => {
     if (!data) return;
-    void mutate(
-      {
-        ...data,
-        post: {
-          ...data.post,
-          _count: {
-            ...data.post._count,
-            wonderings: data.isWondering
-              ? data?.post._count.wonderings - 1
-              : data?.post._count.wonderings + 1
-          }
-        },
-        isWondering: !data.isWondering
-      },
-      false
-    );
     if (!loading) {
       toggleWonder({});
+      void mutate(
+        {
+          ...data,
+          post: {
+            ...data.post,
+            _count: {
+              ...data.post._count,
+              wonderings: data.isWondering
+                ? data?.post._count.wonderings - 1
+                : data?.post._count.wonderings + 1
+            }
+          },
+          isWondering: !data.isWondering
+        },
+        false
+      );
     }
   };
   const onValid = (form: AnswerForm) => {

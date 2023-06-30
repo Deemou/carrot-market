@@ -36,9 +36,9 @@ const ItemDetail: NextPage<ItemDetailResponse> = (props) => {
   );
   const onFavClick = () => {
     if (!data) return;
-    void mutate({ ...data, isLiked: !data.isLiked }, false);
     if (!loading) {
       toggleFav({});
+      void mutate({ ...data, isLiked: !data.isLiked }, false);
     }
   };
   return (
