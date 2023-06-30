@@ -13,6 +13,7 @@ import TextArea from '@components/textarea';
 import client from '@/libs/server/client';
 import Avatar from '@/components/avatar';
 import Card from '@/components/profile/card';
+import WonderButton from '@/components/button/wonder-button';
 
 interface AnswerWithUser extends Answer {
   user: User;
@@ -108,30 +109,11 @@ const CommunityPostDetail: NextPage<CommunityPostResponse> = (props) => {
               <span className="text-orange-500">Q.</span> {data.post.question}
             </div>
             <div className="mt-3 flex w-full space-x-5 border-b-[2px] border-t py-2.5  text-gray-700">
-              <button
-                onClick={onWonderClick}
-                type="button"
-                className={cls(
-                  'flex items-center space-x-2',
-                  data.isWondering ? 'text-teal-600' : ''
-                )}
-              >
-                <svg
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                  ></path>
-                </svg>
-                <span>궁금해요 {data.post._count.wonderings}</span>
-              </button>
+              <WonderButton
+                onWonderClick={onWonderClick}
+                isWondering={data.isWondering}
+                wondersCount={data.post._count.wonderings}
+              />
               <span className="flex items-center space-x-2">
                 <svg
                   fill="none"
