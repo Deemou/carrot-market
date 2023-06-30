@@ -7,7 +7,7 @@ export default function OAuthLoginButtonList() {
     <div className="mt-2 flex flex-col space-y-4">
       <GithubLoginButton />
       <KakaoLoginButton />
-      <NaverLoginButton />
+      {/* <NaverLoginButton /> */}
     </div>
   );
 }
