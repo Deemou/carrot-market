@@ -60,7 +60,6 @@ model User {
   writtenReviews  Review[]    @relation(name: "writtenReviews")
   receivedReviews Review[]    @relation(name: "receivedReviews")
   records         Record[]
-  streams         Stream[]
   messages        Message[]
   chats           Chat[]
   accounts        Account[]
@@ -176,29 +175,12 @@ enum Kind {
   Fav
 }
 
-model Stream {
-  id          Int      @id @default(autoincrement())
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  name        String
-  description String   @db.MediumText
-  price       Int
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId      Int
-  chat        Chat     @relation(fields: [chatId], references: [id])
-  chatId      Int      @unique
-
-  @@index([userId])
-  @@index([chatId])
-}
-
 model Chat {
   id        Int       @id @default(autoincrement())
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   users     User[]
   messages  Message[]
-  stream    Stream?
 }
 
 model Message {
