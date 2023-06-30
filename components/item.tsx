@@ -6,7 +6,7 @@ interface ItemProps {
   name: string;
   price: number;
   thumbImage: string;
-  hearts: number;
+  likesCount: number;
 }
 
 export default function Item({
@@ -14,7 +14,7 @@ export default function Item({
   name,
   price,
   thumbImage,
-  hearts
+  likesCount
 }: ItemProps) {
   return (
     <Link
@@ -52,7 +52,7 @@ export default function Item({
                     d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
                   ></path>
                 </svg>
-                <span>{hearts}</span>
+                <span>{likesCount}</span>
               </div>
             </div>
           </div>
