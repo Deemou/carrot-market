@@ -96,7 +96,9 @@ const ItemDetail: NextPage<ItemDetailResponse> = (props) => {
               </p>
             </div>
           </div>
-          <RelatedItemSection relatedProducts={data.relatedProducts} />
+          {data.relatedProducts.length !== 0 ? (
+            <RelatedItemSection relatedProducts={data.relatedProducts} />
+          ) : null}
         </div>
       )}
     </Layout>
