@@ -23,7 +23,7 @@ export default function ProductListSection({
           name={product.name}
           price={product.price}
           thumbImage={product.thumbImage || product.image}
-          hearts={product._count.favs}
+          likesCount={product._count.favs}
         />
       ))}
     </div>

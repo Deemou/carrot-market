@@ -34,7 +34,7 @@ export default function ProductList({ kind }: ProductListProps) {
           name={record.product.name}
           price={record.product.price}
           thumbImage={record.product.thumbImage || record.product.image}
-          hearts={record.product._count.favs}
+          likesCount={record.product._count.favs}
         />
       ))}
     </div>
