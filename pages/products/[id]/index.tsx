@@ -1,17 +1,16 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next';
-import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
 import { Product, User } from '@prisma/client';
 import useMutation from '@libs/client/useMutation';
-import cls from '@libs/client/utils';
 import Layout from '@/components/layout';
 import Button from '@/components/button/button';
 import client from '@/libs/server/client';
 import Card from '@/components/profile/card';
 import LikeButton from '@/components/button/like-button';
+import RelatedItemSection from '@/components/related-item-section';
 
 interface ProductWithUser extends Product {
   user: User;
@@ -79,40 +78,7 @@ const ItemDetail: NextPage<ItemDetailResponse> = (props) => {
               </div>
             </div>
           </div>
-          <div>
-            <h3>Similar items</h3>
-            <div
-              className={cls(
-                'mt-6 grid grid-cols-3 gap-10 max-w640:grid-cols-2 max-w320:grid-cols-1'
-              )}
-            >
-              {data.relatedProducts.map((product) => (
-                <div key={product.id}>
-                  <Link
-                    href={`/products/${product.id}`}
-                    className="cursor-pointer"
-                  >
-                    <div className="max-w-[256px]">
-                      <div className="relative mb-4 aspect-square">
-                        <Image
-                          src={product.image}
-                          alt="product"
-                          fill
-                          sizes="50vw"
-                          priority
-                          className="object-center"
-                        />
-                      </div>
-                      <div className="flex flex-col">
-                        <span>{product.name}</span>
-                        <span className="mt-1">${product.price}</span>
-                      </div>
-                    </div>
-                  </Link>
-                </div>
-              ))}
-            </div>
-          </div>
+          <RelatedItemSection relatedProducts={data.relatedProducts} />
         </div>
       )}
     </Layout>
