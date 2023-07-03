@@ -12,10 +12,8 @@ export default function LikeButton({ onFavClick, isLiked }: LikeButtonProps) {
       type="button"
       aria-label="like"
       className={cls(
-        'flex items-center justify-center rounded-md p-3 hover:bg-gray-100 ',
-        isLiked
-          ? 'text-red-500  hover:text-red-600'
-          : 'text-gray-400  hover:text-gray-500'
+        'flex items-center justify-center rounded-md p-1',
+        isLiked ? 'text-red-500' : 'text-gray-400'
       )}
     >
       {isLiked ? (

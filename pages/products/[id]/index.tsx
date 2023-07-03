@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable no-unsafe-optional-chaining */
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -6,7 +7,6 @@ import useSWR from 'swr';
 import { Product, User } from '@prisma/client';
 import useMutation from '@libs/client/useMutation';
 import Layout from '@/components/layout';
-import Button from '@/components/button/button';
 import client from '@/libs/server/client';
 import Card from '@/components/profile/card';
 import LikeButton from '@/components/button/like-button';
@@ -14,6 +14,9 @@ import RelatedItemSection from '@/components/related-item-section';
 
 interface ProductWithUser extends Product {
   user: User;
+  _count: {
+    favs: number;
+  };
 }
 interface ItemDetailResponse {
   ok: boolean;
@@ -37,12 +40,27 @@ const ItemDetail: NextPage<ItemDetailResponse> = (props) => {
     if (!data) return;
     if (!loading) {
       toggleFav({});
-      void mutate({ ...data, isLiked: !data.isLiked }, false);
+      void mutate(
+        {
+          ...data,
+          product: {
+            ...data.product,
+            _count: {
+              ...data.product._count,
+              favs: data.isLiked
+                ? data?.product._count.favs - 1
+                : data?.product._count.favs + 1
+            }
+          },
+          isLiked: !data.isLiked
+        },
+        false
+      );
     }
   };
   return (
     <Layout seoTitle="Product Detail">
-      {data && (
+      {data?.ok && (
         <div className="px-4 py-4">
           <div className="mb-8">
             <div className="relative mb-10 w320:flex w320:justify-between w320:space-x-4">
@@ -59,6 +77,10 @@ const ItemDetail: NextPage<ItemDetailResponse> = (props) => {
               <div className="w-full max-w320:mt-10 w320:max-w-[50%]">
                 <h3 className="overflow-x-hidden">{data.product.name}</h3>
                 <h4 className="mt-3 block">${data.product.price}</h4>
+                <div className="flex items-center">
+                  <LikeButton onFavClick={onFavClick} isLiked={data.isLiked} />
+                  <span>{data.product._count.favs}</span>
+                </div>
               </div>
             </div>
             <Card
@@ -72,10 +94,6 @@ const ItemDetail: NextPage<ItemDetailResponse> = (props) => {
               <p className="my-8 overflow-x-hidden">
                 {data.product.description}
               </p>
-              <div className="flex items-center justify-between space-x-2">
-                <Button large text="Talk to seller" />
-                <LikeButton onFavClick={onFavClick} isLiked={data.isLiked} />
-              </div>
             </div>
           </div>
           <RelatedItemSection relatedProducts={data.relatedProducts} />
