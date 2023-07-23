@@ -62,9 +62,9 @@ const ItemDetail: NextPage<ItemDetailResponse> = (props) => {
     <Layout seoTitle="Product Detail">
       {data?.ok && (
         <div className="px-4 py-4">
-          <div className="mb-8">
-            <div className="relative mb-10 w320:flex w320:justify-between w320:space-x-4">
-              <div className="relative aspect-square w-full max-w-[256px]">
+          <div className="mb-10 flex justify-between space-x-10">
+            <div className="w-1/2 max-w-[400px]">
+              <div className="relative aspect-square">
                 <Image
                   src={data.product.image}
                   alt="product"
@@ -74,29 +74,31 @@ const ItemDetail: NextPage<ItemDetailResponse> = (props) => {
                   className="object-center"
                 />
               </div>
-              <div className="w-full max-w320:mt-10 w320:max-w-[50%]">
-                <h3 className="overflow-x-hidden">{data.product.name}</h3>
-                <h4 className="mt-3 block">${data.product.price}</h4>
-                <div className="flex items-center">
-                  <LikeButton onFavClick={onFavClick} isLiked={data.isLiked} />
-                  <span>{data.product._count.favs}</span>
-                </div>
+            </div>
+
+            <div className="w-1/2 space-y-6">
+              <h3 className="overflow-x-hidden font-medium">
+                {data.product.name}
+              </h3>
+              <h3>${data.product.price}</h3>
+              <div className="flex items-center">
+                <LikeButton onFavClick={onFavClick} isLiked={data.isLiked} />
+                <span>{data.product._count.favs}</span>
               </div>
             </div>
-            <Card
-              avatar={data.product.user.avatar}
-              userId={data.product.user.id}
-              userName={data.product.user.name}
-              postType="products"
-              postId={data.product.id}
-            ></Card>
-            <div className="mt-5">
-              <p className="my-8 overflow-x-hidden">
-                {data.product.description}
-              </p>
-            </div>
           </div>
-          {data.relatedProducts.length !== 0 ? (
+          <Card
+            avatar={data.product.user.avatar}
+            userId={data.product.user.id}
+            userName={data.product.user.name}
+            postType="products"
+            postId={data.product.id}
+          ></Card>
+          <div className="mt-5">
+            <p className="my-8 overflow-x-hidden">{data.product.description}</p>
+          </div>
+
+          {data.relatedProducts.length ? (
             <RelatedItemSection relatedProducts={data.relatedProducts} />
           ) : null}
         </div>

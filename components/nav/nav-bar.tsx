@@ -15,7 +15,7 @@ export default function NavBar() {
     <nav className="flex w-full max-w-6xl justify-between bg-black px-2">
       <div className="flex items-center space-x-3">
         <Link href="/">
-          <h3 className="font-medium">Carrot Market</h3>
+          <h4 className="font-medium">Carrot Market</h4>
         </Link>
         <div className="flex space-x-3">
           <NavChannel link="/" name="홈" />

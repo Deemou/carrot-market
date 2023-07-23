@@ -114,6 +114,12 @@ html {
   }
 }
 
+*,
+::before,
+::after {
+  box-sizing: border-box;
+}
+
 h1 {
   font-size: 2.4rem;
 }
@@ -123,7 +129,7 @@ h2 {
 }
 
 h3 {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
 }
 
 h4 {
