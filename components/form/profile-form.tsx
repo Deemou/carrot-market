@@ -41,7 +41,6 @@ export default function ProfileForm() {
   const [uName, setUName] = useState('');
   const [uAvatar, setUAvatar] = useState('');
   const [isUpdateDone, setIsUpdateDone] = useState(false);
-  const [calledPush, setCalledPush] = useState(false);
 
   useEffect(() => {
     if (!session) return;
@@ -115,12 +114,10 @@ export default function ProfileForm() {
   }, [data, session, uAvatar, uName, update]);
 
   useEffect(() => {
-    if (calledPush) return;
     if (!isUpdateDone) return;
 
     void router.push(`/profile`);
-    setCalledPush(true);
-  }, [calledPush, isUpdateDone, router]);
+  }, [isUpdateDone, router]);
 
   return (
     <form
