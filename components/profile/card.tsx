@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 import Link from 'next/link';
 import cls from '@/libs/client/utils';
 import { useEffect, useState } from 'react';
@@ -57,15 +56,14 @@ export default function Card({
     deletePost({});
   };
   const onEditClick = () => {
-    if (postType === 'products') void router.push(`/products/${postId}/edit/`);
-    else if (postType === 'posts')
-      void router.push(`/community/${postId}/edit`);
+    if (postType === 'products') router.push(`/products/${postId}/edit/`);
+    else if (postType === 'posts') router.push(`/community/${postId}/edit`);
   };
 
   useEffect(() => {
     if (!deleteData?.ok) return;
-    if (postType === 'products') void router.push('/');
-    else if (postType === 'posts') void router.push('/community');
+    if (postType === 'products') router.push('/');
+    else if (postType === 'posts') router.push('/community');
   }, [deleteData, postType, router]);
 
   return (
@@ -82,40 +80,42 @@ export default function Card({
       {session && (
         <>
           {/* menu */}
-          <div
-            className={cls(
-              'relative',
-              Number(session.user.id) === userId ? '' : 'hidden'
-            )}
-          >
-            <svg
+          <div className="relative">
+            <button
               onClick={onMenuClick}
-              id="Layer_1"
-              fill="#ffffff"
-              width="22px"
-              height="22px"
-              version="1.1"
-              viewBox="0 0 128 128"
-              xmlSpace="preserve"
-              xmlns="http://www.w3.org/2000/svg"
-              className="cursor-pointer"
+              type="button"
+              className={Number(session.user.id) === userId ? '' : 'hidden'}
             >
-              <circle cx="64" cy="90.358" r="9.824" />
-              <circle cx="99.25" cy="90.358" r="9.824" />
-              <circle cx="28.75" cy="90.358" r="9.824" />
-            </svg>
+              <svg
+                id="Layer_1"
+                fill="#ffffff"
+                width="22px"
+                height="22px"
+                version="1.1"
+                viewBox="0 0 128 128"
+                xmlSpace="preserve"
+                xmlns="http://www.w3.org/2000/svg"
+                className="cursor-pointer"
+              >
+                <circle cx="64" cy="90.358" r="9.824" />
+                <circle cx="99.25" cy="90.358" r="9.824" />
+                <circle cx="28.75" cy="90.358" r="9.824" />
+              </svg>
+            </button>
             {isMenuClicked && (
               <div>
                 {/* overlay */}
                 <div
                   onClick={onOverlayClick}
                   className="fixed left-0 top-0 z-10 h-screen w-full opacity-0"
+                  aria-hidden
                 ></div>
                 {/* modal */}
                 <div className="absolute right-0 top-2 z-20 rounded-md bg-black ring-2 ring-gray-900">
                   {/* edit */}
-                  <div
+                  <button
                     onClick={onEditClick}
+                    type="button"
                     className="flex cursor-pointer flex-row space-x-3 px-3 py-1.5 hover:bg-[#202020]"
                   >
                     <svg
@@ -128,10 +128,11 @@ export default function Card({
                       <path d="m16 2.012 3 3L16.713 7.3l-3-3zM4 14v3h3l8.299-8.287-3-3zm0 6h16v2H4z" />
                     </svg>
                     <span>Edit</span>
-                  </div>
+                  </button>
                   {/* delete */}
-                  <div
+                  <button
                     onClick={onDeleteMenuClick}
+                    type="button"
                     className="flex cursor-pointer flex-row space-x-3 px-3 py-1.5 hover:bg-[#202020]"
                   >
                     <svg
@@ -154,7 +155,7 @@ export default function Card({
                       </g>
                     </svg>
                     <span className="text-[#ff0000]">Delete</span>
-                  </div>
+                  </button>
                 </div>
               </div>
             )}
@@ -166,6 +167,7 @@ export default function Card({
               <div
                 onClick={onDeleteOverlayClick}
                 className="fixed bottom-0 left-0 right-0 top-0 z-30 h-screen w-full bg-slate-100 opacity-10"
+                aria-hidden
               ></div>
               {/* modal */}
               <div className="relative z-40 mx-auto w-80 max-w-[80vw] space-y-5 self-center rounded-xl bg-black px-8 py-4 ring-2 ring-gray-900">

@@ -15,9 +15,8 @@ const Blog: NextPage<{ posts: Post[] }> = ({ posts }) => {
   return (
     <Layout seoTitle="Blog">
       <h3 className="mb-10 mt-5 text-center">Latest Posts</h3>
-      {posts.map((post, index) => (
-        // eslint-disable-next-line react/no-array-index-key
-        <div key={index} className="mb-5">
+      {posts.map((post) => (
+        <div key={post.title} className="mb-5">
           <Link href={`/blog/${post.slug}`}>
             <h3 className="text-red-500">{post.title}</h3>
             <div>

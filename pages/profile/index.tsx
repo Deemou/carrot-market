@@ -100,7 +100,6 @@ export const getServerSideProps = async function (ctx: NextPageContext) {
   });
   return {
     props: {
-      /* eslint-disable @typescript-eslint/no-unsafe-assignment */
       profile: JSON.parse(JSON.stringify(profile))
     }
   };

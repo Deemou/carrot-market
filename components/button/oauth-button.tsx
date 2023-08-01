@@ -14,7 +14,6 @@ export default function OAuthButton({
   return (
     <button
       type="button"
-      // eslint-disable-next-line @typescript-eslint/no-misused-promises
       onClick={() => signIn(provider)}
       className="flex items-center justify-center space-x-2 rounded-md border border-white bg-black px-4 py-2"
     >

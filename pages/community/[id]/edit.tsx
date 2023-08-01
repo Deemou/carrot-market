@@ -45,22 +45,19 @@ const Edit: NextPage = () => {
 
   useEffect(() => {
     if (!postData) return;
-    if (!postData.ok) void router.replace('/community');
+    if (!postData.ok) router.replace('/community');
   });
 
   useEffect(() => {
     if (editData?.ok) {
-      void router.replace(`/community/${router.query.id}`);
+      router.replace(`/community/${router.query.id}`);
     }
   }, [editData, router]);
 
   return (
     <Layout seoTitle="Edit Post">
       {postData?.ok && (
-        <form
-          onSubmit={(...args) => void handleSubmit(onValid)(...args)}
-          className="space-y-4 px-4 py-10"
-        >
+        <form onSubmit={handleSubmit(onValid)} className="space-y-4 px-4 py-10">
           <TextArea
             name="question"
             label="Question"

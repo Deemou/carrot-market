@@ -1,5 +1,3 @@
-/* eslint-disable no-unsafe-optional-chaining */
-
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
@@ -7,7 +5,6 @@ import { Answer, Post, User } from '@prisma/client';
 import useMutation from '@libs/client/useMutation';
 import { useForm } from 'react-hook-form';
 import { useEffect } from 'react';
-import cls from '@libs/client/utils';
 import Layout from '@/components/layout';
 import TextArea from '@components/textarea';
 import client from '@/libs/server/client';
@@ -62,7 +59,7 @@ const CommunityPostDetail: NextPage<CommunityPostResponse> = (props) => {
     if (!data) return;
     if (!loading) {
       toggleWonder({});
-      void mutate(
+      mutate(
         {
           ...data,
           post: {
@@ -70,8 +67,8 @@ const CommunityPostDetail: NextPage<CommunityPostResponse> = (props) => {
             _count: {
               ...data.post._count,
               wonderings: data.isWondering
-                ? data?.post._count.wonderings - 1
-                : data?.post._count.wonderings + 1
+                ? data.post._count.wonderings - 1
+                : data.post._count.wonderings + 1
             }
           },
           isWondering: !data.isWondering
@@ -87,7 +84,7 @@ const CommunityPostDetail: NextPage<CommunityPostResponse> = (props) => {
   useEffect(() => {
     if (answerData && answerData.ok) {
       reset();
-      void mutate();
+      mutate();
     }
   }, [answerData, reset, mutate]);
   return (
@@ -148,7 +145,7 @@ const CommunityPostDetail: NextPage<CommunityPostResponse> = (props) => {
               </div>
             ))}
           </div>
-          <form onSubmit={(...args) => void handleSubmit(onValid)(...args)}>
+          <form onSubmit={handleSubmit(onValid)}>
             <TextArea
               name="answer"
               required
@@ -222,7 +219,6 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
   }
   return {
     props: {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       post: JSON.parse(JSON.stringify(post))
     }
   };

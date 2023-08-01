@@ -78,7 +78,6 @@ export const getServerSideProps = async function (ctx: MyPageContext) {
   });
   return {
     props: {
-      /* eslint-disable @typescript-eslint/no-unsafe-assignment */
       products: JSON.parse(JSON.stringify(products))
     }
   };

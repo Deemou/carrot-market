@@ -26,7 +26,6 @@ export default function NavBar() {
       <div className="flex space-x-3">
         <Avatar url={session?.user.avatar} />
         <Button
-          // eslint-disable-next-line @typescript-eslint/no-misused-promises
           onClick={onClick}
           type="button"
           text="Log out"

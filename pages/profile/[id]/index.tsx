@@ -62,7 +62,6 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
   }
   return {
     props: {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       profile: JSON.parse(JSON.stringify(profile))
     }
   };

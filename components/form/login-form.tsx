@@ -57,7 +57,7 @@ export default function LoginForm() {
 
   return (
     <form
-      onSubmit={(...args) => void handleSubmit(onLoginValid)(...args)}
+      onSubmit={handleSubmit(onLoginValid)}
       className="mt-8 flex flex-col space-y-4"
     >
       <Input

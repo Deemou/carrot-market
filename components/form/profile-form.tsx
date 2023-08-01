@@ -109,21 +109,18 @@ export default function ProfileForm() {
     };
 
     if (data?.ok) {
-      void handleUpdate();
+      handleUpdate();
     }
   }, [data, session, uAvatar, uName, update]);
 
   useEffect(() => {
     if (!isUpdateDone) return;
 
-    void router.push(`/profile`);
+    router.push(`/profile`);
   }, [isUpdateDone, router]);
 
   return (
-    <form
-      onSubmit={(...args) => void handleSubmit(onValid)(...args)}
-      className="space-y-4"
-    >
+    <form onSubmit={handleSubmit(onValid)} className="space-y-4">
       <AvatarInput
         avatarPreview={avatarPreview}
         register={register('avatar')}

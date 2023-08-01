@@ -56,14 +56,14 @@ export default function TokenForm({ email, setIsTokenOk }: TokenFormProps) {
     if (!data) return;
     if (data.ok) {
       setIsTokenOk(true);
-      void handleUpdate();
+      handleUpdate();
     }
     if (data.error) setError('formErrors', { message: data.error });
   }, [data, email, session, setError, setIsTokenOk, update]);
 
   return (
     <form
-      onSubmit={(...args) => void handleSubmit(onTokenValid)(...args)}
+      onSubmit={handleSubmit(onTokenValid)}
       className="mt-8 flex flex-col space-y-4"
     >
       <TokenInput onClick={onClick} register={register} />

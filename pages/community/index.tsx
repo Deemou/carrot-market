@@ -74,7 +74,6 @@ export const getServerSideProps = async function (ctx: NextPageContext) {
   });
   return {
     props: {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       posts: JSON.parse(JSON.stringify(posts))
     }
   };

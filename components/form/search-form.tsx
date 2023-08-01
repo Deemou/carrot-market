@@ -20,16 +20,16 @@ export default function SearchForm({ searchUrl }: SearchFormProps) {
   }, [q, setValue]);
 
   const onValid = ({ query }: ISearchForm) => {
-    void router.push(`${searchUrl}?q=${query}`);
+    router.push(`${searchUrl}?q=${query}`);
   };
 
   return (
     <form
-      onSubmit={(...args) => void handleSubmit(onValid)(...args)}
+      onSubmit={handleSubmit(onValid)}
       className="relative w-5/12 max-w640:w-9/12 max-w480:w-8/12"
     >
       <svg
-        onClick={(...args) => void handleSubmit(onValid)(...args)}
+        onClick={handleSubmit(onValid)}
         viewBox="0 0 20 20"
         xmlns="http://www.w3.org/2000/svg"
         className="absolute right-2 top-1 h-8 w-8 cursor-pointer fill-black"

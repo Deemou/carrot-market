@@ -64,7 +64,7 @@ export default function EmailForm({
 
   return (
     <form
-      onSubmit={(...args) => void handleSubmit(onEmailValid)(...args)}
+      onSubmit={handleSubmit(onEmailValid)}
       className="mt-8 flex flex-col space-y-4"
     >
       <EmailInput onClick={onClick} disabled={disabled} register={register} />

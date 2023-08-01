@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable no-unsafe-optional-chaining */
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -40,7 +38,7 @@ const ItemDetail: NextPage<ItemDetailResponse> = (props) => {
     if (!data) return;
     if (!loading) {
       toggleFav({});
-      void mutate(
+      mutate(
         {
           ...data,
           product: {
@@ -48,8 +46,8 @@ const ItemDetail: NextPage<ItemDetailResponse> = (props) => {
             _count: {
               ...data.product._count,
               favs: data.isLiked
-                ? data?.product._count.favs - 1
-                : data?.product._count.favs + 1
+                ? data.product._count.favs - 1
+                : data.product._count.favs + 1
             }
           },
           isLiked: !data.isLiked

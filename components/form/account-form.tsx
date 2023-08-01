@@ -44,13 +44,13 @@ export default function AccountForm({ email }: AccountFormProps) {
 
   useEffect(() => {
     if (!data) return;
-    if (data.ok) void router.replace('/');
+    if (data.ok) router.replace('/');
     if (data.error) setError('formErrors', { message: data.error });
   }, [data, router, setError]);
 
   return (
     <form
-      onSubmit={(...args) => void handleSubmit(onAccountValid)(...args)}
+      onSubmit={handleSubmit(onAccountValid)}
       className="mt-8 flex flex-col space-y-4"
     >
       <NameInput onClick={onClick} register={register} errors={errors} />

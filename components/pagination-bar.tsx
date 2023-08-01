@@ -17,17 +17,16 @@ export default function PaginationBar({
   const [pages, setPages] = useState<number[]>([]);
   const pageLimit = Math.min(5, lastPage);
   const onClickPage = (page: number) => {
-    if (q) void router.push(`${router.pathname}?q=${q}&page=${page}`);
-    else void router.push(`${router.pathname}?page=${page}`);
+    if (q) router.push(`${router.pathname}?q=${q}&page=${page}`);
+    else router.push(`${router.pathname}?page=${page}`);
   };
   const onClickDirection = (direction: Direction) => {
     if (direction === 'prev') {
-      if (q)
-        void router.push(`${router.pathname}?q=${q}&page=${currentPage - 1}`);
-      else void router.push(`${router.pathname}?page=${currentPage - 1}`);
+      if (q) router.push(`${router.pathname}?q=${q}&page=${currentPage - 1}`);
+      else router.push(`${router.pathname}?page=${currentPage - 1}`);
     } else if (q)
-      void router.push(`${router.pathname}?q=${q}&page=${currentPage + 1}`);
-    else void router.push(`${router.pathname}?page=${currentPage + 1}`);
+      router.push(`${router.pathname}?q=${q}&page=${currentPage + 1}`);
+    else router.push(`${router.pathname}?page=${currentPage + 1}`);
   };
   useEffect(() => {
     if (currentPage <= 3) {
