@@ -11,6 +11,7 @@ import client from '@/libs/server/client';
 import Avatar from '@/components/avatar';
 import Card from '@/components/profile/card';
 import WonderButton from '@/components/button/wonder-button';
+import MessageIcon from '@/components/icon/message-icon';
 
 interface AnswerWithUser extends Answer {
   user: User;
@@ -111,23 +112,10 @@ const CommunityPostDetail: NextPage<CommunityPostResponse> = (props) => {
                 isWondering={data.isWondering}
                 wondersCount={data.post._count.wonderings}
               />
-              <span className="flex items-center space-x-2">
-                <svg
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-                  ></path>
-                </svg>
+              <div className="flex items-center space-x-2">
+                <MessageIcon />
                 <span>답변 {data.post._count.answers}</span>
-              </span>
+              </div>
             </div>
           </div>
           <div className="my-5 space-y-5">
