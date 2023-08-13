@@ -4,6 +4,7 @@ import { Dispatch, SetStateAction, useEffect } from 'react';
 import EmailInput from '@components/input/email-input';
 import { useSession } from 'next-auth/react';
 import { IEmailForm } from '@/types/form';
+import ErrorMessage from '../error-message';
 
 interface MutationResult {
   ok: boolean;
@@ -65,9 +66,7 @@ export default function EmailForm({
     >
       <EmailInput onClick={onClick} disabled={disabled} register={register} />
       {errors.formErrors && (
-        <span className="my-2 block text-center text-red-600">
-          {errors.formErrors.message}
-        </span>
+        <ErrorMessage message={errors.formErrors.message} />
       )}
       {children}
     </form>

@@ -4,6 +4,7 @@ import { Dispatch, SetStateAction, useEffect } from 'react';
 import Button from '@/components/button/button';
 import TokenInput from '@components/input/token-input';
 import { useSession } from 'next-auth/react';
+import ErrorMessage from '../error-message';
 
 interface ITokenForm {
   token: string;
@@ -68,9 +69,7 @@ export default function TokenForm({ email, setIsTokenOk }: TokenFormProps) {
     >
       <TokenInput onClick={onClick} register={register} />
       {errors.formErrors && (
-        <span className="my-2 block text-center text-red-600">
-          {errors.formErrors.message}
-        </span>
+        <ErrorMessage message={errors.formErrors.message} />
       )}
       <Button text={loading ? 'Loading' : 'Confirm Token'} />
       <h3 className="my-4 flex justify-center text-red-400">

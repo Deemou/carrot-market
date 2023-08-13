@@ -6,6 +6,7 @@ import Input from '@components/input';
 import { signIn } from 'next-auth/react';
 import { ILoginForm } from '@/types/form';
 import EmailInput from '../input/email-input';
+import ErrorMessage from '../error-message';
 
 export default function LoginForm() {
   const [isLoading, setIsLoading] = useState(false);
@@ -62,9 +63,7 @@ export default function LoginForm() {
         })}
       />
       {errors.formErrors && (
-        <span className="my-2 block text-center text-red-600">
-          {errors.formErrors.message}
-        </span>
+        <ErrorMessage message={errors.formErrors.message} />
       )}
       <Button text={isLoading ? 'Loading' : 'Continue'} />
     </form>
