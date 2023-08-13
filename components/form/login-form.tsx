@@ -4,12 +4,8 @@ import { useRouter } from 'next/router';
 import Button from '@/components/button/button';
 import Input from '@components/input';
 import { signIn } from 'next-auth/react';
-
-interface ILoginForm {
-  email: string;
-  password: string;
-  formErrors?: string;
-}
+import { ILoginForm } from '@/types/form';
+import EmailInput from '../input/email-input';
 
 export default function LoginForm() {
   const [isLoading, setIsLoading] = useState(false);
@@ -54,16 +50,7 @@ export default function LoginForm() {
       onSubmit={handleSubmit(onLoginValid)}
       className="mt-8 flex flex-col space-y-4"
     >
-      <Input
-        onClick={onClick}
-        type="email"
-        name="email"
-        label="Email address"
-        required
-        register={register('email', {
-          required: true
-        })}
-      />
+      <EmailInput register={register} />
       <Input
         onClick={onClick}
         type="password"

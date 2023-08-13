@@ -3,11 +3,7 @@ import useMutation from '@/libs/client/useMutation';
 import { Dispatch, SetStateAction, useEffect } from 'react';
 import EmailInput from '@components/input/email-input';
 import { useSession } from 'next-auth/react';
-
-interface IEmailForm {
-  email: string;
-  formErrors?: string;
-}
+import { IEmailForm } from '@/types/form';
 
 interface MutationResult {
   ok: boolean;
