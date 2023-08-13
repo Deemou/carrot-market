@@ -31,9 +31,8 @@ const CommunitySearch: NextPage = () => {
   );
 
   useEffect(() => {
-    if (router?.query?.page) {
-      setPage(+router.query.page);
-    }
+    if (router?.query?.page) setPage(+router.query.page);
+    else setPage(1);
   }, [page, router]);
 
   return (
