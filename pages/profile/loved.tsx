@@ -1,36 +1,25 @@
 import type { NextPage, NextPageContext } from 'next';
-import Layout from '@/components/layout';
 import client from '@/libs/server/client';
 import { Kind } from '@prisma/client';
 import { ProductWithCount } from 'pages';
-import Item from '@/components/item';
 import { getSession } from 'next-auth/react';
+import Layout from '@/components/layout';
+import RecordList from '@/components/record-list';
 
 interface Record {
   id: number;
   product: ProductWithCount;
 }
 
-interface ProductListResponse {
+interface RecordListResponse {
   ok: boolean;
-  products: Record[];
+  records: Record[];
 }
 
-const Loved: NextPage<ProductListResponse> = ({ products }) => {
+const Loved: NextPage<RecordListResponse> = ({ records }) => {
   return (
-    <Layout seoTitle="Products Loved">
-      <div className="space-y-5 divide-y pb-10">
-        {products?.map((record) => (
-          <Item
-            id={record.product.id}
-            key={record.id}
-            name={record.product.name}
-            price={record.product.price}
-            thumbImage={record.product.thumbImage || record.product.image}
-            likesCount={record.product._count.favs}
-          />
-        ))}
-      </div>
+    <Layout seoTitle="Record Loved">
+      <RecordList records={records} />
     </Layout>
   );
 };
@@ -61,7 +50,7 @@ export const getServerSideProps = async function (ctx: NextPageContext) {
       }
     }
   });
-  const products = recordQueries?.map((record) => {
+  const records = recordQueries?.map((record) => {
     return {
       ...record,
       product: {
@@ -72,7 +61,7 @@ export const getServerSideProps = async function (ctx: NextPageContext) {
   });
   return {
     props: {
-      products: JSON.parse(JSON.stringify(products))
+      records: JSON.parse(JSON.stringify(records))
     }
   };
 };
