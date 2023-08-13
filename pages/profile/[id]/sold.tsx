@@ -3,7 +3,6 @@ import Layout from '@/components/layout';
 import client from '@/libs/server/client';
 import { Kind } from '@prisma/client';
 import { ProductWithCount } from 'pages';
-import { getSession } from 'next-auth/react';
 import RecordList from '@/components/record-list';
 
 interface Record {
@@ -31,8 +30,7 @@ interface MyPageContext extends NextPageContext {
 }
 
 export const getServerSideProps = async function (ctx: MyPageContext) {
-  const session = await getSession(ctx);
-  const userId = Number(session?.user?.id);
+  const userId = Number(ctx.query.id);
   const kind = 'Sale';
 
   const recordQueries = await client.record.findMany({
