@@ -5,6 +5,10 @@ import { ProductWithCount } from 'pages';
 import { getSession } from 'next-auth/react';
 import Layout from '@/components/layout';
 import RecordList from '@/components/record-list';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import useSWR from 'swr';
+import PaginationBar from '@/components/pagination-bar';
 
 interface Record {
   id: number;
@@ -14,12 +18,34 @@ interface Record {
 interface RecordListResponse {
   ok: boolean;
   records: Record[];
+  lastPage: number;
 }
 
-const Sold: NextPage<RecordListResponse> = ({ records }) => {
+const kind = 'Sale';
+
+const Sold: NextPage<RecordListResponse> = (props) => {
+  const router = useRouter();
+  const [page, setPage] = useState<number>(1);
+  const { data } = useSWR<RecordListResponse>(
+    `/api/users/records?kind=${kind}&page=${page}`,
+    {
+      fallbackData: props
+    }
+  );
+
+  useEffect(() => {
+    if (router?.query?.page) setPage(+router.query.page);
+    else setPage(1);
+  }, [page, router]);
+
   return (
     <Layout seoTitle="Record Sale">
-      <RecordList records={records} />
+      {data?.ok && (
+        <>
+          <RecordList records={data.records} />
+          <PaginationBar currentPage={page} lastPage={data.lastPage} />
+        </>
+      )}
     </Layout>
   );
 };
@@ -27,15 +53,18 @@ const Sold: NextPage<RecordListResponse> = ({ records }) => {
 export const getServerSideProps = async function (ctx: NextPageContext) {
   const session = await getSession(ctx);
   const userId = Number(session?.user?.id);
-  const kind = 'Sale';
+  const page = Number(ctx.query.page) || 1;
+  const limit = 10;
 
   const recordQueries = await client.record.findMany({
+    take: limit,
+    skip: (page - 1) * limit,
+    orderBy: {
+      createdAt: 'desc'
+    },
     where: {
       userId,
       kind: kind as Kind
-    },
-    orderBy: {
-      createdAt: 'desc'
     },
     include: {
       product: {

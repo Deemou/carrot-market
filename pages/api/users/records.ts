@@ -17,8 +17,24 @@ async function handler(
   } = req;
 
   const userId = Number(id) || Number(session.user.id);
+  const page = Number(req.query.page);
+  const limit = 10;
+  const recordAll = await client.record.findMany({
+    where: {
+      userId,
+      kind: kind as Kind
+    }
+  });
+  const recordCount = recordAll.length;
+  const lastPage = Math.ceil(recordCount / limit);
+  if (page < 1 || page > lastPage) return res.json({ ok: false });
 
   const recordQueries = await client.record.findMany({
+    take: limit,
+    skip: (page - 1) * limit,
+    orderBy: {
+      createdAt: 'desc'
+    },
     where: {
       userId,
       kind: kind as Kind
@@ -39,7 +55,7 @@ async function handler(
       }
     }
   });
-  const products = recordQueries?.map((record) => {
+  const records = recordQueries.map((record) => {
     return {
       ...record,
       product: {
@@ -51,7 +67,8 @@ async function handler(
 
   res.json({
     ok: true,
-    products
+    records,
+    lastPage
   });
 }
 
