@@ -38,9 +38,11 @@ const Community: NextPage<PostsResponse> = (props) => {
   return (
     <Layout seoTitle="Community">
       <SearchBar section="community" />
-      {data && <PostListSection posts={data.posts} />}
       {data?.ok && (
-        <PaginationBar currentPage={page} lastPage={data.lastPage} />
+        <>
+          <PostListSection posts={data.posts} />
+          <PaginationBar currentPage={page} lastPage={data.lastPage} />
+        </>
       )}
     </Layout>
   );

@@ -18,7 +18,7 @@ interface PostListSectionProps {
 export default function PostListSection({ posts }: PostListSectionProps) {
   return (
     <div className="mt-24 space-y-4 divide-y-[2px]">
-      {posts?.map((post) => (
+      {posts.map((post) => (
         <Link
           href={`/community/${post.id}`}
           key={post.id}

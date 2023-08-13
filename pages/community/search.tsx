@@ -38,14 +38,16 @@ const CommunitySearch: NextPage = () => {
   return (
     <Layout seoTitle="CommunitySearch">
       <SearchBar section="community" />
-      {data && <PostListSection posts={data.posts} />}
-      {data && !data?.ok && (
+      {data?.ok && (
+        <>
+          <PostListSection posts={data.posts} />
+          <PaginationBar currentPage={page} lastPage={data.lastPage} />
+        </>
+      )}
+      {!data?.ok && (
         <div className="mt-40">
           <h3 className="text-center">No results found</h3>
         </div>
-      )}
-      {data?.ok && (
-        <PaginationBar currentPage={page} lastPage={data.lastPage} />
       )}
     </Layout>
   );

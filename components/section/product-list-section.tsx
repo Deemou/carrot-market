@@ -16,7 +16,7 @@ export default function ProductListSection({
 }: ProductListSectionProps) {
   return (
     <div className="mt-24 space-y-4 divide-y-[2px]">
-      {products?.map((product) => (
+      {products.map((product) => (
         <Item
           id={product.id}
           key={product.id}

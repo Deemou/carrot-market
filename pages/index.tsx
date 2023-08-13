@@ -36,9 +36,11 @@ const Home: NextPage<ProductsResponse> = (props) => {
   return (
     <Layout seoTitle="Home">
       <SearchBar section="products" />
-      {data && <ProductListSection products={data.products} />}
       {data?.ok && (
-        <PaginationBar currentPage={page} lastPage={data.lastPage} />
+        <>
+          <ProductListSection products={data.products} />
+          <PaginationBar currentPage={page} lastPage={data.lastPage} />
+        </>
       )}
     </Layout>
   );
