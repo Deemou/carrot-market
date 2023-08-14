@@ -1,22 +1,23 @@
-import { UseFormRegister } from 'react-hook-form';
+import { RegisterOptions, UseFormRegisterReturn } from 'react-hook-form';
 import Input from '@components/input';
+import { IEmailForm, ILoginForm } from '@/types/form';
 
-interface IEmailForm {
-  email: string;
-  formErrors?: string;
-}
+type LoginFormOrEmailForm = ILoginForm | IEmailForm;
 
-interface EmailInputProps {
+interface EmailInputProps<T extends LoginFormOrEmailForm> {
   onClick?: () => void;
   disabled?: boolean;
-  register: UseFormRegister<IEmailForm>;
+  register: (
+    key: keyof Pick<T, 'email'>,
+    options?: RegisterOptions
+  ) => UseFormRegisterReturn;
 }
 
-export default function EmailInput({
+export default function EmailInput<T extends LoginFormOrEmailForm>({
   register,
   disabled,
   onClick
-}: EmailInputProps) {
+}: EmailInputProps<T>) {
   return (
     <Input
       onClick={onClick}
@@ -25,9 +26,7 @@ export default function EmailInput({
       label="Email address"
       required
       disabled={disabled}
-      register={register('email', {
-        required: true
-      })}
+      register={register('email', { required: true })}
     />
   );
 }

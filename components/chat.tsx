@@ -59,7 +59,7 @@ export default function ChatRoom({ title, chatId }: ChatProps) {
 
   const page = useInfiniteScroll(direction, scrollId);
   useEffect(() => {
-    void setSize(page);
+    setSize(page);
   });
 
   const { register, handleSubmit, reset } = useForm<MessageForm>();
@@ -86,7 +86,6 @@ export default function ChatRoom({ title, chatId }: ChatProps) {
       scrollBox.scrollTop = scrollBox.scrollHeight - scrollHeight;
       setScrollHeight(scrollBox.scrollHeight);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   return (
@@ -116,7 +115,7 @@ export default function ChatRoom({ title, chatId }: ChatProps) {
       </div>
       <div className="inset-x-0 py-2">
         <form
-          onSubmit={(...args) => void handleSubmit(onValid)(...args)}
+          onSubmit={handleSubmit(onValid)}
           className="relative mx-auto flex w-full max-w-lg items-center"
         >
           <input

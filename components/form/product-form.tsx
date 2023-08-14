@@ -59,7 +59,7 @@ export default function ProductForm({
 
   useEffect(() => {
     if (!ProductData) return;
-    if (!ProductData.ok) void router.replace('/');
+    if (!ProductData.ok) router.replace('/');
   });
 
   useEffect(() => {
@@ -116,15 +116,12 @@ export default function ProductForm({
 
   useEffect(() => {
     if (data?.ok) {
-      void router.replace(`/products/${data.id}`);
+      router.replace(`/products/${data.id}`);
     }
   }, [data, router]);
 
   return (
-    <form
-      onSubmit={(...args) => void handleSubmit(onValid)(...args)}
-      className="space-y-4 p-4 py-10"
-    >
+    <form onSubmit={handleSubmit(onValid)} className="space-y-4 p-4 py-10">
       <ImageInput
         imagePreview={productImagePreview}
         register={register('productImage')}

@@ -29,13 +29,13 @@ const Write: NextPage = () => {
   };
   useEffect(() => {
     if (data && data.ok) {
-      void router.push(`/community/${data.post.id}`);
+      router.push(`/community/${data.post.id}`);
     }
   }, [data, router]);
   return (
     <Layout seoTitle="Write Post">
       <form
-        onSubmit={(...args) => void handleSubmit(onValid)(...args)}
+        onSubmit={(...args) => handleSubmit(onValid)(...args)}
         className="space-y-4 p-4 py-10"
       >
         <TextArea

@@ -29,17 +29,18 @@ const Home: NextPage<ProductsResponse> = (props) => {
   });
 
   useEffect(() => {
-    if (router?.query?.page) {
-      setPage(+router.query.page);
-    }
+    if (router?.query?.page) setPage(+router.query.page);
+    else setPage(1);
   }, [page, router]);
 
   return (
     <Layout seoTitle="Home">
       <SearchBar section="products" />
-      {data && <ProductListSection products={data.products} />}
       {data?.ok && (
-        <PaginationBar currentPage={page} lastPage={data.lastPage} />
+        <>
+          <ProductListSection products={data.products} />
+          <PaginationBar currentPage={page} lastPage={data.lastPage} />
+        </>
       )}
     </Layout>
   );
@@ -71,7 +72,6 @@ export const getServerSideProps = async function (ctx: NextPageContext) {
   });
   return {
     props: {
-      /* eslint-disable @typescript-eslint/no-unsafe-assignment */
       products: JSON.parse(JSON.stringify(products))
     }
   };

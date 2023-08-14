@@ -1,30 +1,26 @@
-/* eslint-disable @typescript-eslint/require-await */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-misused-promises */
 import { PrismaClient } from '@prisma/client';
 
 const client = new PrismaClient();
 
 async function main() {
-  Array.from({ length: 500 }, (_, i) => i).forEach(async (item) => {
-    await client.stream.create({
-      data: {
-        name: String(item),
-        description: String(item),
-        price: item,
-        user: {
-          connect: {
-            id: 1
-          }
-        },
-        chat: {
-          create: {}
-        }
-      }
-    });
-    console.log(`${item}/500`);
-  });
+  // Array.from({ length: 500 }, (_, i) => i).forEach(async (item) => {
+  //   await client.stream.create({
+  //     data: {
+  //       name: String(item),
+  //       description: String(item),
+  //       price: item,
+  //       user: {
+  //         connect: {
+  //           id: 1
+  //         }
+  //       },
+  //       chat: {
+  //         create: {}
+  //       }
+  //     }
+  //   });
+  //   console.log(`${item}/500`);
+  // });
 }
 
 main()

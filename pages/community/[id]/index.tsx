@@ -1,5 +1,3 @@
-/* eslint-disable no-unsafe-optional-chaining */
-
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
@@ -7,12 +5,13 @@ import { Answer, Post, User } from '@prisma/client';
 import useMutation from '@libs/client/useMutation';
 import { useForm } from 'react-hook-form';
 import { useEffect } from 'react';
-import cls from '@libs/client/utils';
 import Layout from '@/components/layout';
 import TextArea from '@components/textarea';
 import client from '@/libs/server/client';
 import Avatar from '@/components/avatar';
 import Card from '@/components/profile/card';
+import WonderButton from '@/components/button/wonder-button';
+import MessageIcon from '@/components/icon/message-icon';
 
 interface AnswerWithUser extends Answer {
   user: User;
@@ -59,24 +58,24 @@ const CommunityPostDetail: NextPage<CommunityPostResponse> = (props) => {
 
   const onWonderClick = () => {
     if (!data) return;
-    void mutate(
-      {
-        ...data,
-        post: {
-          ...data.post,
-          _count: {
-            ...data.post._count,
-            wonderings: data.isWondering
-              ? data?.post._count.wonderings - 1
-              : data?.post._count.wonderings + 1
-          }
-        },
-        isWondering: !data.isWondering
-      },
-      false
-    );
     if (!loading) {
       toggleWonder({});
+      mutate(
+        {
+          ...data,
+          post: {
+            ...data.post,
+            _count: {
+              ...data.post._count,
+              wonderings: data.isWondering
+                ? data.post._count.wonderings - 1
+                : data.post._count.wonderings + 1
+            }
+          },
+          isWondering: !data.isWondering
+        },
+        false
+      );
     }
   };
   const onValid = (form: AnswerForm) => {
@@ -86,7 +85,7 @@ const CommunityPostDetail: NextPage<CommunityPostResponse> = (props) => {
   useEffect(() => {
     if (answerData && answerData.ok) {
       reset();
-      void mutate();
+      mutate();
     }
   }, [answerData, reset, mutate]);
   return (
@@ -108,47 +107,15 @@ const CommunityPostDetail: NextPage<CommunityPostResponse> = (props) => {
               <span className="text-orange-500">Q.</span> {data.post.question}
             </div>
             <div className="mt-3 flex w-full space-x-5 border-b-[2px] border-t py-2.5  text-gray-700">
-              <button
-                onClick={onWonderClick}
-                type="button"
-                className={cls(
-                  'flex items-center space-x-2',
-                  data.isWondering ? 'text-teal-600' : ''
-                )}
-              >
-                <svg
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                  ></path>
-                </svg>
-                <span>궁금해요 {data.post._count.wonderings}</span>
-              </button>
-              <span className="flex items-center space-x-2">
-                <svg
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-                  ></path>
-                </svg>
+              <WonderButton
+                onWonderClick={onWonderClick}
+                isWondering={data.isWondering}
+                wondersCount={data.post._count.wonderings}
+              />
+              <div className="flex items-center space-x-2">
+                <MessageIcon />
                 <span>답변 {data.post._count.answers}</span>
-              </span>
+              </div>
             </div>
           </div>
           <div className="my-5 space-y-5">
@@ -166,7 +133,7 @@ const CommunityPostDetail: NextPage<CommunityPostResponse> = (props) => {
               </div>
             ))}
           </div>
-          <form onSubmit={(...args) => void handleSubmit(onValid)(...args)}>
+          <form onSubmit={handleSubmit(onValid)}>
             <TextArea
               name="answer"
               required
@@ -240,7 +207,6 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
   }
   return {
     props: {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       post: JSON.parse(JSON.stringify(post))
     }
   };

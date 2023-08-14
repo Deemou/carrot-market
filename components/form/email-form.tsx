@@ -3,11 +3,8 @@ import useMutation from '@/libs/client/useMutation';
 import { Dispatch, SetStateAction, useEffect } from 'react';
 import EmailInput from '@components/input/email-input';
 import { useSession } from 'next-auth/react';
-
-interface IEmailForm {
-  email: string;
-  formErrors?: string;
-}
+import { IEmailForm } from '@/types/form';
+import ErrorMessage from '../error-message';
 
 interface MutationResult {
   ok: boolean;
@@ -64,14 +61,12 @@ export default function EmailForm({
 
   return (
     <form
-      onSubmit={(...args) => void handleSubmit(onEmailValid)(...args)}
+      onSubmit={handleSubmit(onEmailValid)}
       className="mt-8 flex flex-col space-y-4"
     >
       <EmailInput onClick={onClick} disabled={disabled} register={register} />
       {errors.formErrors && (
-        <span className="my-2 block text-center text-red-600">
-          {errors.formErrors.message}
-        </span>
+        <ErrorMessage message={errors.formErrors.message} />
       )}
       {children}
     </form>

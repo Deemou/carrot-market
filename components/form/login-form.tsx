@@ -1,27 +1,16 @@
 import { useForm } from 'react-hook-form';
-import useMutation from '@/libs/client/useMutation';
-import { useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import Button from '@/components/button/button';
 import Input from '@components/input';
 import { signIn } from 'next-auth/react';
-
-interface ILoginForm {
-  email: string;
-  password: string;
-  formErrors?: string;
-}
-
-interface MutationResult {
-  ok: boolean;
-  error?: string;
-}
-
-const loginUrl = '/api/users/login';
+import { ILoginForm } from '@/types/form';
+import EmailInput from '../input/email-input';
+import ErrorMessage from '../error-message';
 
 export default function LoginForm() {
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  const [enter, { loading, data }] = useMutation<MutationResult>(loginUrl);
   const {
     register,
     handleSubmit,
@@ -36,7 +25,9 @@ export default function LoginForm() {
 
   const onLoginValid = useCallback(
     async (validForm: ILoginForm) => {
+      if (isLoading) return;
       try {
+        setIsLoading(true);
         const { email, password } = validForm;
         const result = await signIn('credentials', {
           redirect: false, // 로그인 실패 시 새로고침 여부
@@ -52,24 +43,15 @@ export default function LoginForm() {
         console.error(error);
       }
     },
-    [router, setError]
+    [isLoading, router, setError]
   );
 
   return (
     <form
-      onSubmit={(...args) => void handleSubmit(onLoginValid)(...args)}
+      onSubmit={handleSubmit(onLoginValid)}
       className="mt-8 flex flex-col space-y-4"
     >
-      <Input
-        onClick={onClick}
-        type="email"
-        name="email"
-        label="Email address"
-        required
-        register={register('email', {
-          required: true
-        })}
-      />
+      <EmailInput register={register} />
       <Input
         onClick={onClick}
         type="password"
@@ -81,11 +63,9 @@ export default function LoginForm() {
         })}
       />
       {errors.formErrors && (
-        <span className="my-2 block text-center text-red-600">
-          {errors.formErrors.message}
-        </span>
+        <ErrorMessage message={errors.formErrors.message} />
       )}
-      <Button text={loading ? 'Loading' : 'Continue'} />
+      <Button text={isLoading ? 'Loading' : 'Continue'} />
     </form>
   );
 }

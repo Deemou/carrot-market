@@ -1,12 +1,13 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import EmptyHeartIcon from './icon/empty-heart-icon';
 
 interface ItemProps {
   id: number;
   name: string;
   price: number;
   thumbImage: string;
-  hearts: number;
+  likesCount: number;
 }
 
 export default function Item({
@@ -14,7 +15,7 @@ export default function Item({
   name,
   price,
   thumbImage,
-  hearts
+  likesCount
 }: ItemProps) {
   return (
     <Link
@@ -37,22 +38,9 @@ export default function Item({
           <div className="flex justify-between">
             <span>${price}</span>
             <div className="flex items-end justify-end space-x-2">
-              <div className="flex items-center justify-between space-x-0.5 text-red-700">
-                <svg
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                  ></path>
-                </svg>
-                <span>{hearts}</span>
+              <div className="flex items-center justify-between space-x-0.5">
+                <EmptyHeartIcon />
+                <span>{likesCount}</span>
               </div>
             </div>
           </div>

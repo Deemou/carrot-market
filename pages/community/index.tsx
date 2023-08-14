@@ -31,17 +31,18 @@ const Community: NextPage<PostsResponse> = (props) => {
   });
 
   useEffect(() => {
-    if (router?.query?.page) {
-      setPage(+router.query.page);
-    }
+    if (router?.query?.page) setPage(+router.query.page);
+    else setPage(1);
   }, [page, router]);
 
   return (
     <Layout seoTitle="Community">
       <SearchBar section="community" />
-      {data && <PostListSection posts={data.posts} />}
       {data?.ok && (
-        <PaginationBar currentPage={page} lastPage={data.lastPage} />
+        <>
+          <PostListSection posts={data.posts} />
+          <PaginationBar currentPage={page} lastPage={data.lastPage} />
+        </>
       )}
     </Layout>
   );
@@ -74,7 +75,6 @@ export const getServerSideProps = async function (ctx: NextPageContext) {
   });
   return {
     props: {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       posts: JSON.parse(JSON.stringify(posts))
     }
   };

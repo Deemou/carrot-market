@@ -3,7 +3,6 @@ import Input from '../input';
 
 interface ITokenForm {
   token: string;
-  formErrors?: string;
 }
 
 interface TokenInputProps {

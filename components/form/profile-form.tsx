@@ -41,7 +41,6 @@ export default function ProfileForm() {
   const [uName, setUName] = useState('');
   const [uAvatar, setUAvatar] = useState('');
   const [isUpdateDone, setIsUpdateDone] = useState(false);
-  const [calledPush, setCalledPush] = useState(false);
 
   useEffect(() => {
     if (!session) return;
@@ -110,23 +109,18 @@ export default function ProfileForm() {
     };
 
     if (data?.ok) {
-      void handleUpdate();
+      handleUpdate();
     }
   }, [data, session, uAvatar, uName, update]);
 
   useEffect(() => {
-    if (calledPush) return;
     if (!isUpdateDone) return;
 
-    void router.push(`/profile`);
-    setCalledPush(true);
-  }, [calledPush, isUpdateDone, router]);
+    router.push(`/profile`);
+  }, [isUpdateDone, router]);
 
   return (
-    <form
-      onSubmit={(...args) => void handleSubmit(onValid)(...args)}
-      className="space-y-4"
-    >
+    <form onSubmit={handleSubmit(onValid)} className="space-y-4">
       <AvatarInput
         avatarPreview={avatarPreview}
         register={register('avatar')}

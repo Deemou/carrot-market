@@ -1,7 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/require-await */
-/* eslint-disable no-param-reassign */
 import NextAuth, { NextAuthOptions } from 'next-auth';
 import { PrismaAdapter } from '@auth/prisma-adapter';
 import client from '@/libs/server/client';
@@ -44,7 +40,7 @@ export const authOptions: NextAuthOptions = {
           id: user.id.toString(),
           name: user.name,
           email: user.email,
-          avatar: ''
+          avatar: user.avatar || ''
         };
       }
     }),
@@ -86,16 +82,15 @@ export const authOptions: NextAuthOptions = {
         };
       }
       if (trigger === 'update' && session) {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
         return { ...token, ...session?.user };
       }
 
       return token;
     },
     async session({ session, token }) {
-      session.user = token;
       console.log('session', session);
-      return session;
+      console.log('token', token);
+      return { ...session, user: token };
     }
   }
 };

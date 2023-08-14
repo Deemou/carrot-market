@@ -15,7 +15,7 @@ async function handler(
     query: { id }
   } = req;
 
-  const product = await client.product.findUnique({
+  const productQuery = await client.product.findUnique({
     where: {
       id: Number(id)
     },
@@ -26,11 +26,22 @@ async function handler(
           name: true,
           avatar: true
         }
+      },
+      _count: {
+        select: {
+          records: {
+            where: {
+              kind: { equals: 'Fav' }
+            }
+          }
+        }
       }
     }
   });
-  if (!product) res.status(404).json({ ok: false, error: 'Not found product' });
-  const terms = product?.name.split(' ').map((word) => ({
+  if (!productQuery)
+    return res.status(404).json({ ok: false, error: 'Not found product' });
+
+  const terms = productQuery.name.split(' ').map((word) => ({
     name: {
       contains: word
     }
@@ -40,7 +51,7 @@ async function handler(
       OR: terms,
       AND: {
         id: {
-          not: product?.id
+          not: productQuery?.id
         }
       }
     }
@@ -48,7 +59,7 @@ async function handler(
   const isLiked = Boolean(
     await client.record.findFirst({
       where: {
-        productId: product?.id,
+        productId: productQuery?.id,
         userId: Number(session.user.id),
         kind: 'Fav'
       },
@@ -57,6 +68,10 @@ async function handler(
       }
     })
   );
+  const product = {
+    ...productQuery,
+    _count: { favs: productQuery._count.records }
+  };
 
   res.json({ ok: true, product, isLiked, relatedProducts });
 }

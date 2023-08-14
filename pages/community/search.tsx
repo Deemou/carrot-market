@@ -31,22 +31,23 @@ const CommunitySearch: NextPage = () => {
   );
 
   useEffect(() => {
-    if (router?.query?.page) {
-      setPage(+router.query.page);
-    }
+    if (router?.query?.page) setPage(+router.query.page);
+    else setPage(1);
   }, [page, router]);
 
   return (
     <Layout seoTitle="CommunitySearch">
       <SearchBar section="community" />
-      {data && <PostListSection posts={data.posts} />}
-      {data && !data?.ok && (
+      {data?.ok && (
+        <>
+          <PostListSection posts={data.posts} />
+          <PaginationBar currentPage={page} lastPage={data.lastPage} />
+        </>
+      )}
+      {!data?.ok && (
         <div className="mt-40">
           <h3 className="text-center">No results found</h3>
         </div>
-      )}
-      {data?.ok && (
-        <PaginationBar currentPage={page} lastPage={data.lastPage} />
       )}
     </Layout>
   );

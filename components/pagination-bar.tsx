@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import cls from '@/libs/client/utils';
+import PrevIcon from './icon/prev-icon';
+import NextIcon from './icon/next-icon';
+import ThreeDotIcon from './icon/three-dot-icon';
 
 interface PaginationProps {
   currentPage: number;
@@ -17,17 +20,16 @@ export default function PaginationBar({
   const [pages, setPages] = useState<number[]>([]);
   const pageLimit = Math.min(5, lastPage);
   const onClickPage = (page: number) => {
-    if (q) void router.push(`${router.pathname}?q=${q}&page=${page}`);
-    else void router.push(`${router.pathname}?page=${page}`);
+    if (q) router.push(`${router.pathname}?q=${q}&page=${page}`);
+    else router.push(`${router.pathname}?page=${page}`);
   };
   const onClickDirection = (direction: Direction) => {
     if (direction === 'prev') {
-      if (q)
-        void router.push(`${router.pathname}?q=${q}&page=${currentPage - 1}`);
-      else void router.push(`${router.pathname}?page=${currentPage - 1}`);
+      if (q) router.push(`${router.pathname}?q=${q}&page=${currentPage - 1}`);
+      else router.push(`${router.pathname}?page=${currentPage - 1}`);
     } else if (q)
-      void router.push(`${router.pathname}?q=${q}&page=${currentPage + 1}`);
-    else void router.push(`${router.pathname}?page=${currentPage + 1}`);
+      router.push(`${router.pathname}?q=${q}&page=${currentPage + 1}`);
+    else router.push(`${router.pathname}?page=${currentPage + 1}`);
   };
   useEffect(() => {
     if (currentPage <= 3) {
@@ -47,7 +49,7 @@ export default function PaginationBar({
     }
   }, [currentPage, lastPage, pageLimit]);
   return (
-    <div className="item-center mt-10 flex justify-center space-x-2 py-5">
+    <div className="mt-10 flex items-center justify-center space-x-2 py-5">
       <button
         onClick={() => {
           onClickDirection('prev');
@@ -55,20 +57,7 @@ export default function PaginationBar({
         type="button"
         className={currentPage === 1 ? 'hidden' : 'block'}
       >
-        <svg
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-4 w-4"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M15 19l-7-7 7-7"
-          ></path>
-        </svg>
+        <PrevIcon />
       </button>
       <div
         className={cls(
@@ -85,20 +74,9 @@ export default function PaginationBar({
         >
           <span>{1}</span>
         </button>
-        <svg
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-          className="ml-3 mr-1 h-4 w-4"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"
-          ></path>
-        </svg>
+        <div className="ml-3 mr-1 aspect-square h-4">
+          <ThreeDotIcon />
+        </div>
       </div>
       {pages?.map((page) => {
         return (
@@ -126,20 +104,9 @@ export default function PaginationBar({
           pages.includes(lastPage) ? 'hidden' : ''
         )}
       >
-        <svg
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-          className="ml-1 mr-3 h-4 w-4"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"
-          ></path>
-        </svg>
+        <div className="ml-1 mr-3 aspect-square h-4">
+          <ThreeDotIcon />
+        </div>
         <button
           onClick={() => {
             onClickPage(lastPage);
@@ -157,20 +124,7 @@ export default function PaginationBar({
         type="button"
         className={currentPage === lastPage ? 'hidden' : 'block'}
       >
-        <svg
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-4 w-4"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M9 5l7 7-7 7"
-          ></path>
-        </svg>
+        <NextIcon />
       </button>
     </div>
   );
