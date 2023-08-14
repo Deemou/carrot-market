@@ -33,7 +33,7 @@ const Profile: NextPage = () => {
           <Tab href="/profile/bought" text="구매내역" className="w-1/3">
             <ShoppingBagIcon />
           </Tab>
-          <Tab href="/profile/loved" text="관심목록" className="w-1/3">
+          <Tab href="/profile/fav" text="관심목록" className="w-1/3">
             <FilledHeartIcon />
           </Tab>
         </div>

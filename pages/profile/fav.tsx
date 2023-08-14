@@ -23,7 +23,7 @@ interface RecordListResponse {
 
 const kind = 'Fav';
 
-const Loved: NextPage<RecordListResponse> = (props) => {
+const Fav: NextPage<RecordListResponse> = (props) => {
   const router = useRouter();
   const [page, setPage] = useState<number>(1);
   const { data } = useSWR<RecordListResponse>(
@@ -39,7 +39,7 @@ const Loved: NextPage<RecordListResponse> = (props) => {
   }, [page, router]);
 
   return (
-    <Layout seoTitle="Record Loved">
+    <Layout seoTitle="Record Fav">
       {data?.ok && (
         <>
           <RecordList records={data.records} />
@@ -98,4 +98,4 @@ export const getServerSideProps = async function (ctx: NextPageContext) {
   };
 };
 
-export default Loved;
+export default Fav;
