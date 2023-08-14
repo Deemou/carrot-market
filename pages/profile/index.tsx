@@ -27,7 +27,7 @@ const Profile: NextPage = () => {
           </div>
         </div>
         <div className="mt-10 flex">
-          <Tab href="/profile/sold" text="판매중인 상품" className="w-1/3">
+          <Tab href="/profile/sale" text="판매중인 상품" className="w-1/3">
             <CartIcon />
           </Tab>
           <Tab href="/profile/bought" text="구매내역" className="w-1/3">

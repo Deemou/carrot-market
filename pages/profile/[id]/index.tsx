@@ -17,7 +17,7 @@ const Profile: NextPage<{ profile: User }> = ({ profile }) => {
           </div>
         </div>
         <div className="mt-10 flex justify-around">
-          <Tab href={`/profile/${profile.id}/sold`} text="판매중인 상품">
+          <Tab href={`/profile/${profile.id}/sale`} text="판매중인 상품">
             <CartIcon />
           </Tab>
         </div>

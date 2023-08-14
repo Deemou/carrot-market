@@ -1,12 +1,12 @@
 import type { NextPage, NextPageContext } from 'next';
+import Layout from '@/components/layout';
 import client from '@/libs/server/client';
 import { Kind } from '@prisma/client';
 import { ProductWithCount } from 'pages';
-import { getSession } from 'next-auth/react';
-import Layout from '@/components/layout';
 import RecordList from '@/components/record-list';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 import useSWR from 'swr';
 import PaginationBar from '@/components/pagination-bar';
 
@@ -23,11 +23,13 @@ interface RecordListResponse {
 
 const kind = 'Sale';
 
-const Sold: NextPage<RecordListResponse> = (props) => {
+const Sale: NextPage<RecordListResponse> = (props) => {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const id = searchParams.get('id');
   const [page, setPage] = useState<number>(1);
   const { data } = useSWR<RecordListResponse>(
-    `/api/users/records?kind=${kind}&page=${page}`,
+    `/api/users/records?kind=${kind}&id=${id}&page=${page}`,
     {
       fallbackData: props
     }
@@ -50,9 +52,14 @@ const Sold: NextPage<RecordListResponse> = (props) => {
   );
 };
 
-export const getServerSideProps = async function (ctx: NextPageContext) {
-  const session = await getSession(ctx);
-  const userId = Number(session?.user?.id);
+interface MyPageContext extends NextPageContext {
+  params: {
+    id: string;
+  };
+}
+
+export const getServerSideProps = async function (ctx: MyPageContext) {
+  const userId = Number(ctx.query.id);
   const page = Number(ctx.query.page) || 1;
   const limit = 10;
 
@@ -98,4 +105,4 @@ export const getServerSideProps = async function (ctx: NextPageContext) {
   };
 };
 
-export default Sold;
+export default Sale;
