@@ -1,11 +1,14 @@
-import { atom } from 'recoil';
+import { atom, selector } from 'recoil';
 
-const mobile =
-  typeof navigator !== 'undefined'
-    ? /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
-    : false;
+export const windowWidthAtom = atom({
+  key: 'windowWidth',
+  default: typeof window !== 'undefined' ? window.innerWidth : 0
+});
 
-export default atom({
+export const isMobileAtom = atom({
   key: 'isMobile',
-  default: mobile
+  default:
+    typeof navigator !== 'undefined'
+      ? /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
+      : false
 });
