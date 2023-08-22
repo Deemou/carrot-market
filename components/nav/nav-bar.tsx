@@ -2,8 +2,8 @@ import React from 'react';
 import Link from 'next/link';
 import { signOut, useSession } from 'next-auth/react';
 import NavChannel from '@components/nav/nav-channel';
-import Button from '@components/button/button';
-import Avatar from '../avatar';
+import Button from '@/components/common/button/button';
+import Avatar from '../common/avatar';
 
 export default function NavBar() {
   const { data: session } = useSession();

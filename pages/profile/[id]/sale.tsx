@@ -1,14 +1,14 @@
 import type { NextPage, NextPageContext } from 'next';
-import Layout from '@/components/layout';
+import Layout from '@/components/common/layout';
 import client from '@/libs/server/client';
 import { Kind } from '@prisma/client';
 import { ProductWithCount } from 'pages';
-import RecordList from '@/components/record-list';
+import RecordList from '@/components/product/record-list';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import useSWR from 'swr';
-import PaginationBar from '@/components/pagination-bar';
+import PaginationBar from '@/components/pagination/pagination-bar';
 
 interface Record {
   id: number;

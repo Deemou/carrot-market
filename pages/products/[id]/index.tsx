@@ -4,11 +4,11 @@ import { useRouter } from 'next/router';
 import useSWR from 'swr';
 import { Product, User } from '@prisma/client';
 import useMutation from '@libs/client/useMutation';
-import Layout from '@/components/layout';
+import Layout from '@/components/common/layout';
 import client from '@/libs/server/client';
 import Card from '@/components/profile/card';
-import LikeButton from '@/components/button/like-button';
-import RelatedItemSection from '@/components/related-item-section';
+import LikeButton from '@/components/common/button/like-button';
+import RelatedItemSection from '@/components/product/related-item-section';
 
 interface ProductWithUser extends Product {
   user: User;

@@ -1,10 +1,10 @@
 import type { NextPage } from 'next';
 import { useEffect, useState } from 'react';
-import Layout from '@/components/layout';
-import Button from '@/components/button/button';
-import EmailForm from '@/components/form/email-form';
-import TokenForm from '@/components/form/token-form';
-import ProfileForm from '@/components/form/profile-form';
+import Layout from '@/components/common/layout';
+import Button from '@/components/common/button/button';
+import EmailForm from '@/components/auth/email-form';
+import TokenForm from '@/components/auth/token-form';
+import ProfileForm from '@/components/profile/profile-form';
 import { useSession } from 'next-auth/react';
 
 const EditProfile: NextPage = () => {

@@ -3,11 +3,11 @@ import useSWR from 'swr';
 import { useEffect, useState } from 'react';
 import { Post, User } from '@prisma/client';
 import client from '@libs/server/client';
-import Layout from '@/components/layout';
-import SearchBar from '@/components/search-bar';
-import PostListSection from '@/components/section/post-list-section';
+import Layout from '@/components/common/layout';
+import SearchBar from '@/components/search/search-bar';
+import PostListSection from '@/components/community/post-list-section';
 import { useRouter } from 'next/router';
-import PaginationBar from '@/components/pagination-bar';
+import PaginationBar from '@/components/pagination/pagination-bar';
 
 interface PostWithUser extends Post {
   user: User;

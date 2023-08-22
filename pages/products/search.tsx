@@ -3,10 +3,10 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import useSWR from 'swr';
 import { Product } from '@prisma/client';
-import Layout from '@/components/layout';
-import SearchBar from '@/components/search-bar';
-import ProductListSection from '@/components/section/product-list-section';
-import PaginationBar from '@/components/pagination-bar';
+import Layout from '@/components/common/layout';
+import SearchBar from '@/components/search/search-bar';
+import ProductListSection from '@/components/product/product-list-section';
+import PaginationBar from '@/components/pagination/pagination-bar';
 
 export interface ProductWithCount extends Product {
   _count: {

@@ -5,12 +5,12 @@ import { Answer, Post, User } from '@prisma/client';
 import useMutation from '@libs/client/useMutation';
 import { useForm } from 'react-hook-form';
 import { useEffect } from 'react';
-import Layout from '@/components/layout';
-import TextArea from '@components/textarea';
+import Layout from '@/components/common/layout';
+import TextArea from '@/components/common/textarea';
 import client from '@/libs/server/client';
-import Avatar from '@/components/avatar';
+import Avatar from '@/components/common/avatar';
 import Card from '@/components/profile/card';
-import WonderButton from '@/components/button/wonder-button';
+import WonderButton from '@/components/community/wonder-button';
 import MessageIcon from '@/components/icon/message-icon';
 
 interface AnswerWithUser extends Answer {

@@ -1,0 +1,56 @@
+.slider {
+  position: relative;
+  min-height: 24rem;
+  margin-top: 3rem;
+  overflow: hidden;
+  &:hover .slider-arrow {
+    opacity: 1;
+  }
+}
+
+.slider-arrow {
+  position: absolute;
+  top: 0;
+  transform: translateY(calc(var(--slide-width) * 1px / 2));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 3rem;
+  height: 4rem;
+  color: gray;
+  background-color: #ffffff;
+  border: 1px solid gray;
+  transition: all 0.3s;
+  z-index: 90;
+  cursor: pointer;
+  &:hover {
+    color: #000;
+  }
+  &:blur {
+    color: #ffffff;
+    background-color: #000;
+  }
+  svg {
+    width: 34px;
+    height: 34px;
+  }
+}
+
+.slider-row {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  display: flex;
+  gap: 5px;
+}
+
+.slide {
+  width: calc(100% / var(--offset));
+  cursor: pointer;
+  &:first-child {
+    transform-origin: center left;
+  }
+  &:last-child {
+    transform-origin: center right;
+  }
+}
