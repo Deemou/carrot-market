@@ -8,7 +8,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import useSWR from 'swr';
-import PaginationBar from '@/components/pagination-bar';
+import PaginationBar from '@/components/pagination/pagination-bar';
 
 interface Record {
   id: number;

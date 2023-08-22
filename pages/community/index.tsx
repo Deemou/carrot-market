@@ -7,7 +7,7 @@ import Layout from '@/components/layout';
 import SearchBar from '@/components/search-bar';
 import PostListSection from '@/components/section/post-list-section';
 import { useRouter } from 'next/router';
-import PaginationBar from '@/components/pagination-bar';
+import PaginationBar from '@/components/pagination/pagination-bar';
 
 interface PostWithUser extends Post {
   user: User;

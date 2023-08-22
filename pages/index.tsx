@@ -6,8 +6,8 @@ import { useEffect, useState } from 'react';
 import client from '@/libs/server/client';
 import SearchBar from '@/components/search-bar';
 import { useRouter } from 'next/router';
-import PaginationBar from '@/components/pagination-bar';
 import ProductListSection from '@/components/section/product-list-section';
+import PaginationBar from '@/components/pagination/pagination-bar';
 
 export interface ProductWithCount extends Product {
   _count: {

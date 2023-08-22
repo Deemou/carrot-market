@@ -6,7 +6,7 @@ import { Product } from '@prisma/client';
 import Layout from '@/components/layout';
 import SearchBar from '@/components/search-bar';
 import ProductListSection from '@/components/section/product-list-section';
-import PaginationBar from '@/components/pagination-bar';
+import PaginationBar from '@/components/pagination/pagination-bar';
 
 export interface ProductWithCount extends Product {
   _count: {
