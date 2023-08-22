@@ -1,8 +1,8 @@
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import { User } from '@prisma/client';
-import Layout from '@/components/layout';
+import Layout from '@/components/common/layout';
 import Tab from '@/components/profile/tab';
-import Avatar from '@/components/avatar';
+import Avatar from '@/components/common/avatar';
 import client from '@/libs/server/client';
 import CartIcon from '@/components/icon/cart-icon';
 

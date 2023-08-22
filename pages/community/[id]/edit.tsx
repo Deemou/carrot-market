@@ -4,10 +4,10 @@ import useMutation from '@/libs/client/useMutation';
 import { Post } from '@prisma/client';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-import Layout from '@/components/layout';
-import Button from '@/components/button/button';
+import Layout from '@/components/common/layout';
+import Button from '@/components/common/button/button';
 import { useForm } from 'react-hook-form';
-import TextArea from '@/components/textarea';
+import TextArea from '@/components/common/textarea';
 
 interface EditPostForm {
   question: string;

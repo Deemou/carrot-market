@@ -3,7 +3,7 @@ import cls from '@/libs/client/utils';
 import { useEffect, useState } from 'react';
 import useMutation from '@/libs/client/useMutation';
 import { useRouter } from 'next/router';
-import Avatar from '@components/avatar';
+import Avatar from '@/components/common/avatar';
 import { useSession } from 'next-auth/react';
 import ThreeDotIcon from '../icon/three-dot-icon';
 import EditIcon from '../icon/edit-icon';

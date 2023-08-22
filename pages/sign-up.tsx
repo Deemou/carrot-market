@@ -1,10 +1,10 @@
 import type { NextPage } from 'next';
 import { useState } from 'react';
 import Link from 'next/link';
-import TokenForm from '@/components/form/token-form';
-import AccountForm from '@/components/form/account-form';
-import EmailForm from '@/components/form/email-form';
-import Button from '@/components/button/button';
+import TokenForm from '@/components/auth/token-form';
+import AccountForm from '@/components/auth/account-form';
+import EmailForm from '@/components/auth/email-form';
+import Button from '@/components/common/button/button';
 
 const SignUp: NextPage = () => {
   const [email, setEmail] = useState('');

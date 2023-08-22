@@ -1,7 +1,7 @@
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import Layout from '@/components/layout';
-import ProductForm from '@/components/form/product-form';
+import Layout from '@/components/common/layout';
+import ProductForm from '@/components/product/product-form';
 
 const Edit: NextPage = () => {
   const router = useRouter();

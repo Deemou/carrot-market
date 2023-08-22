@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
-import Layout from '@/components/layout';
-import ProductForm from '@/components/form/product-form';
+import Layout from '@/components/common/layout';
+import ProductForm from '@/components/product/product-form';
 
 const Upload: NextPage = () => {
   const requestUrl = '/api/products';

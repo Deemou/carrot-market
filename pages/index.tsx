@@ -1,12 +1,12 @@
 import type { NextPage, NextPageContext } from 'next';
 import { Product } from '@prisma/client';
-import Layout from '@/components/layout';
+import Layout from '@/components/common/layout';
 import useSWR from 'swr';
 import { useEffect, useState } from 'react';
 import client from '@/libs/server/client';
-import SearchBar from '@/components/search-bar';
+import SearchBar from '@/components/search/search-bar';
 import { useRouter } from 'next/router';
-import ProductListSection from '@/components/section/product-list-section';
+import ProductListSection from '@/components/product/product-list-section';
 import PaginationBar from '@/components/pagination/pagination-bar';
 
 export interface ProductWithCount extends Product {

@@ -5,9 +5,9 @@ import { useEffect } from 'react';
 import { Post } from '@prisma/client';
 import useMutation from '@libs/client/useMutation';
 import useCoords from '@libs/client/useCoords';
-import Layout from '@/components/layout';
-import Button from '@/components/button/button';
-import TextArea from '@components/textarea';
+import Layout from '@/components/common/layout';
+import Button from '@/components/common/button/button';
+import TextArea from '@/components/common/textarea';
 
 interface WriteForm {
   question: string;
