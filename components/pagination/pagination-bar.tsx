@@ -19,28 +19,41 @@ export default function PaginationBar({
   const [pages, setPages] = useState<number[]>([]);
   const pageLimit = Math.min(5, lastPage);
 
+  const generateUrl = useCallback(
+    (page: number) => {
+      const searchParams = new URLSearchParams(
+        router.query as Record<string, string>
+      );
+      searchParams.set('page', `${page}`);
+      if (q) searchParams.set('q', `${q}`);
+      return `${router.pathname}?${searchParams.toString()}`;
+    },
+    [router, q]
+  );
+
   const onClickPage = useCallback(
     (page: number) => {
-      if (q) router.push(`${router.pathname}?q=${q}&page=${page}`);
-      else router.push(`${router.pathname}?page=${page}`);
+      router.push(generateUrl(page));
     },
-    [q, router]
+    [router, generateUrl]
   );
 
   const onClickPrev = useCallback(() => {
-    if (q) router.push(`${router.pathname}?q=${q}&page=${currentPage - 1}`);
-    else router.push(`${router.pathname}?page=${currentPage - 1}`);
-  }, [currentPage, q, router]);
+    router.push(generateUrl(currentPage - 1));
+  }, [currentPage, router, generateUrl]);
 
   const onClickNext = useCallback(() => {
-    if (q) router.push(`${router.pathname}?q=${q}&page=${currentPage + 1}`);
-    else router.push(`${router.pathname}?page=${currentPage + 1}`);
-  }, [currentPage, q, router]);
+    router.push(generateUrl(currentPage + 1));
+  }, [currentPage, router, generateUrl]);
 
   useEffect(() => {
-    if (currentPage <= 3) {
+    const withinFirstThreePages = currentPage <= 3;
+    const withinLastThreePages = currentPage >= lastPage - 3;
+    const inMiddlePages = currentPage > 3 && currentPage + 2 < lastPage;
+
+    if (withinFirstThreePages) {
       setPages(Array.from({ length: pageLimit }, (_, i) => i + 1));
-    } else if (currentPage > 3 && currentPage + 2 < lastPage) {
+    } else if (inMiddlePages) {
       setPages([
         currentPage - 2,
         currentPage - 1,
@@ -48,7 +61,7 @@ export default function PaginationBar({
         currentPage + 1,
         currentPage + 2
       ]);
-    } else if (currentPage + 3 >= lastPage) {
+    } else if (withinLastThreePages) {
       setPages(
         Array.from({ length: pageLimit }, (_, i) => lastPage - i).reverse()
       );
