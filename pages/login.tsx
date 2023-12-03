@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
-import Link from 'next/link';
 import LoginForm from '@/components/auth/login-form';
 import OAuthLoginButtonList from '@/components/auth/oauth-login-button-list';
+import AuthNavigation from '@/components/auth/auth-navigation';
 
 const Enter: NextPage = () => {
   return (
@@ -17,11 +17,10 @@ const Enter: NextPage = () => {
         </div>
         <OAuthLoginButtonList />
 
-        <div className="flex justify-center p-4">
-          <Link href="/sign-up" className="cursor-pointer">
-            <span>You don&apos;t have an account yet? Sign up!</span>
-          </Link>
-        </div>
+        <AuthNavigation
+          address="/sign-up"
+          message="You don't have an account yet? Sign up!"
+        />
       </div>
     </div>
   );
