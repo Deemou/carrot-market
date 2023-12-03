@@ -26,7 +26,7 @@ const SignUp: NextPage = () => {
       {isTokenOk && <AccountForm email={email} />}
       <div className="flex justify-center p-4">
         <Link href="/login" className="cursor-pointer">
-          <span className="">You already have an account? Login!</span>
+          <span>You already have an account? Login!</span>
         </Link>
       </div>
     </div>

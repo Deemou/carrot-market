@@ -63,10 +63,7 @@ export default function TokenForm({ email, setIsTokenOk }: TokenFormProps) {
   }, [data, email, session, setError, setIsTokenOk, update]);
 
   return (
-    <form
-      onSubmit={handleSubmit(onTokenValid)}
-      className="mt-8 flex flex-col space-y-4"
-    >
+    <form onSubmit={handleSubmit(onTokenValid)} className="mt-8 space-y-4">
       <TokenInput onClick={onClick} register={register} />
       {errors.formErrors && (
         <ErrorMessage message={errors.formErrors.message} />

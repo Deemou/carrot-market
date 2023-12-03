@@ -19,9 +19,7 @@ const Enter: NextPage = () => {
 
         <div className="flex justify-center p-4">
           <Link href="/sign-up" className="cursor-pointer">
-            <span className="">
-              You don&apos;t have an account yet? Sign up!
-            </span>
+            <span>You don&apos;t have an account yet? Sign up!</span>
           </Link>
         </div>
       </div>
