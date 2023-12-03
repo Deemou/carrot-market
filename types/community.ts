@@ -18,3 +18,12 @@ export interface CommunityPostResponse {
   post: PostWithUser;
   isWondering: boolean;
 }
+
+export interface IAnswerForm {
+  answer: string;
+}
+
+export interface AnswerResponse {
+  ok: boolean;
+  Answer: Answer;
+}
