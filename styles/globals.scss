@@ -140,4 +140,9 @@ p {
   font-size: 1.2rem;
 }
 
+input,
+button {
+  max-width: 36rem;
+}
+
 @import './slider.scss';
