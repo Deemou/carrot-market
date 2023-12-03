@@ -12,10 +12,10 @@ const SignUp: NextPage = () => {
   const [isTokenOk, setIsTokenOk] = useState(false);
 
   return (
-    <div className="mx-auto mt-16 w-full max-w-xl px-4">
+    <div className="mx-auto mt-16 w-full max-w-xl space-y-8 px-4">
       <h1 className="text-center">Sign up for Carrot Market</h1>
 
-      <div className="flex flex-col gap-8">
+      <div className="space-y-8">
         {!isEmailOk && (
           <EmailForm setEmail={setEmail} setIsEmailOk={setIsEmailOk}>
             <Button text="Verify Email" />

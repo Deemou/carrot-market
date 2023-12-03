@@ -15,7 +15,7 @@ export default function ImageInput({
     <div>
       <label
         htmlFor="picture"
-        className="relative mx-auto flex aspect-square w-1/2 max-w-[400px] cursor-pointer items-center justify-center rounded-md border-2 border-gray-300 hover:border-orange-500 hover:text-orange-500"
+        className="relative mx-auto flex aspect-square max-w-[400px] cursor-pointer items-center justify-center rounded-md border-2 border-gray-300 hover:border-orange-500 hover:text-orange-500"
       >
         {imagePreview ? (
           <Image

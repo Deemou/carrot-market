@@ -5,9 +5,10 @@ import AuthNavigation from '@/components/auth/auth-navigation';
 
 const Enter: NextPage = () => {
   return (
-    <div className="mx-auto mt-16 w-full max-w-xl px-4">
+    <div className="mx-auto mt-16 w-full max-w-xl space-y-8 px-4">
       <h1 className="text-center">Log in to Carrot Market</h1>
-      <div className="flex flex-col gap-8">
+
+      <div className="space-y-8">
         <LoginForm />
 
         <div className="flex items-center justify-between">

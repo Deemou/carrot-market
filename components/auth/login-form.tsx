@@ -47,7 +47,7 @@ export default function LoginForm() {
   );
 
   return (
-    <form onSubmit={handleSubmit(onLoginValid)} className="mt-8 space-y-4">
+    <form onSubmit={handleSubmit(onLoginValid)} className="space-y-4">
       <EmailInput register={register} />
       <Input
         onClick={onClick}

@@ -35,8 +35,8 @@ const Write: NextPage = () => {
   return (
     <Layout seoTitle="Write Post">
       <form
-        onSubmit={(...args) => handleSubmit(onValid)(...args)}
-        className="space-y-4 p-4 py-10"
+        onSubmit={handleSubmit(onValid)}
+        className="mx-auto w-full max-w-xl space-y-4 py-10"
       >
         <TextArea
           name="question"

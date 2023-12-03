@@ -60,7 +60,7 @@ export default function EmailForm({
   }, [data, setError, setIsEmailOk]);
 
   return (
-    <form onSubmit={handleSubmit(onEmailValid)} className="mt-8 space-y-4">
+    <form onSubmit={handleSubmit(onEmailValid)} className="space-y-4">
       <EmailInput onClick={onClick} disabled={disabled} register={register} />
       {errors.formErrors && (
         <ErrorMessage message={errors.formErrors.message} />
