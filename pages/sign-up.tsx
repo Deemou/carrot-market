@@ -15,20 +15,22 @@ const SignUp: NextPage = () => {
     <div className="mx-auto mt-16 w-full max-w-xl px-4">
       <h1 className="text-center">Sign up for Carrot Market</h1>
 
-      {!isEmailOk && (
-        <EmailForm setEmail={setEmail} setIsEmailOk={setIsEmailOk}>
-          <Button text="Verify Email" />
-        </EmailForm>
-      )}
-      {isEmailOk && !isTokenOk && (
-        <TokenForm email={email} setIsTokenOk={setIsTokenOk} />
-      )}
-      {isTokenOk && <AccountForm email={email} />}
+      <div className="flex flex-col gap-8">
+        {!isEmailOk && (
+          <EmailForm setEmail={setEmail} setIsEmailOk={setIsEmailOk}>
+            <Button text="Verify Email" />
+          </EmailForm>
+        )}
+        {isEmailOk && !isTokenOk && (
+          <TokenForm email={email} setIsTokenOk={setIsTokenOk} />
+        )}
+        {isTokenOk && <AccountForm email={email} />}
 
-      <AuthNavigation
-        address="/login"
-        message="You already have an account? Login!"
-      />
+        <AuthNavigation
+          address="/login"
+          message="You already have an account? Login!"
+        />
+      </div>
     </div>
   );
 };
