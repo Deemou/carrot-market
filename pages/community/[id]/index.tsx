@@ -1,60 +1,23 @@
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
-import { Answer, Post, User } from '@prisma/client';
 import useMutation from '@libs/client/useMutation';
-import { useForm } from 'react-hook-form';
-import { useEffect } from 'react';
 import Layout from '@/components/common/layout';
-import TextArea from '@/components/common/textarea';
 import client from '@/libs/server/client';
 import Avatar from '@/components/common/avatar';
 import Card from '@/components/profile/card';
 import WonderButton from '@/components/community/wonder-button';
 import MessageIcon from '@/components/icon/message-icon';
-
-interface AnswerWithUser extends Answer {
-  user: User;
-}
-
-interface PostWithUser extends Post {
-  user: User;
-  _count: {
-    answers: number;
-    wonderings: number;
-  };
-  answers: AnswerWithUser[];
-}
-
-interface CommunityPostResponse {
-  ok: boolean;
-  post: PostWithUser;
-  isWondering: boolean;
-}
-
-interface AnswerForm {
-  answer: string;
-}
-
-interface AnswerResponse {
-  ok: boolean;
-  response: Answer;
-}
+import AnswerForm from '@/components/community/answer-form';
+import { CommunityPostResponse } from '@/types/community';
 
 const CommunityPostDetail: NextPage<CommunityPostResponse> = (props) => {
   const router = useRouter();
-  const { register, handleSubmit, reset } = useForm<AnswerForm>();
-  const { data, mutate } = useSWR<CommunityPostResponse>(
-    `/api/posts/${router.query.id}`,
-    {
-      fallbackData: props
-    }
-  );
-  const [toggleWonder, { loading }] = useMutation(
-    `/api/posts/${router.query.id}/wonder`
-  );
-  const [sendAnswer, { data: answerData, loading: answerLoading }] =
-    useMutation<AnswerResponse>(`/api/posts/${router.query.id}/answers`);
+  const requestUrl = `/api/posts/${router.query.id}`;
+  const { data, mutate } = useSWR<CommunityPostResponse>(requestUrl, {
+    fallbackData: props
+  });
+  const [toggleWonder, { loading }] = useMutation(`${requestUrl}/wonder`);
 
   const onWonderClick = () => {
     if (!data) return;
@@ -78,16 +41,7 @@ const CommunityPostDetail: NextPage<CommunityPostResponse> = (props) => {
       );
     }
   };
-  const onValid = (form: AnswerForm) => {
-    if (answerLoading) return;
-    sendAnswer(form);
-  };
-  useEffect(() => {
-    if (answerData && answerData.ok) {
-      reset();
-      mutate();
-    }
-  }, [answerData, reset, mutate]);
+
   return (
     <Layout seoTitle="Community Post Detail">
       {data && (
@@ -133,20 +87,8 @@ const CommunityPostDetail: NextPage<CommunityPostResponse> = (props) => {
               </div>
             ))}
           </div>
-          <form onSubmit={handleSubmit(onValid)}>
-            <TextArea
-              name="answer"
-              required
-              register={register('answer', { required: true, minLength: 5 })}
-              placeholder="Answer this question!"
-            />
-            <button
-              type="submit"
-              className="mt-2 w-full rounded-md border border-transparent bg-orange-500 py-2 shadow-sm hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
-            >
-              {answerLoading ? 'Loading...' : 'Reply'}
-            </button>
-          </form>
+
+          <AnswerForm requestUrl={requestUrl} mutate={mutate} />
         </div>
       )}
     </Layout>
