@@ -19,6 +19,15 @@ export interface CommunityPostResponse {
   isWondering: boolean;
 }
 
+export interface IPostForm {
+  question: string;
+}
+
+export interface PostResponse {
+  ok: boolean;
+  post: Post;
+}
+
 export interface IAnswerForm {
   answer: string;
 }
