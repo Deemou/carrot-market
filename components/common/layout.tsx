@@ -1,4 +1,3 @@
-import React from 'react';
 import Head from 'next/head';
 import Header from '@/components/common/header';
 
@@ -8,11 +7,10 @@ interface LayoutProps {
 }
 
 export default function Layout({ seoTitle, children }: LayoutProps) {
-  const message = `${seoTitle} | Carrot Market`;
   return (
     <>
       <Head>
-        <title>{message}</title>
+        <title>{seoTitle}</title>
       </Head>
       <Header />
       <main className="mx-auto flex w-full flex-col items-center pb-24 pt-20">
