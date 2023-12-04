@@ -32,7 +32,7 @@ export default function PostForm({ buttonText, requestUrl }: PostFormProps) {
   return (
     <form
       onSubmit={handleSubmit(onValid)}
-      className="mx-auto w-full max-w-xl flex-col items-end space-y-4 py-10"
+      className="mx-auto flex w-full max-w-xl flex-col space-y-4 py-10"
     >
       <PostInput register={register} />
       <Button text={loading ? 'Loading...' : buttonText} />

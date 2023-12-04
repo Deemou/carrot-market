@@ -62,7 +62,7 @@ export default function LoginForm() {
       {errors.formErrors && (
         <ErrorMessage message={errors.formErrors.message} />
       )}
-      <Button text={isLoading ? 'Loading' : 'Continue'} />
+      <Button text={isLoading ? 'Loading' : 'Continue'} long />
     </form>
   );
 }

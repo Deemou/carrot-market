@@ -49,7 +49,10 @@ export default function AccountForm({ email }: AccountFormProps) {
   }, [data, router, setError]);
 
   return (
-    <form onSubmit={handleSubmit(onAccountValid)} className="mt-8 space-y-4">
+    <form
+      onSubmit={handleSubmit(onAccountValid)}
+      className="mt-8 flex flex-col space-y-4"
+    >
       <NameInput onClick={onClick} register={register} errors={errors} />
       <PasswordInput onClick={onClick} register={register} errors={errors} />
       <Button text={loading ? 'Loading' : 'Create Account'} />

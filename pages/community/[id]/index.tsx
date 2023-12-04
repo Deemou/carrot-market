@@ -14,6 +14,7 @@ import { CommunityPostResponse } from '@/types/community';
 const CommunityPostDetail: NextPage<CommunityPostResponse> = (props) => {
   const router = useRouter();
   const requestUrl = `/api/posts/${router.query.id}`;
+  const buttonText = 'Reply';
   const { data, mutate } = useSWR<CommunityPostResponse>(requestUrl, {
     fallbackData: props
   });
@@ -88,7 +89,11 @@ const CommunityPostDetail: NextPage<CommunityPostResponse> = (props) => {
             ))}
           </div>
 
-          <AnswerForm requestUrl={requestUrl} mutate={mutate} />
+          <AnswerForm
+            requestUrl={requestUrl}
+            buttonText={buttonText}
+            mutate={mutate}
+          />
         </div>
       )}
     </Layout>

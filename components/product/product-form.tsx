@@ -123,7 +123,7 @@ export default function ProductForm({
   return (
     <form
       onSubmit={handleSubmit(onValid)}
-      className="mx-auto w-full max-w-xl space-y-4 py-10"
+      className="mx-auto flex w-full max-w-xl flex-col space-y-4 py-10"
     >
       <ImageInput
         imagePreview={productImagePreview}
