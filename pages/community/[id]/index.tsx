@@ -4,13 +4,11 @@ import useSWR from 'swr';
 import useMutation from '@libs/client/useMutation';
 import Layout from '@/components/common/layout';
 import client from '@/libs/server/client';
-import Avatar from '@/components/common/avatar';
 import Card from '@/components/profile/card';
-import WonderButton from '@/components/community/wonder-button';
-import MessageIcon from '@/components/icon/message-icon';
 import AnswerForm from '@/components/community/answer-form';
 import { CommunityPostResponse } from '@/types/community';
 import AnswerList from '@/components/community/answer-list';
+import PostInfoBar from '@/components/community/post-info-bar';
 
 const CommunityPostDetail: NextPage<CommunityPostResponse> = (props) => {
   const router = useRouter();
@@ -58,25 +56,16 @@ const CommunityPostDetail: NextPage<CommunityPostResponse> = (props) => {
             postType="posts"
             postId={data.post.id}
           ></Card>
-          <div>
-            <div className="mt-2">
-              <span className="text-orange-500">Q.</span> {data.post.question}
-            </div>
-            <div className="mt-3 flex w-full space-x-5 border-b-[2px] border-t py-2.5  text-gray-700">
-              <WonderButton
-                onWonderClick={onWonderClick}
-                isWondering={data.isWondering}
-                wondersCount={data.post._count.wonderings}
-              />
-              <div className="flex items-center space-x-2">
-                <MessageIcon />
-                <span>답변 {data.post._count.answers}</span>
-              </div>
-            </div>
+          <div className="mt-2">
+            <span className="text-orange-500">Q.</span> {data.post.question}
           </div>
-
+          <PostInfoBar
+            onWonderClick={onWonderClick}
+            isWondering={data.isWondering}
+            wondersCount={data.post._count.wonderings}
+            answersCount={data.post._count.answers}
+          />
           <AnswerList answers={data.post.answers} />
-
           <AnswerForm
             requestUrl={requestUrl}
             buttonText={buttonText}
