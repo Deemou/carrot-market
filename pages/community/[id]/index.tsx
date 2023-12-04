@@ -10,6 +10,7 @@ import { CommunityPostResponse } from '@/types/community';
 import AnswerList from '@/components/community/answer-list';
 import PostInfoBar from '@/components/community/post-info-bar';
 import Question from '@/components/community/question';
+import PostCategory from '@/components/community/post-category';
 
 const CommunityPostDetail: NextPage<CommunityPostResponse> = (props) => {
   const router = useRouter();
@@ -47,9 +48,7 @@ const CommunityPostDetail: NextPage<CommunityPostResponse> = (props) => {
     <Layout seoTitle="Community Post Detail">
       {data && (
         <div className="px-4">
-          <span className="my-3 inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-gray-800">
-            Question
-          </span>
+          <PostCategory category="Question" />
           <Card
             avatar={data.post.user.avatar}
             userId={data.post.user.id}
