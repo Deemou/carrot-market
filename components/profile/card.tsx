@@ -7,6 +7,7 @@ import { useSession } from 'next-auth/react';
 import MenuButton from '../common/button/menu-button';
 import DeleteWarningModal from '../common/delete-warning-modal';
 import MenuModal from '../common/button/menu-modal';
+import ProfileInfo from './profile-info';
 
 interface CardProps {
   avatar: string | null;
@@ -70,15 +71,7 @@ export default function Card({
 
   return (
     <div className="flex justify-between border-b border-t py-3">
-      <div className="my-3 flex items-center space-x-3">
-        <Avatar url={avatar} />
-        <div className="flex h-12 flex-col justify-between">
-          <h4>{userName}</h4>
-          <Link href={`/profile/${userId}`} className="text-gray-500">
-            View profile &rarr;
-          </Link>
-        </div>
-      </div>
+      <ProfileInfo avatar={avatar} userId={userId} userName={userName} />
       {session && (
         <>
           <div className="relative">
