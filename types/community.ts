@@ -1,10 +1,10 @@
 import { Answer, Post, User } from '@prisma/client';
 
-interface AnswerWithUser extends Answer {
+export interface AnswerWithUser extends Answer {
   user: User;
 }
 
-interface PostWithUser extends Post {
+export interface PostWithUser extends Post {
   user: User;
   _count: {
     answers: number;

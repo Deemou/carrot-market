@@ -10,6 +10,7 @@ import WonderButton from '@/components/community/wonder-button';
 import MessageIcon from '@/components/icon/message-icon';
 import AnswerForm from '@/components/community/answer-form';
 import { CommunityPostResponse } from '@/types/community';
+import AnswerList from '@/components/community/answer-list';
 
 const CommunityPostDetail: NextPage<CommunityPostResponse> = (props) => {
   const router = useRouter();
@@ -73,21 +74,8 @@ const CommunityPostDetail: NextPage<CommunityPostResponse> = (props) => {
               </div>
             </div>
           </div>
-          <div className="my-5 space-y-5">
-            {data.post.answers.map((answer) => (
-              <div key={answer.id} className="flex items-start space-x-3">
-                <Avatar url={answer.user.avatar} />
-                <div>
-                  <div className="flex flex-col">
-                    <span>{answer.user.name}</span>
-                    <span>{answer.createdAt.toString().slice(0, 10)}</span>
-                  </div>
 
-                  <span className="mt-2">{answer.answer} </span>
-                </div>
-              </div>
-            ))}
-          </div>
+          <AnswerList answers={data.post.answers} />
 
           <AnswerForm
             requestUrl={requestUrl}
