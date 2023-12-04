@@ -9,6 +9,7 @@ import AnswerForm from '@/components/community/answer-form';
 import { CommunityPostResponse } from '@/types/community';
 import AnswerList from '@/components/community/answer-list';
 import PostInfoBar from '@/components/community/post-info-bar';
+import Question from '@/components/community/question';
 
 const CommunityPostDetail: NextPage<CommunityPostResponse> = (props) => {
   const router = useRouter();
@@ -56,9 +57,7 @@ const CommunityPostDetail: NextPage<CommunityPostResponse> = (props) => {
             postType="posts"
             postId={data.post.id}
           ></Card>
-          <div className="mt-2">
-            <span className="text-orange-500">Q.</span> {data.post.question}
-          </div>
+          <Question question={data.post.question} />
           <PostInfoBar
             onWonderClick={onWonderClick}
             isWondering={data.isWondering}
