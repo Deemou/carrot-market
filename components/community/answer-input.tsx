@@ -11,7 +11,7 @@ export default function AnswerInput({ register }: AnswerInputProps) {
     <TextArea
       name="answer"
       required
-      register={register('answer', { required: true, minLength: 5 })}
+      register={register('answer', { required: true })}
       placeholder="Answer this question!"
     />
   );
