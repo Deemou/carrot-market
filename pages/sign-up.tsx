@@ -1,10 +1,10 @@
 import type { NextPage } from 'next';
 import { useState } from 'react';
-import Link from 'next/link';
 import TokenForm from '@/components/auth/token-form';
 import AccountForm from '@/components/auth/account-form';
 import EmailForm from '@/components/auth/email-form';
 import Button from '@/components/common/button/button';
+import AuthNavigation from '@/components/auth/auth-navigation';
 
 const SignUp: NextPage = () => {
   const [email, setEmail] = useState('');
@@ -12,9 +12,10 @@ const SignUp: NextPage = () => {
   const [isTokenOk, setIsTokenOk] = useState(false);
 
   return (
-    <div className="mx-auto mt-16 w-full max-w-xl px-4">
+    <div className="mx-auto mt-16 w-full max-w-xl space-y-8 px-4">
       <h1 className="text-center">Sign up for Carrot Market</h1>
-      <div className="mt-12">
+
+      <div className="space-y-8">
         {!isEmailOk && (
           <EmailForm setEmail={setEmail} setIsEmailOk={setIsEmailOk}>
             <Button text="Verify Email" />
@@ -24,11 +25,11 @@ const SignUp: NextPage = () => {
           <TokenForm email={email} setIsTokenOk={setIsTokenOk} />
         )}
         {isTokenOk && <AccountForm email={email} />}
-        <div className="flex justify-center p-4">
-          <Link href="/login" className="cursor-pointer">
-            <span className="">You already have an account? Login!</span>
-          </Link>
-        </div>
+
+        <AuthNavigation
+          address="/login"
+          message="You already have an account? Login!"
+        />
       </div>
     </div>
   );

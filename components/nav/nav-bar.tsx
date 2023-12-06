@@ -25,12 +25,7 @@ export default function NavBar() {
       </div>
       <div className="flex space-x-3">
         <Avatar url={session?.user.avatar} />
-        <Button
-          onClick={onClick}
-          type="button"
-          text="Log out"
-          long={false}
-        ></Button>
+        <Button onClick={onClick} type="button" text="Log out" />
       </div>
     </nav>
   );

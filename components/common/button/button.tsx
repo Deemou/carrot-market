@@ -5,7 +5,6 @@ interface ButtonProps {
   onClick?: MouseEventHandler<HTMLButtonElement>;
   type?: 'button' | 'submit';
   text: string;
-  large?: boolean;
   long?: boolean;
   [key: string]: any;
 }
@@ -24,8 +23,7 @@ export default function Button({
       type={type === 'button' ? 'button' : 'submit'}
       {...rest}
       className={cls(
-        'rounded-md border border-gray-200 px-3 hover:bg-gray-200 hover:text-black',
-        large ? 'py-2' : 'py-1',
+        'ml-auto rounded-md border border-gray-200 px-3 py-2 hover:bg-gray-200 hover:text-black',
         long ? 'w-full' : ''
       )}
     >
@@ -37,6 +35,5 @@ export default function Button({
 Button.defaultProps = {
   onClick: undefined,
   type: 'submit',
-  large: false,
-  long: true
+  long: false
 };

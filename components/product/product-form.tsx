@@ -121,7 +121,10 @@ export default function ProductForm({
   }, [data, router]);
 
   return (
-    <form onSubmit={handleSubmit(onValid)} className="space-y-4 p-4 py-10">
+    <form
+      onSubmit={handleSubmit(onValid)}
+      className="mx-auto flex w-full max-w-xl flex-col space-y-4 py-10"
+    >
       <ImageInput
         imagePreview={productImagePreview}
         register={register('productImage')}

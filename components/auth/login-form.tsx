@@ -47,10 +47,7 @@ export default function LoginForm() {
   );
 
   return (
-    <form
-      onSubmit={handleSubmit(onLoginValid)}
-      className="mt-8 flex flex-col space-y-4"
-    >
+    <form onSubmit={handleSubmit(onLoginValid)} className="space-y-4">
       <EmailInput register={register} />
       <Input
         onClick={onClick}
@@ -65,7 +62,7 @@ export default function LoginForm() {
       {errors.formErrors && (
         <ErrorMessage message={errors.formErrors.message} />
       )}
-      <Button text={isLoading ? 'Loading' : 'Continue'} />
+      <Button text={isLoading ? 'Loading' : 'Continue'} long />
     </form>
   );
 }

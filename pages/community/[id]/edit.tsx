@@ -7,7 +7,7 @@ import { useEffect } from 'react';
 import Layout from '@/components/common/layout';
 import Button from '@/components/common/button/button';
 import { useForm } from 'react-hook-form';
-import TextArea from '@/components/common/textarea';
+import PostInput from '@/components/community/post-input';
 
 interface EditPostForm {
   question: string;
@@ -24,6 +24,7 @@ interface Response {
 
 const Edit: NextPage = () => {
   const router = useRouter();
+  const buttonText = 'Update';
   const { register, setValue, handleSubmit } = useForm<EditPostForm>();
 
   const requestUrl = `/api/posts/${router.query.id}/edit`;
@@ -31,15 +32,14 @@ const Edit: NextPage = () => {
   const { data: postData } = useSWR<PostResponse>(
     router.query.id ? requestUrl : null
   );
-  const [editPost, { loading: editLoading, data: editData }] =
-    useMutation<Response>(requestUrl);
+  const [editPost, { loading, data }] = useMutation<Response>(requestUrl);
 
   useEffect(() => {
     if (postData?.post) setValue('question', postData.post.question);
   }, [setValue, postData?.post]);
 
   const onValid = (form: EditPostForm) => {
-    if (editLoading) return;
+    if (loading) return;
     editPost(form);
   };
 
@@ -49,23 +49,20 @@ const Edit: NextPage = () => {
   });
 
   useEffect(() => {
-    if (editData?.ok) {
+    if (data?.ok) {
       router.replace(`/community/${router.query.id}`);
     }
-  }, [editData, router]);
+  }, [data, router]);
 
   return (
     <Layout seoTitle="Edit Post">
       {postData?.ok && (
-        <form onSubmit={handleSubmit(onValid)} className="space-y-4 px-4 py-10">
-          <TextArea
-            name="question"
-            label="Question"
-            required
-            register={register('question', { required: true, minLength: 5 })}
-            placeholder="Ask a question!"
-          />
-          <Button text={editLoading ? 'Loading...' : 'Update'} />
+        <form
+          onSubmit={handleSubmit(onValid)}
+          className="mx-auto flex w-full max-w-xl flex-col space-y-4 py-10"
+        >
+          <PostInput register={register} />
+          <Button text={loading ? 'Loading...' : buttonText} />
         </form>
       )}
     </Layout>

@@ -22,7 +22,7 @@ const EditProfile: NextPage = () => {
 
   return (
     <Layout seoTitle="Edit Profile">
-      <div className="px-4 py-10">
+      <div className="mx-auto max-w-xl space-y-4 px-4 py-10">
         <ProfileForm />
         {!isEmailOk && (
           <EmailForm

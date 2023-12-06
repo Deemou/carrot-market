@@ -120,7 +120,7 @@ export default function ProfileForm() {
   }, [isUpdateDone, router]);
 
   return (
-    <form onSubmit={handleSubmit(onValid)} className="space-y-4">
+    <form onSubmit={handleSubmit(onValid)} className="flex flex-col space-y-4">
       <AvatarInput
         avatarPreview={avatarPreview}
         register={register('avatar')}
