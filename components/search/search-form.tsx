@@ -75,19 +75,23 @@ export default function SearchForm() {
   const onButtonMouseUp = (e: MouseEvent<HTMLButtonElement>) => {
     setIsListVisible(false);
     const target = e.target as HTMLElement;
-    setValue('query', target.textContent || '');
+    const query = target.textContent || '';
+    navigateToSearch(query);
   };
   const onButtonKeyDown = (e: KeyboardEvent<HTMLElement>) => {
     if (e.key === 'Enter') {
       setIsListVisible(false);
       const target = e.target as HTMLElement;
-      setValue('query', target.textContent || '');
-      setSearchWord(target.textContent || '');
+      const query = target.textContent || '';
+      navigateToSearch(query);
     }
   };
 
-  const onValid = ({ query }: ISearchForm) => {
+  const navigateToSearch = (query: string) => {
     router.push(`${searchUrl}?q=${query}`);
+  };
+  const onValid = ({ query }: ISearchForm) => {
+    navigateToSearch(query);
   };
   const focusItem = (index: number) => {
     const ref = itemRefs.current[index];
@@ -101,6 +105,7 @@ export default function SearchForm() {
   useEffect(() => {
     if (q) setValue('query', q?.toString());
   }, [q, setValue]);
+
   return (
     <form
       onSubmit={handleSubmit(onValid)}
