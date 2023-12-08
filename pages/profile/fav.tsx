@@ -1,7 +1,6 @@
 import type { NextPage, NextPageContext } from 'next';
 import client from '@/libs/server/client';
 import { Kind } from '@prisma/client';
-import { ProductWithCount } from 'pages';
 import { getSession } from 'next-auth/react';
 import Layout from '@/components/common/layout';
 import RecordList from '@/components/product/record-list';
@@ -9,17 +8,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import useSWR from 'swr';
 import PaginationBar from '@/components/pagination/pagination-bar';
-
-interface Record {
-  id: number;
-  product: ProductWithCount;
-}
-
-interface RecordListResponse {
-  ok: boolean;
-  records: Record[];
-  lastPage: number;
-}
+import { RecordListResponse } from '@/types/product';
 
 const kind = 'Fav';
 

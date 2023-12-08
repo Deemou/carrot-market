@@ -1,5 +1,4 @@
 import type { NextPage, NextPageContext } from 'next';
-import { Product } from '@prisma/client';
 import Layout from '@/components/common/layout';
 import useSWR from 'swr';
 import { useEffect, useState } from 'react';
@@ -8,18 +7,9 @@ import SearchBar from '@/components/search/search-bar';
 import { useRouter } from 'next/router';
 import ProductListSection from '@/components/product/product-list-section';
 import PaginationBar from '@/components/pagination/pagination-bar';
-
-export interface ProductWithCount extends Product {
-  _count: {
-    favs: number;
-  };
-}
-
-interface ProductsResponse {
-  ok: boolean;
-  products: ProductWithCount[];
-  lastPage: number;
-}
+import { ProductsResponse } from '@/types/product';
+import { useSetRecoilState } from 'recoil';
+import { pageTypeAtom } from '@/atoms';
 
 const Home: NextPage<ProductsResponse> = (props) => {
   const router = useRouter();
@@ -27,6 +17,11 @@ const Home: NextPage<ProductsResponse> = (props) => {
   const { data } = useSWR<ProductsResponse>(`/api/products?page=${page}`, {
     fallbackData: props
   });
+  const setPageType = useSetRecoilState(pageTypeAtom);
+
+  useEffect(() => {
+    setPageType('products');
+  }, [setPageType]);
 
   useEffect(() => {
     if (router?.query?.page) setPage(+router.query.page);
@@ -35,7 +30,7 @@ const Home: NextPage<ProductsResponse> = (props) => {
 
   return (
     <Layout seoTitle="Home">
-      <SearchBar section="products" />
+      <SearchBar />
       {data?.ok && (
         <>
           <ProductListSection products={data.products} />

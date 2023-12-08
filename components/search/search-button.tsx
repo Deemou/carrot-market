@@ -9,7 +9,7 @@ export default function SearchButton({ handleSubmit }: SearchButtonProps) {
     <button
       onClick={handleSubmit}
       type="button"
-      className="absolute right-2 top-1 aspect-square h-8 cursor-pointer fill-black"
+      className="absolute right-2 top-1 z-10 aspect-square h-8 cursor-pointer fill-black"
     >
       <SearchIcon />
     </button>

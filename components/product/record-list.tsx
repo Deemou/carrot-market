@@ -1,16 +1,7 @@
-import { ProductWithCount } from '@/pages';
+import { IRecordList } from '@/types/product';
 import Item from './item';
 
-interface Record {
-  id: number;
-  product: ProductWithCount;
-}
-
-interface RecordListProps {
-  records: Record[];
-}
-
-export default function RecordList({ records }: RecordListProps) {
+export default function RecordList({ records }: IRecordList) {
   return (
     <div className="space-y-5 divide-y pb-10">
       {records.map((record) => (

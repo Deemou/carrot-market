@@ -1,11 +1,5 @@
-import { Product } from '@prisma/client';
 import Item from '@/components/product/item';
-
-export interface ProductWithCount extends Product {
-  _count: {
-    favs: number;
-  };
-}
+import { ProductWithCount } from '@/types/product';
 
 interface ProductListSectionProps {
   products: ProductWithCount[];

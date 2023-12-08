@@ -11,6 +11,24 @@ async function handler(
       query: { q }
     } = req;
     const page = Number(req.query.page);
+
+    if (!page) {
+      const limit = 8;
+      const products = await client.product.findMany({
+        take: limit,
+        where: {
+          name: {
+            contains: q?.toString()
+          }
+        }
+      });
+
+      return res.json({
+        ok: true,
+        products
+      });
+    }
+
     const limit = 10;
     const productAll = await client.product.findMany({
       where: {

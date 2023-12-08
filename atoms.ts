@@ -13,6 +13,11 @@ export const isMobileAtom = atom({
       : false
 });
 
+export const pageTypeAtom = atom({
+  key: 'pageType',
+  default: 'products'
+});
+
 export const slideContentCols = selector({
   key: 'slideContentCols',
   get: ({ get }) => {

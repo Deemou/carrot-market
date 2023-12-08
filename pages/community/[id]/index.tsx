@@ -11,6 +11,9 @@ import AnswerList from '@/components/community/answer-list';
 import PostInfoBar from '@/components/community/post-info-bar';
 import Question from '@/components/community/question';
 import PostCategory from '@/components/community/post-category';
+import { useSetRecoilState } from 'recoil';
+import { pageTypeAtom } from '@/atoms';
+import { useEffect } from 'react';
 
 const CommunityPostDetail: NextPage<CommunityPostResponse> = (props) => {
   const router = useRouter();
@@ -20,6 +23,11 @@ const CommunityPostDetail: NextPage<CommunityPostResponse> = (props) => {
     fallbackData: props
   });
   const [toggleWonder, { loading }] = useMutation(`${requestUrl}/wonder`);
+  const setPageType = useSetRecoilState(pageTypeAtom);
+
+  useEffect(() => {
+    setPageType('community');
+  }, [setPageType]);
 
   const onWonderClick = () => {
     if (!data) return;
@@ -53,7 +61,6 @@ const CommunityPostDetail: NextPage<CommunityPostResponse> = (props) => {
             avatar={data.post.user.avatar}
             userId={data.post.user.id}
             userName={data.post.user.name}
-            postType="posts"
             postId={data.post.id}
           ></Card>
           <Question question={data.post.question} />
