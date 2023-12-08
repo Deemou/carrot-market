@@ -9,6 +9,8 @@ import client from '@/libs/server/client';
 import Card from '@/components/profile/card';
 import LikeButton from '@/components/common/button/like-button';
 import RelatedItemSection from '@/components/product/related-item-section';
+import { useSetRecoilState } from 'recoil';
+import { pageTypeAtom } from '@/atoms';
 
 interface ProductWithUser extends Product {
   user: User;
@@ -34,6 +36,9 @@ const ItemDetail: NextPage<ItemDetailResponse> = (props) => {
   const [toggleFav, { loading }] = useMutation(
     `/api/products/${router.query.id}/fav`
   );
+  const setPageType = useSetRecoilState(pageTypeAtom);
+  setPageType('products');
+
   const onFavClick = () => {
     if (!data) return;
     if (!loading) {
@@ -89,7 +94,6 @@ const ItemDetail: NextPage<ItemDetailResponse> = (props) => {
             avatar={data.product.user.avatar}
             userId={data.product.user.id}
             userName={data.product.user.name}
-            postType="products"
             postId={data.product.id}
           ></Card>
           <div className="mt-5">

@@ -1,9 +1,9 @@
-import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import useMutation from '@/libs/client/useMutation';
 import { useRouter } from 'next/router';
-import Avatar from '@/components/common/avatar';
 import { useSession } from 'next-auth/react';
+import { useRecoilValue } from 'recoil';
+import { pageTypeAtom } from '@/atoms';
 import MenuButton from '../common/button/menu-button';
 import DeleteWarningModal from '../common/delete-warning-modal';
 import MenuModal from '../common/button/menu-modal';
@@ -13,7 +13,6 @@ interface CardProps {
   avatar: string | null;
   userId: number;
   userName: string | null;
-  postType: string;
   postId: number;
 }
 
@@ -21,19 +20,14 @@ interface Response {
   ok: boolean;
 }
 
-export default function Card({
-  avatar,
-  userId,
-  userName,
-  postType,
-  postId
-}: CardProps) {
+export default function Card({ avatar, userId, userName, postId }: CardProps) {
   const { data: session } = useSession();
   const router = useRouter();
   const [isMenuClicked, setIsMenuClicked] = useState(false);
   const [isDeleteMenuClicked, setIsDeleteMenuClicked] = useState(false);
+  const pageType = useRecoilValue(pageTypeAtom);
 
-  const postUrl = `/api/${postType}/${postId}`;
+  const postUrl = `/api/${pageType}/${postId}`;
   const deleteUrl = `${postUrl}/delete`;
 
   const [deletePost, { loading: deleteLoading, data: deleteData }] =
@@ -59,15 +53,15 @@ export default function Card({
     deletePost({});
   };
   const onEditClick = () => {
-    if (postType === 'products') router.push(`/products/${postId}/edit/`);
-    else if (postType === 'posts') router.push(`/community/${postId}/edit`);
+    if (pageType === 'products') router.push(`/products/${postId}/edit/`);
+    else if (pageType === 'community') router.push(`/community/${postId}/edit`);
   };
 
   useEffect(() => {
     if (!deleteData?.ok) return;
-    if (postType === 'products') router.push('/');
-    else if (postType === 'posts') router.push('/community');
-  }, [deleteData, postType, router]);
+    if (pageType === 'products') router.push('/');
+    else if (pageType === 'community') router.push('/community');
+  }, [deleteData, pageType, router]);
 
   return (
     <div className="flex justify-between border-b border-t py-3">

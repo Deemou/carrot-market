@@ -7,6 +7,8 @@ import Layout from '@/components/common/layout';
 import SearchBar from '@/components/search/search-bar';
 import ProductListSection from '@/components/product/product-list-section';
 import PaginationBar from '@/components/pagination/pagination-bar';
+import { useSetRecoilState } from 'recoil';
+import { pageTypeAtom } from '@/atoms';
 
 export interface ProductWithCount extends Product {
   _count: {
@@ -27,6 +29,8 @@ const ProductSearch: NextPage = () => {
   const { data } = useSWR<ProductsResponse>(
     q ? `/api/products/search?q=${q}&page=${page}` : null
   );
+  const setPageType = useSetRecoilState(pageTypeAtom);
+  setPageType('products');
 
   useEffect(() => {
     if (router?.query?.page) setPage(+router.query.page);
@@ -35,7 +39,7 @@ const ProductSearch: NextPage = () => {
 
   return (
     <Layout seoTitle="ProductSearch">
-      <SearchBar section="products" />
+      <SearchBar />
       {data?.ok && (
         <>
           <ProductListSection products={data.products} />

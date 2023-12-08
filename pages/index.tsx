@@ -20,6 +20,8 @@ interface ProductsResponse {
   products: ProductWithCount[];
   lastPage: number;
 }
+import { useSetRecoilState } from 'recoil';
+import { pageTypeAtom } from '@/atoms';
 
 const Home: NextPage<ProductsResponse> = (props) => {
   const router = useRouter();
@@ -27,6 +29,8 @@ const Home: NextPage<ProductsResponse> = (props) => {
   const { data } = useSWR<ProductsResponse>(`/api/products?page=${page}`, {
     fallbackData: props
   });
+  const setPageType = useSetRecoilState(pageTypeAtom);
+  setPageType('products');
 
   useEffect(() => {
     if (router?.query?.page) setPage(+router.query.page);
@@ -35,7 +39,7 @@ const Home: NextPage<ProductsResponse> = (props) => {
 
   return (
     <Layout seoTitle="Home">
-      <SearchBar section="products" />
+      <SearchBar />
       {data?.ok && (
         <>
           <ProductListSection products={data.products} />
