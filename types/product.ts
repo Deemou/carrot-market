@@ -11,3 +11,18 @@ export interface ProductsResponse {
   products: ProductWithCount[];
   lastPage: number;
 }
+
+interface IRecord {
+  id: number;
+  product: ProductWithCount;
+}
+
+export interface IRecordList {
+  records: IRecord[];
+}
+
+export interface RecordListResponse {
+  ok: boolean;
+  records: IRecord[];
+  lastPage: number;
+}

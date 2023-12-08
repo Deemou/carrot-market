@@ -13,15 +13,10 @@ import { useRecoilValue } from 'recoil';
 import { pageTypeAtom } from '@/atoms';
 import cls from '@/libs/client/utils';
 import SearchButton from './search-button';
-import { ProductWithCount } from '../product/product-list-section';
+import { ProductsResponse } from '@/types/product';
 
 interface ISearchForm {
   query: string;
-}
-
-interface ProductsResponse {
-  ok: boolean;
-  products: ProductWithCount[];
 }
 
 export default function SearchForm() {

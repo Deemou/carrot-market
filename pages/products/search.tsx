@@ -9,18 +9,7 @@ import ProductListSection from '@/components/product/product-list-section';
 import PaginationBar from '@/components/pagination/pagination-bar';
 import { useSetRecoilState } from 'recoil';
 import { pageTypeAtom } from '@/atoms';
-
-export interface ProductWithCount extends Product {
-  _count: {
-    favs: number;
-  };
-}
-
-interface ProductsResponse {
-  ok: boolean;
-  products: ProductWithCount[];
-  lastPage: number;
-}
+import { ProductsResponse } from '@/types/product';
 
 const ProductSearch: NextPage = () => {
   const router = useRouter();
