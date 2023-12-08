@@ -31,7 +31,7 @@ export default function SearchForm() {
   const [searchWord, setSearchWord] = useState('');
   const pageType = useRecoilValue(pageTypeAtom);
   const searchUrl = `${pageType}/search`;
-  const [listVisible, setListVisible] = useState(false);
+  const [isListVisible, setIsListVisible] = useState(false);
   const [isNavigationKeyPressed, setIsNavigationKeyPressed] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const itemRefs = useRef<(HTMLElement | null)[]>([]);
@@ -40,14 +40,14 @@ export default function SearchForm() {
     searchWord ? `/api/products/search?q=${searchWord}` : null
   );
 
-  const isOpenSearchList = listVisible && data && data?.products?.length > 0;
+  const isOpenSearchList = isListVisible && data && data?.products?.length > 0;
 
   const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setListVisible(true);
+    setIsListVisible(true);
     setSearchWord(e.currentTarget.value);
   };
   const onInputClick = () => {
-    setListVisible(true);
+    setIsListVisible(true);
   };
   const onInputKeyDown = (e: KeyboardEvent<HTMLElement>) => {
     if (!data?.products) return;
@@ -65,28 +65,28 @@ export default function SearchForm() {
     }
   };
   const onInputBlur = () => {
-    if (!isNavigationKeyPressed) setListVisible(false);
+    if (!isNavigationKeyPressed) setIsListVisible(false);
     else setIsNavigationKeyPressed(false);
   };
 
-  const onButtonMouseUp = (e: MouseEvent<HTMLButtonElement>) => {
-    setListVisible(false);
-    const target = e.target as HTMLElement;
-    setValue('query', target.textContent || '');
-  };
   const onButtonMouseDown = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
   };
+  const onButtonMouseUp = (e: MouseEvent<HTMLButtonElement>) => {
+    setIsListVisible(false);
+    const target = e.target as HTMLElement;
+    setValue('query', target.textContent || '');
+  };
   const onButtonKeyDown = (e: KeyboardEvent<HTMLElement>) => {
     if (e.key === 'Enter') {
-      setListVisible(false);
+      setIsListVisible(false);
       const target = e.target as HTMLElement;
       setValue('query', target.textContent || '');
+      setSearchWord(target.textContent || '');
     }
   };
 
   const onValid = ({ query }: ISearchForm) => {
-    console.log(query);
     router.push(`${searchUrl}?q=${query}`);
   };
   const focusItem = (index: number) => {
@@ -101,7 +101,6 @@ export default function SearchForm() {
   useEffect(() => {
     if (q) setValue('query', q?.toString());
   }, [q, setValue]);
-
   return (
     <form
       onSubmit={handleSubmit(onValid)}
