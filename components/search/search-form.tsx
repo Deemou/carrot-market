@@ -30,7 +30,7 @@ export default function SearchForm() {
   const { register, setValue, handleSubmit } = useForm<ISearchForm>();
   const [searchWord, setSearchWord] = useState('');
   const pageType = useRecoilValue(pageTypeAtom);
-  const searchUrl = `${pageType}/search`;
+  const searchUrl = `/${pageType}/search`;
   const [isListVisible, setIsListVisible] = useState(false);
   const [isNavigationKeyPressed, setIsNavigationKeyPressed] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
