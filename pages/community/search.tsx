@@ -32,7 +32,10 @@ const CommunitySearch: NextPage = () => {
     q ? `/api/posts/search?q=${q}&page=${page}` : null
   );
   const setPageType = useSetRecoilState(pageTypeAtom);
-  setPageType('community');
+
+  useEffect(() => {
+    setPageType('community');
+  }, [setPageType]);
 
   useEffect(() => {
     if (router?.query?.page) setPage(+router.query.page);

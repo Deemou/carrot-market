@@ -13,6 +13,7 @@ import Question from '@/components/community/question';
 import PostCategory from '@/components/community/post-category';
 import { useSetRecoilState } from 'recoil';
 import { pageTypeAtom } from '@/atoms';
+import { useEffect } from 'react';
 
 const CommunityPostDetail: NextPage<CommunityPostResponse> = (props) => {
   const router = useRouter();
@@ -23,7 +24,10 @@ const CommunityPostDetail: NextPage<CommunityPostResponse> = (props) => {
   });
   const [toggleWonder, { loading }] = useMutation(`${requestUrl}/wonder`);
   const setPageType = useSetRecoilState(pageTypeAtom);
-  setPageType('community');
+
+  useEffect(() => {
+    setPageType('community');
+  }, [setPageType]);
 
   const onWonderClick = () => {
     if (!data) return;

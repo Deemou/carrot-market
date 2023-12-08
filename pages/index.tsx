@@ -30,7 +30,10 @@ const Home: NextPage<ProductsResponse> = (props) => {
     fallbackData: props
   });
   const setPageType = useSetRecoilState(pageTypeAtom);
-  setPageType('products');
+
+  useEffect(() => {
+    setPageType('products');
+  }, [setPageType]);
 
   useEffect(() => {
     if (router?.query?.page) setPage(+router.query.page);

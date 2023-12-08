@@ -30,7 +30,10 @@ const ProductSearch: NextPage = () => {
     q ? `/api/products/search?q=${q}&page=${page}` : null
   );
   const setPageType = useSetRecoilState(pageTypeAtom);
-  setPageType('products');
+
+  useEffect(() => {
+    setPageType('products');
+  }, [setPageType]);
 
   useEffect(() => {
     if (router?.query?.page) setPage(+router.query.page);

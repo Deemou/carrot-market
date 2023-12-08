@@ -11,6 +11,7 @@ import LikeButton from '@/components/common/button/like-button';
 import RelatedItemSection from '@/components/product/related-item-section';
 import { useSetRecoilState } from 'recoil';
 import { pageTypeAtom } from '@/atoms';
+import { useEffect } from 'react';
 
 interface ProductWithUser extends Product {
   user: User;
@@ -37,7 +38,10 @@ const ItemDetail: NextPage<ItemDetailResponse> = (props) => {
     `/api/products/${router.query.id}/fav`
   );
   const setPageType = useSetRecoilState(pageTypeAtom);
-  setPageType('products');
+
+  useEffect(() => {
+    setPageType('products');
+  }, [setPageType]);
 
   const onFavClick = () => {
     if (!data) return;
