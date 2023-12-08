@@ -33,7 +33,7 @@ export default function SearchForm() {
   const searchUrl = `/${pageType}/search`;
   const [isListVisible, setIsListVisible] = useState(false);
   const [isNavigationKeyPressed, setIsNavigationKeyPressed] = useState(false);
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [selectedIndex, setSelectedIndex] = useState(-1);
   const itemRefs = useRef<(HTMLElement | null)[]>([]);
 
   const { data } = useSWR<ProductsResponse>(
