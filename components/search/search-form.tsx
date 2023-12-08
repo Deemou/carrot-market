@@ -118,11 +118,14 @@ export default function SearchForm() {
           <input
             type="text"
             required
-            {...register('query', { required: true, minLength: 2 })}
+            {...register('query', {
+              required: true,
+              minLength: 2,
+              onBlur: onInputBlur,
+              onChange: onInputChange
+            })}
             placeholder="검색어를 입력해주세요."
-            onBlur={onInputBlur}
             onClick={onInputClick}
-            onChange={onInputChange}
             onKeyDown={onInputKeyDown}
             className={cls(
               'w-full border-none pr-12',
