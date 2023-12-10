@@ -27,8 +27,8 @@ export default function SearchForm() {
   const pageType = useRecoilValue(pageTypeAtom);
   const searchUrl = `/${pageType}/search`;
   const [isListVisible, setIsListVisible] = useState(false);
-  const [isNavigationKeyPressed, setIsNavigationKeyPressed] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(-1);
+  const [hoveredIndex, setHoveredIndex] = useState(-1);
   const itemRefs = useRef<(HTMLElement | null)[]>([]);
 
   const { data } = useSWR<ProductsResponse>(
@@ -37,11 +37,9 @@ export default function SearchForm() {
 
   const isOpenSearchList = isListVisible && data && data?.products?.length > 0;
 
-  const onFormBlur = () => {
-    if (!isNavigationKeyPressed) setIsListVisible(false);
-    else setIsNavigationKeyPressed(false);
+  const onInputBlur = () => {
+    setIsListVisible(false);
   };
-
   const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setIsListVisible(true);
     setSearchWord(e.currentTarget.value);
@@ -53,21 +51,27 @@ export default function SearchForm() {
     setSearchWord(query);
   };
   const onInputKeyDown = (e: KeyboardEvent<HTMLElement>) => {
+    console.log('!!');
     if (!data?.products) return;
 
     if (e.key === 'Tab' || e.key === 'ArrowDown') {
       e.preventDefault();
-      setIsNavigationKeyPressed(true);
       setSelectedIndex((prevIndex) =>
-        prevIndex === data.products.length - 1 ? 0 : prevIndex + 1
+        prevIndex >= data.products.length - 1 ? 0 : prevIndex + 1
       );
     } else if (e.key === 'ArrowUp') {
       e.preventDefault();
-      setIsNavigationKeyPressed(true);
       setSelectedIndex((prevIndex) => Math.max(-1, prevIndex - 1));
     }
   };
 
+  const onButtonMouseEnter = (index: number) => {
+    setHoveredIndex(index);
+    setSelectedIndex(-1);
+  };
+  const onButtonMouseLeave = () => {
+    setHoveredIndex(-1);
+  };
   const onButtonMouseDown = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
   };
@@ -91,22 +95,11 @@ export default function SearchForm() {
   const onValid = ({ query }: ISearchForm) => {
     navigateToSearch(query);
   };
-  const focusItem = (index: number) => {
-    const ref = itemRefs.current[index];
-    if (!ref) return;
-    ref.focus();
-    if (ref.textContent) setValue('query', ref.textContent);
-  };
 
   useEffect(() => {
-    if (selectedIndex === -1) {
-      const inputElement = document.getElementById('search-input');
-      if (inputElement) {
-        inputElement.focus();
-      }
-      return;
-    }
-    focusItem(selectedIndex);
+    const ref = itemRefs.current[selectedIndex];
+    if (!ref) return;
+    if (ref.textContent) setValue('query', ref.textContent);
   }, [selectedIndex]);
 
   useEffect(() => {
@@ -117,7 +110,6 @@ export default function SearchForm() {
   return (
     <form
       onSubmit={handleSubmit(onValid)}
-      onBlur={onFormBlur}
       className="relative w-5/12 max-w640:w-9/12 max-w480:w-8/12"
     >
       <SearchButton />
@@ -125,13 +117,13 @@ export default function SearchForm() {
       {pageType === 'products' ? (
         <div className="relative">
           <input
-            id="search-input"
             type="text"
             required
             {...register('query', {
               required: true,
               minLength: 2,
-              onChange: onInputChange
+              onChange: onInputChange,
+              onBlur: onInputBlur
             })}
             placeholder="검색어를 입력해주세요."
             onClick={onInputClick}
@@ -153,7 +145,8 @@ export default function SearchForm() {
                     itemRefs.current[index] = ref;
                   }}
                   type="button"
-                  tabIndex={0}
+                  onMouseEnter={() => onButtonMouseEnter(index)}
+                  onMouseLeave={onButtonMouseLeave}
                   onMouseDown={onButtonMouseDown}
                   onMouseUp={onButtonMouseUp}
                   onKeyDown={(e) => {
@@ -162,7 +155,10 @@ export default function SearchForm() {
                   }}
                   className={cls(
                     'w-full p-2 text-left outline-none',
-                    index === selectedIndex ? 'bg-gray-400' : ''
+                    index === hoveredIndex ? 'bg-gray-400' : '',
+                    hoveredIndex === -1 && index === selectedIndex
+                      ? 'bg-gray-400'
+                      : ''
                   )}
                 >
                   {product.name}
