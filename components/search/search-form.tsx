@@ -90,7 +90,9 @@ export default function SearchForm() {
   };
   const focusItem = (index: number) => {
     const ref = itemRefs.current[index];
-    if (ref) ref.focus();
+    if (!ref) return;
+    ref.focus();
+    if (ref.textContent) setValue('query', ref.textContent);
   };
 
   useEffect(() => {
@@ -98,7 +100,8 @@ export default function SearchForm() {
   }, [selectedIndex]);
 
   useEffect(() => {
-    if (q) setValue('query', q?.toString());
+    if (!q) return;
+    setValue('query', q?.toString());
   }, [q, setValue]);
 
   return (
