@@ -27,8 +27,8 @@ export default function SearchForm() {
   const pageType = useRecoilValue(pageTypeAtom);
   const searchUrl = `/${pageType}/search`;
   const [isListVisible, setIsListVisible] = useState(false);
-  const [isNavigationKeyPressed, setIsNavigationKeyPressed] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(-1);
+  const [hoveredIndex, setHoveredIndex] = useState(-1);
   const itemRefs = useRef<(HTMLElement | null)[]>([]);
 
   const { data } = useSWR<ProductsResponse>(
@@ -37,46 +37,53 @@ export default function SearchForm() {
 
   const isOpenSearchList = isListVisible && data && data?.products?.length > 0;
 
+  const onInputBlur = () => {
+    setIsListVisible(false);
+  };
   const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setIsListVisible(true);
     setSearchWord(e.currentTarget.value);
   };
-  const onInputClick = () => {
+  const onInputClick = (e: MouseEvent<HTMLInputElement>) => {
     setIsListVisible(true);
+    const target = e.currentTarget;
+    const query = target.value || '';
+    setSearchWord(query);
   };
   const onInputKeyDown = (e: KeyboardEvent<HTMLElement>) => {
+    console.log('!!');
     if (!data?.products) return;
 
     if (e.key === 'Tab' || e.key === 'ArrowDown') {
       e.preventDefault();
-      setIsNavigationKeyPressed(true);
       setSelectedIndex((prevIndex) =>
-        Math.min(data.products.length - 1, prevIndex + 1)
+        prevIndex >= data.products.length - 1 ? 0 : prevIndex + 1
       );
     } else if (e.key === 'ArrowUp') {
       e.preventDefault();
-      setIsNavigationKeyPressed(true);
-      setSelectedIndex((prevIndex) => Math.max(0, prevIndex - 1));
+      setSelectedIndex((prevIndex) => Math.max(-1, prevIndex - 1));
     }
   };
-  const onInputBlur = () => {
-    if (!isNavigationKeyPressed) setIsListVisible(false);
-    else setIsNavigationKeyPressed(false);
-  };
 
+  const onButtonMouseEnter = (index: number) => {
+    setHoveredIndex(index);
+    setSelectedIndex(-1);
+  };
+  const onButtonMouseLeave = () => {
+    setHoveredIndex(-1);
+  };
   const onButtonMouseDown = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
   };
   const onButtonMouseUp = (e: MouseEvent<HTMLButtonElement>) => {
-    setIsListVisible(false);
-    const target = e.target as HTMLElement;
+    const target = e.currentTarget;
     const query = target.textContent || '';
     navigateToSearch(query);
   };
   const onButtonKeyDown = (e: KeyboardEvent<HTMLElement>) => {
     if (e.key === 'Enter') {
       setIsListVisible(false);
-      const target = e.target as HTMLElement;
+      const target = e.currentTarget;
       const query = target.textContent || '';
       navigateToSearch(query);
     }
@@ -88,17 +95,16 @@ export default function SearchForm() {
   const onValid = ({ query }: ISearchForm) => {
     navigateToSearch(query);
   };
-  const focusItem = (index: number) => {
-    const ref = itemRefs.current[index];
-    if (ref) ref.focus();
-  };
 
   useEffect(() => {
-    focusItem(selectedIndex);
+    const ref = itemRefs.current[selectedIndex];
+    if (!ref) return;
+    if (ref.textContent) setValue('query', ref.textContent);
   }, [selectedIndex]);
 
   useEffect(() => {
-    if (q) setValue('query', q?.toString());
+    if (!q) return;
+    setValue('query', q?.toString());
   }, [q, setValue]);
 
   return (
@@ -106,11 +112,7 @@ export default function SearchForm() {
       onSubmit={handleSubmit(onValid)}
       className="relative w-5/12 max-w640:w-9/12 max-w480:w-8/12"
     >
-      <SearchButton
-        handleSubmit={() => {
-          handleSubmit(onValid);
-        }}
-      />
+      <SearchButton />
 
       {pageType === 'products' ? (
         <div className="relative">
@@ -120,8 +122,8 @@ export default function SearchForm() {
             {...register('query', {
               required: true,
               minLength: 2,
-              onBlur: onInputBlur,
-              onChange: onInputChange
+              onChange: onInputChange,
+              onBlur: onInputBlur
             })}
             placeholder="검색어를 입력해주세요."
             onClick={onInputClick}
@@ -143,7 +145,8 @@ export default function SearchForm() {
                     itemRefs.current[index] = ref;
                   }}
                   type="button"
-                  tabIndex={0}
+                  onMouseEnter={() => onButtonMouseEnter(index)}
+                  onMouseLeave={onButtonMouseLeave}
                   onMouseDown={onButtonMouseDown}
                   onMouseUp={onButtonMouseUp}
                   onKeyDown={(e) => {
@@ -152,7 +155,10 @@ export default function SearchForm() {
                   }}
                   className={cls(
                     'w-full p-2 text-left outline-none',
-                    index === selectedIndex ? 'bg-gray-400' : ''
+                    index === hoveredIndex ? 'bg-gray-400' : '',
+                    hoveredIndex === -1 && index === selectedIndex
+                      ? 'bg-gray-400'
+                      : ''
                   )}
                 >
                   {product.name}

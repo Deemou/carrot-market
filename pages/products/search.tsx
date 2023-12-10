@@ -2,7 +2,6 @@ import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import useSWR from 'swr';
-import { Product } from '@prisma/client';
 import Layout from '@/components/common/layout';
 import SearchBar from '@/components/search/search-bar';
 import ProductListSection from '@/components/product/product-list-section';
