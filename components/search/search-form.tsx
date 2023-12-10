@@ -46,8 +46,11 @@ export default function SearchForm() {
     setIsListVisible(true);
     setSearchWord(e.currentTarget.value);
   };
-  const onInputClick = () => {
+  const onInputClick = (e: MouseEvent<HTMLInputElement>) => {
     setIsListVisible(true);
+    const target = e.currentTarget;
+    const query = target.value || '';
+    setSearchWord(query);
   };
   const onInputKeyDown = (e: KeyboardEvent<HTMLElement>) => {
     if (!data?.products) return;
@@ -69,14 +72,14 @@ export default function SearchForm() {
     e.preventDefault();
   };
   const onButtonMouseUp = (e: MouseEvent<HTMLButtonElement>) => {
-    const target = e.target as HTMLElement;
+    const target = e.currentTarget;
     const query = target.textContent || '';
     navigateToSearch(query);
   };
   const onButtonKeyDown = (e: KeyboardEvent<HTMLElement>) => {
     if (e.key === 'Enter') {
       setIsListVisible(false);
-      const target = e.target as HTMLElement;
+      const target = e.currentTarget;
       const query = target.textContent || '';
       navigateToSearch(query);
     }
