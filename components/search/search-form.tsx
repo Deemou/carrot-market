@@ -56,12 +56,12 @@ export default function SearchForm() {
       e.preventDefault();
       setIsNavigationKeyPressed(true);
       setSelectedIndex((prevIndex) =>
-        Math.min(data.products.length - 1, prevIndex + 1)
+        prevIndex === data.products.length - 1 ? 0 : prevIndex + 1
       );
     } else if (e.key === 'ArrowUp') {
       e.preventDefault();
       setIsNavigationKeyPressed(true);
-      setSelectedIndex((prevIndex) => Math.max(0, prevIndex - 1));
+      setSelectedIndex((prevIndex) => Math.max(-1, prevIndex - 1));
     }
   };
 
@@ -96,6 +96,13 @@ export default function SearchForm() {
   };
 
   useEffect(() => {
+    if (selectedIndex === -1) {
+      const inputElement = document.getElementById('search-input');
+      if (inputElement) {
+        inputElement.focus();
+      }
+      return;
+    }
     focusItem(selectedIndex);
   }, [selectedIndex]);
 
@@ -115,6 +122,7 @@ export default function SearchForm() {
       {pageType === 'products' ? (
         <div className="relative">
           <input
+            id="search-input"
             type="text"
             required
             {...register('query', {
