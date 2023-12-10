@@ -44,6 +44,9 @@ export default function SearchForm() {
     setIsListVisible(true);
     setSearchWord(e.currentTarget.value);
   };
+  const onInputFocus = () => {
+    setSelectedIndex(-1);
+  };
   const onInputClick = (e: MouseEvent<HTMLInputElement>) => {
     setIsListVisible(true);
     const target = e.currentTarget;
@@ -51,7 +54,6 @@ export default function SearchForm() {
     setSearchWord(query);
   };
   const onInputKeyDown = (e: KeyboardEvent<HTMLElement>) => {
-    console.log('!!');
     if (!data?.products) return;
 
     if (e.key === 'Tab' || e.key === 'ArrowDown') {
@@ -126,6 +128,7 @@ export default function SearchForm() {
               onBlur: onInputBlur
             })}
             placeholder="검색어를 입력해주세요."
+            onFocus={onInputFocus}
             onClick={onInputClick}
             onKeyDown={onInputKeyDown}
             className={cls(
