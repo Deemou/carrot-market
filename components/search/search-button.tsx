@@ -1,14 +1,9 @@
 import SearchIcon from '../icon/search-icon';
 
-interface SearchButtonProps {
-  handleSubmit: () => void;
-}
-
-export default function SearchButton({ handleSubmit }: SearchButtonProps) {
+export default function SearchButton() {
   return (
     <button
-      onClick={handleSubmit}
-      type="button"
+      type="submit"
       className="absolute right-2 top-1 z-10 aspect-square h-8 cursor-pointer fill-black"
     >
       <SearchIcon />

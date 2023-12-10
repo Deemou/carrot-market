@@ -107,11 +107,7 @@ export default function SearchForm() {
       onBlur={onFormBlur}
       className="relative w-5/12 max-w640:w-9/12 max-w480:w-8/12"
     >
-      <SearchButton
-        handleSubmit={() => {
-          handleSubmit(onValid);
-        }}
-      />
+      <SearchButton />
 
       {pageType === 'products' ? (
         <div className="relative">
