@@ -25,9 +25,10 @@ interface Response {
 const Edit: NextPage = () => {
   const router = useRouter();
   const buttonText = 'Update';
+  const pageType = 'community';
   const { register, setValue, handleSubmit } = useForm<EditPostForm>();
 
-  const requestUrl = `/api/posts/${router.query.id}/edit`;
+  const requestUrl = `/api/${pageType}/${router.query.id}/edit`;
 
   const { data: postData } = useSWR<PostResponse>(
     router.query.id ? requestUrl : null
@@ -45,12 +46,12 @@ const Edit: NextPage = () => {
 
   useEffect(() => {
     if (!postData) return;
-    if (!postData.ok) router.replace('/community');
+    if (!postData.ok) router.replace(`/${pageType}`);
   });
 
   useEffect(() => {
     if (data?.ok) {
-      router.replace(`/community/${router.query.id}`);
+      router.replace(`/${pageType}/${router.query.id}`);
     }
   }, [data, router]);
 

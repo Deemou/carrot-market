@@ -17,8 +17,9 @@ import { useEffect } from 'react';
 
 const CommunityPostDetail: NextPage<CommunityPostResponse> = (props) => {
   const router = useRouter();
-  const requestUrl = `/api/posts/${router.query.id}`;
   const buttonText = 'Reply';
+  const pageType = 'community';
+  const requestUrl = `/api/${pageType}/${router.query.id}`;
   const { data, mutate } = useSWR<CommunityPostResponse>(requestUrl, {
     fallbackData: props
   });
@@ -26,7 +27,7 @@ const CommunityPostDetail: NextPage<CommunityPostResponse> = (props) => {
   const setPageType = useSetRecoilState(pageTypeAtom);
 
   useEffect(() => {
-    setPageType('community');
+    setPageType(pageType);
   }, [setPageType]);
 
   const onWonderClick = () => {

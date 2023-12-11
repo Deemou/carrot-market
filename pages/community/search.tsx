@@ -28,13 +28,14 @@ const CommunitySearch: NextPage = () => {
   const router = useRouter();
   const { q } = router.query;
   const [page, setPage] = useState<number>(1);
+  const pageType = 'community';
   const { data } = useSWR<PostsResponse>(
-    q ? `/api/posts/search?q=${q}&page=${page}` : null
+    q ? `/api/${pageType}/search?q=${q}&page=${page}` : null
   );
   const setPageType = useSetRecoilState(pageTypeAtom);
 
   useEffect(() => {
-    setPageType('community');
+    setPageType(pageType);
   }, [setPageType]);
 
   useEffect(() => {

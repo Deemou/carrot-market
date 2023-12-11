@@ -3,7 +3,7 @@ import Layout from '@/components/common/layout';
 import PostForm from '@/components/community/post-form';
 
 const Write: NextPage = () => {
-  const requestUrl = '/api/posts';
+  const requestUrl = '/api/community';
 
   return (
     <Layout seoTitle="Write Post">

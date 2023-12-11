@@ -28,13 +28,14 @@ interface PostsResponse {
 const Community: NextPage<PostsResponse> = (props) => {
   const router = useRouter();
   const [page, setPage] = useState<number>(1);
-  const { data } = useSWR<PostsResponse>(`/api/posts?page=${page}`, {
+  const pageType = 'community';
+  const { data } = useSWR<PostsResponse>(`/api/${pageType}?page=${page}`, {
     fallbackData: props
   });
   const setPageType = useSetRecoilState(pageTypeAtom);
 
   useEffect(() => {
-    setPageType('community');
+    setPageType(pageType);
   }, [setPageType]);
 
   useEffect(() => {
