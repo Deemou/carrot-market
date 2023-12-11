@@ -37,21 +37,21 @@ export default function SearchForm() {
 
   const isOpenSearchList = isListVisible && data && data?.products?.length > 0;
 
-  const onInputBlur = () => {
-    setIsListVisible(false);
-  };
   const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setIsListVisible(true);
     setSearchWord(e.currentTarget.value);
   };
-  const onInputFocus = () => {
-    setSelectedIndex(-1);
+  const onInputBlur = () => {
+    setIsListVisible(false);
   };
   const onInputClick = (e: MouseEvent<HTMLInputElement>) => {
     setIsListVisible(true);
     const target = e.currentTarget;
     const query = target.value || '';
     setSearchWord(query);
+  };
+  const onInputFocus = () => {
+    setSelectedIndex(-1);
   };
   const onInputKeyDown = (e: KeyboardEvent<HTMLElement>) => {
     if (!data?.products) return;
@@ -119,8 +119,8 @@ export default function SearchForm() {
               onBlur: onInputBlur
             })}
             placeholder="검색어를 입력해주세요."
-            onFocus={onInputFocus}
             onClick={onInputClick}
+            onFocus={onInputFocus}
             onKeyDown={onInputKeyDown}
             className={cls(
               'w-full border-none pr-12',
