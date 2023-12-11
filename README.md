@@ -35,6 +35,7 @@
 - [사용자 인증](https://github.com/Deemou/carrot-market/wiki/사용자-인증)
 - [상태 관리](https://github.com/Deemou/carrot-market/wiki/상태-관리)
 - [이메일 인증](https://github.com/Deemou/carrot-market/wiki/이메일-인증)
+- [검색어 자동 완성](https://github.com/Deemou/carrot-market/wiki/검색어-자동-완성)
 - [Infinite Scroll](https://github.com/Deemou/carrot-market/wiki/infinite-scroll)
 - [Static Generation 적용](https://github.com/Deemou/carrot-market/wiki/static-generation-적용)
 - [Server Side Rendering 적용](https://github.com/Deemou/carrot-market/wiki/server-side-rendering-적용)

@@ -37,12 +37,12 @@ export default function SearchForm() {
 
   const isOpenSearchList = isListVisible && data && data?.products?.length > 0;
 
-  const onInputBlur = () => {
-    setIsListVisible(false);
-  };
   const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setIsListVisible(true);
     setSearchWord(e.currentTarget.value);
+  };
+  const onInputBlur = () => {
+    setIsListVisible(false);
   };
   const onInputClick = (e: MouseEvent<HTMLInputElement>) => {
     setIsListVisible(true);
@@ -50,8 +50,10 @@ export default function SearchForm() {
     const query = target.value || '';
     setSearchWord(query);
   };
+  const onInputFocus = () => {
+    setSelectedIndex(-1);
+  };
   const onInputKeyDown = (e: KeyboardEvent<HTMLElement>) => {
-    console.log('!!');
     if (!data?.products) return;
 
     if (e.key === 'Tab' || e.key === 'ArrowDown') {
@@ -60,7 +62,6 @@ export default function SearchForm() {
         prevIndex >= data.products.length - 1 ? 0 : prevIndex + 1
       );
     } else if (e.key === 'ArrowUp') {
-      e.preventDefault();
       setSelectedIndex((prevIndex) => Math.max(-1, prevIndex - 1));
     }
   };
@@ -79,14 +80,6 @@ export default function SearchForm() {
     const target = e.currentTarget;
     const query = target.textContent || '';
     navigateToSearch(query);
-  };
-  const onButtonKeyDown = (e: KeyboardEvent<HTMLElement>) => {
-    if (e.key === 'Enter') {
-      setIsListVisible(false);
-      const target = e.currentTarget;
-      const query = target.textContent || '';
-      navigateToSearch(query);
-    }
   };
 
   const navigateToSearch = (query: string) => {
@@ -127,6 +120,7 @@ export default function SearchForm() {
             })}
             placeholder="검색어를 입력해주세요."
             onClick={onInputClick}
+            onFocus={onInputFocus}
             onKeyDown={onInputKeyDown}
             className={cls(
               'w-full border-none pr-12',
@@ -149,10 +143,6 @@ export default function SearchForm() {
                   onMouseLeave={onButtonMouseLeave}
                   onMouseDown={onButtonMouseDown}
                   onMouseUp={onButtonMouseUp}
-                  onKeyDown={(e) => {
-                    onButtonKeyDown(e);
-                    onInputKeyDown(e);
-                  }}
                   className={cls(
                     'w-full p-2 text-left outline-none',
                     index === hoveredIndex ? 'bg-gray-400' : '',
