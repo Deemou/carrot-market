@@ -62,7 +62,6 @@ export default function SearchForm() {
         prevIndex >= data.products.length - 1 ? 0 : prevIndex + 1
       );
     } else if (e.key === 'ArrowUp') {
-      e.preventDefault();
       setSelectedIndex((prevIndex) => Math.max(-1, prevIndex - 1));
     }
   };
@@ -81,14 +80,6 @@ export default function SearchForm() {
     const target = e.currentTarget;
     const query = target.textContent || '';
     navigateToSearch(query);
-  };
-  const onButtonKeyDown = (e: KeyboardEvent<HTMLElement>) => {
-    if (e.key === 'Enter') {
-      setIsListVisible(false);
-      const target = e.currentTarget;
-      const query = target.textContent || '';
-      navigateToSearch(query);
-    }
   };
 
   const navigateToSearch = (query: string) => {
@@ -152,10 +143,6 @@ export default function SearchForm() {
                   onMouseLeave={onButtonMouseLeave}
                   onMouseDown={onButtonMouseDown}
                   onMouseUp={onButtonMouseUp}
-                  onKeyDown={(e) => {
-                    onButtonKeyDown(e);
-                    onInputKeyDown(e);
-                  }}
                   className={cls(
                     'w-full p-2 text-left outline-none',
                     index === hoveredIndex ? 'bg-gray-400' : '',
