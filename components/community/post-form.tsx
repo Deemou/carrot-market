@@ -6,6 +6,7 @@ import useCoords from '@libs/client/useCoords';
 import Button from '@/components/common/button/button';
 import { IPostForm, PostResponse } from '@/types/community';
 import PostInput from './post-input';
+import { COMMUNITY } from '@/pageTypes';
 
 interface PostFormProps {
   buttonText: string;
@@ -25,7 +26,7 @@ export default function PostForm({ buttonText, requestUrl }: PostFormProps) {
 
   useEffect(() => {
     if (data && data.ok) {
-      router.push(`/community/${data.post.id}`);
+      router.push(`/${COMMUNITY}/${data.post.id}`);
     }
   }, [data, router]);
 

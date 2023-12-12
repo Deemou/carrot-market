@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Product } from '@prisma/client';
+import { PRODUCTS } from '@/pageTypes';
 
 interface CustomCSSProperties extends CSSProperties {
   '--offset'?: string;
@@ -21,7 +22,7 @@ export default function ProductSlide({ offset, product }: ProductSlideProps) {
       className="slide"
       style={{ '--offset': `${offset}` } as CustomCSSProperties}
     >
-      <Link href={`/products/${product.id}`}>
+      <Link href={`/${PRODUCTS}/${product.id}`}>
         <div>
           <div className="relative mb-4 aspect-square w-full">
             <Image

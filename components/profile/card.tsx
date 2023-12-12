@@ -8,6 +8,8 @@ import MenuButton from '../common/button/menu-button';
 import DeleteWarningModal from '../common/delete-warning-modal';
 import MenuModal from '../common/button/menu-modal';
 import ProfileInfo from './profile-info';
+import { COMMUNITY, PRODUCTS } from '@/pageTypes';
+import { HOME_URL } from '@/routes';
 
 interface CardProps {
   avatar: string | null;
@@ -27,8 +29,8 @@ export default function Card({ avatar, userId, userName, postId }: CardProps) {
   const [isDeleteMenuClicked, setIsDeleteMenuClicked] = useState(false);
   const pageType = useRecoilValue(pageTypeAtom);
 
-  const postUrl = `/api/${pageType}/${postId}`;
-  const deleteUrl = `${postUrl}/delete`;
+  const postApiUrl = `/api/${pageType}/${postId}`;
+  const deleteUrl = `${postApiUrl}/delete`;
 
   const [deletePost, { loading: deleteLoading, data: deleteData }] =
     useMutation<Response>(deleteUrl);
@@ -53,14 +55,15 @@ export default function Card({ avatar, userId, userName, postId }: CardProps) {
     deletePost({});
   };
   const onEditClick = () => {
-    if (pageType === 'products') router.push(`/products/${postId}/edit/`);
-    else if (pageType === 'community') router.push(`/community/${postId}/edit`);
+    if (pageType === PRODUCTS) router.push(`/${PRODUCTS}/${postId}/edit/`);
+    else if (pageType === COMMUNITY)
+      router.push(`/${COMMUNITY}/${postId}/edit`);
   };
 
   useEffect(() => {
     if (!deleteData?.ok) return;
-    if (pageType === 'products') router.push('/');
-    else if (pageType === 'community') router.push('/community');
+    if (pageType === PRODUCTS) router.push(HOME_URL);
+    else if (pageType === COMMUNITY) router.push(`/${COMMUNITY}`);
   }, [deleteData, pageType, router]);
 
   return (

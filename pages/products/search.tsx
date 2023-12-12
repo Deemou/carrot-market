@@ -9,18 +9,19 @@ import PaginationBar from '@/components/pagination/pagination-bar';
 import { useSetRecoilState } from 'recoil';
 import { pageTypeAtom } from '@/atoms';
 import { ProductsResponse } from '@/types/product';
+import { PRODUCTS } from '@/pageTypes';
 
 const ProductSearch: NextPage = () => {
   const router = useRouter();
   const { q } = router.query;
   const [page, setPage] = useState<number>(1);
   const { data } = useSWR<ProductsResponse>(
-    q ? `/api/products/search?q=${q}&page=${page}` : null
+    q ? `/api/${PRODUCTS}/search?q=${q}&page=${page}` : null
   );
   const setPageType = useSetRecoilState(pageTypeAtom);
 
   useEffect(() => {
-    setPageType('products');
+    setPageType(PRODUCTS);
   }, [setPageType]);
 
   useEffect(() => {

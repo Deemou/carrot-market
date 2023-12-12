@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import EmptyHeartIcon from '../icon/empty-heart-icon';
+import { PRODUCTS } from '@/pageTypes';
 
 interface ItemProps {
   id: number;
@@ -19,7 +20,7 @@ export default function Item({
 }: ItemProps) {
   return (
     <Link
-      href={`/products/${id}`}
+      href={`/${PRODUCTS}/${id}`}
       className="flex cursor-pointer justify-between pt-5"
     >
       <div className="flex w-full justify-between space-x-4">

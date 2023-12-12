@@ -19,7 +19,7 @@ const Enter: NextPage = () => {
         <OAuthLoginButtonList />
 
         <AuthNavigation
-          address="/sign-up"
+          address={SIGNUP_URL}
           message="You don't have an account yet? Sign up!"
         />
       </div>

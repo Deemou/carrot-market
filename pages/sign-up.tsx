@@ -27,7 +27,7 @@ const SignUp: NextPage = () => {
         {isTokenOk && <AccountForm email={email} />}
 
         <AuthNavigation
-          address="/login"
+          address={LOGIN_URL}
           message="You already have an account? Login!"
         />
       </div>

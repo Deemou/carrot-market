@@ -8,6 +8,7 @@ import Layout from '@/components/common/layout';
 import Button from '@/components/common/button/button';
 import { useForm } from 'react-hook-form';
 import PostInput from '@/components/community/post-input';
+import { COMMUNITY } from '@/pageTypes';
 
 interface EditPostForm {
   question: string;
@@ -25,10 +26,9 @@ interface Response {
 const Edit: NextPage = () => {
   const router = useRouter();
   const buttonText = 'Update';
-  const pageType = 'community';
   const { register, setValue, handleSubmit } = useForm<EditPostForm>();
 
-  const requestUrl = `/api/${pageType}/${router.query.id}/edit`;
+  const requestUrl = `/api/${COMMUNITY}/${router.query.id}/edit`;
 
   const { data: postData } = useSWR<PostResponse>(
     router.query.id ? requestUrl : null
@@ -46,12 +46,12 @@ const Edit: NextPage = () => {
 
   useEffect(() => {
     if (!postData) return;
-    if (!postData.ok) router.replace(`/${pageType}`);
+    if (!postData.ok) router.replace(`/${COMMUNITY}`);
   });
 
   useEffect(() => {
     if (data?.ok) {
-      router.replace(`/${pageType}/${router.query.id}`);
+      router.replace(`/${COMMUNITY}/${router.query.id}`);
     }
   }, [data, router]);
 

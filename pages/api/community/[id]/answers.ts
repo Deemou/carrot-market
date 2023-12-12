@@ -3,6 +3,7 @@ import withHandler, { ResponseType } from '@libs/server/withHandler';
 import client from '@libs/server/client';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@api/auth/[...nextauth]';
+import { COMMUNITY } from '@/pageTypes';
 
 async function handler(
   req: NextApiRequest,
@@ -34,7 +35,7 @@ async function handler(
 
   console.log(newAnswer);
 
-  await res.revalidate(`/community/${id}`);
+  await res.revalidate(`/${COMMUNITY}/${id}`);
   res.json({
     ok: true,
     answer: newAnswer
