@@ -10,6 +10,7 @@ import { useRouter } from 'next/router';
 import PaginationBar from '@/components/pagination/pagination-bar';
 import { useSetRecoilState } from 'recoil';
 import { pageTypeAtom } from '@/atoms';
+import { COMMUNITY } from '@/pageTypes';
 
 interface PostWithUser extends Post {
   user: User;
@@ -28,13 +29,13 @@ interface PostsResponse {
 const Community: NextPage<PostsResponse> = (props) => {
   const router = useRouter();
   const [page, setPage] = useState<number>(1);
-  const { data } = useSWR<PostsResponse>(`/api/posts?page=${page}`, {
+  const { data } = useSWR<PostsResponse>(`/api/${COMMUNITY}?page=${page}`, {
     fallbackData: props
   });
   const setPageType = useSetRecoilState(pageTypeAtom);
 
   useEffect(() => {
-    setPageType('community');
+    setPageType(COMMUNITY);
   }, [setPageType]);
 
   useEffect(() => {

@@ -10,17 +10,18 @@ import PaginationBar from '@/components/pagination/pagination-bar';
 import { ProductsResponse } from '@/types/product';
 import { useSetRecoilState } from 'recoil';
 import { pageTypeAtom } from '@/atoms';
+import { PRODUCTS } from '@/pageTypes';
 
 const Home: NextPage<ProductsResponse> = (props) => {
   const router = useRouter();
   const [page, setPage] = useState<number>(1);
-  const { data } = useSWR<ProductsResponse>(`/api/products?page=${page}`, {
+  const { data } = useSWR<ProductsResponse>(`/api/${PRODUCTS}?page=${page}`, {
     fallbackData: props
   });
   const setPageType = useSetRecoilState(pageTypeAtom);
 
   useEffect(() => {
-    setPageType('products');
+    setPageType(PRODUCTS);
   }, [setPageType]);
 
   useEffect(() => {

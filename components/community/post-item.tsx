@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import CheckIcon from '../icon/check-icon';
 import MessageIcon from '../icon/message-icon';
+import { COMMUNITY } from '@/pageTypes';
 
 interface PostProps {
   id: number;
@@ -21,7 +22,7 @@ export default function PostItem({
 }: PostProps) {
   return (
     <Link
-      href={`/community/${id}`}
+      href={`/${COMMUNITY}/${id}`}
       key={id}
       className="flex cursor-pointer flex-col items-start pt-4"
     >

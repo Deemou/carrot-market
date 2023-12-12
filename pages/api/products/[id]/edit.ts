@@ -3,6 +3,7 @@ import withHandler, { ResponseType } from '@libs/server/withHandler';
 import client from '@libs/server/client';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@api/auth/[...nextauth]';
+import { PRODUCTS } from '@/pageTypes';
 
 async function handler(
   req: NextApiRequest,
@@ -48,7 +49,7 @@ async function handler(
       }
     });
 
-    await res.revalidate(`/products/${id}`);
+    await res.revalidate(`/${PRODUCTS}/${id}`);
 
     res.json({
       ok: true,

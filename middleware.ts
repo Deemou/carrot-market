@@ -5,13 +5,14 @@ import {
   userAgent
 } from 'next/server';
 import { getToken } from 'next-auth/jwt';
-
-const loginUrl = '/login';
-const signUpUrl = '/sign-up';
+import { HOME_URL, LOGIN_URL, PROFILE_URL, SIGNUP_URL } from './routes';
 
 export const middleware = async (req: NextRequest, ev: NextFetchEvent) => {
   function isAuthPages() {
-    return req.url.includes(loginUrl) || req.url.includes(signUpUrl);
+    return req.url.includes(LOGIN_URL) || req.url.includes(SIGNUP_URL);
+  }
+  function isAuthNeededPages() {
+    return req.url.endsWith(PROFILE_URL);
   }
 
   if (userAgent(req).isBot) {
@@ -23,14 +24,13 @@ export const middleware = async (req: NextRequest, ev: NextFetchEvent) => {
   const secret = process.env.NEXTAUTH_SECRET;
   const token = await getToken({ req, secret });
 
-  if (!token && !isAuthPages()) {
-    // req.nextUrl.searchParams.set('from', req.nextUrl.pathname);
-    req.nextUrl.pathname = loginUrl;
+  if (!token && isAuthNeededPages()) {
+    req.nextUrl.pathname = LOGIN_URL;
     return NextResponse.redirect(req.nextUrl);
   }
 
   if (token && isAuthPages()) {
-    req.nextUrl.pathname = '/';
+    req.nextUrl.pathname = HOME_URL;
     return NextResponse.redirect(req.nextUrl);
   }
 };

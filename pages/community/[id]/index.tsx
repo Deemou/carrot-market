@@ -14,11 +14,15 @@ import PostCategory from '@/components/community/post-category';
 import { useSetRecoilState } from 'recoil';
 import { pageTypeAtom } from '@/atoms';
 import { useEffect } from 'react';
+import { COMMUNITY } from '@/pageTypes';
+import { useSession } from 'next-auth/react';
+import redirectToLoginIfConfirmed from '@/libs/client/redirectToLoginIfConfirmed';
 
 const CommunityPostDetail: NextPage<CommunityPostResponse> = (props) => {
+  const { data: session } = useSession();
   const router = useRouter();
-  const requestUrl = `/api/posts/${router.query.id}`;
   const buttonText = 'Reply';
+  const requestUrl = `/api/${COMMUNITY}/${router.query.id}`;
   const { data, mutate } = useSWR<CommunityPostResponse>(requestUrl, {
     fallbackData: props
   });
@@ -26,10 +30,14 @@ const CommunityPostDetail: NextPage<CommunityPostResponse> = (props) => {
   const setPageType = useSetRecoilState(pageTypeAtom);
 
   useEffect(() => {
-    setPageType('community');
+    setPageType(COMMUNITY);
   }, [setPageType]);
 
   const onWonderClick = () => {
+    if (!session) {
+      redirectToLoginIfConfirmed(router);
+      return;
+    }
     if (!data) return;
     if (!loading) {
       toggleWonder({});

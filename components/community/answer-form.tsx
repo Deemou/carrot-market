@@ -9,6 +9,9 @@ import {
 } from '@/types/community';
 import Answernput from './answer-input';
 import Button from '../common/button/button';
+import { useSession } from 'next-auth/react';
+import redirectToLoginIfConfirmed from '@/libs/client/redirectToLoginIfConfirmed';
+import { useRouter } from 'next/router';
 
 interface AnswerFormProps {
   requestUrl: string;
@@ -21,6 +24,8 @@ export default function AnswerForm({
   buttonText,
   mutate
 }: AnswerFormProps) {
+  const { data: session } = useSession();
+  const router = useRouter();
   const { register, handleSubmit, reset } = useForm<IAnswerForm>();
 
   const [sendAnswer, { data, loading }] = useMutation<AnswerResponse>(
@@ -29,6 +34,10 @@ export default function AnswerForm({
 
   const onValid = (form: IAnswerForm) => {
     if (loading) return;
+    if (!session) {
+      redirectToLoginIfConfirmed(router);
+      return;
+    }
     sendAnswer(form);
   };
 

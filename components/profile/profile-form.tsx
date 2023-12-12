@@ -8,6 +8,7 @@ import { useRouter } from 'next/router';
 import NameInput from '@/components/common/input/name-input';
 import { saveAvatar } from '@/libs/client/image';
 import { useSession } from 'next-auth/react';
+import { PROFILE_URL } from '@/routes';
 
 interface EditProfileForm {
   avatar?: FileList;
@@ -116,7 +117,7 @@ export default function ProfileForm() {
   useEffect(() => {
     if (!isUpdateDone) return;
 
-    router.push(`/profile`);
+    router.push(PROFILE_URL);
   }, [isUpdateDone, router]);
 
   return (

@@ -9,7 +9,6 @@ async function handler(
   res: NextApiResponse<ResponseType>
 ) {
   const session = await getServerSession(req, res, authOptions);
-  if (!session) return res.status(400).json({ ok: false });
 
   const {
     query: { id }
@@ -50,16 +49,20 @@ async function handler(
     }
   });
   if (!post) res.status(404).json({ ok: false, error: 'Not found post' });
-  const alreadyExists = await client.wondering.findFirst({
-    where: {
-      userId: Number(session.user.id),
-      postId: Number(id)
-    },
-    select: {
-      id: true
-    }
-  });
-  const isWondering = Boolean(alreadyExists);
+
+  const isWondering = session
+    ? Boolean(
+        await client.wondering.findFirst({
+          where: {
+            userId: Number(session.user.id),
+            postId: Number(id)
+          },
+          select: {
+            id: true
+          }
+        })
+      )
+    : false;
 
   res.json({
     ok: true,

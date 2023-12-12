@@ -11,6 +11,8 @@ import { Product } from '@prisma/client';
 import ImageInput from '@/components/common/input/image-input';
 import DescriptionInput from '@/components/common/input/description-input';
 import ItemNameInput from '@/components/product/item-name-input';
+import { PRODUCTS } from '@/pageTypes';
+import { HOME_URL } from '@/routes';
 
 interface IProductForm {
   name: string;
@@ -59,7 +61,7 @@ export default function ProductForm({
 
   useEffect(() => {
     if (!ProductData) return;
-    if (!ProductData.ok) router.replace('/');
+    if (!ProductData.ok) router.replace(HOME_URL);
   });
 
   useEffect(() => {
@@ -116,7 +118,7 @@ export default function ProductForm({
 
   useEffect(() => {
     if (data?.ok) {
-      router.replace(`/products/${data.id}`);
+      router.replace(`/${PRODUCTS}/${data.id}`);
     }
   }, [data, router]);
 

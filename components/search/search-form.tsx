@@ -14,6 +14,7 @@ import { pageTypeAtom } from '@/atoms';
 import cls from '@/libs/client/utils';
 import SearchButton from './search-button';
 import { ProductsResponse } from '@/types/product';
+import { PRODUCTS } from '@/pageTypes';
 
 interface ISearchForm {
   query: string;
@@ -32,7 +33,7 @@ export default function SearchForm() {
   const itemRefs = useRef<(HTMLElement | null)[]>([]);
 
   const { data } = useSWR<ProductsResponse>(
-    searchWord ? `/api/products/search?q=${searchWord}` : null
+    searchWord ? `/api/${PRODUCTS}/search?q=${searchWord}` : null
   );
 
   const isOpenSearchList = isListVisible && data && data?.products?.length > 0;
@@ -107,7 +108,7 @@ export default function SearchForm() {
     >
       <SearchButton />
 
-      {pageType === 'products' ? (
+      {pageType === PRODUCTS ? (
         <div className="relative">
           <input
             type="text"

@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import NameInput from '@/components/common/input/name-input';
 import PasswordInput from '@/components/auth/password-input';
 import Button from '@/components/common/button/button';
+import { LOGIN_URL } from '@/routes';
 
 interface IAccountForm {
   name: string;
@@ -44,7 +45,7 @@ export default function AccountForm({ email }: AccountFormProps) {
 
   useEffect(() => {
     if (!data) return;
-    if (data.ok) router.replace('/');
+    if (data.ok) router.replace(LOGIN_URL);
     if (data.error) setError('formErrors', { message: data.error });
   }, [data, router, setError]);
 

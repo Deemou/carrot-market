@@ -2,6 +2,7 @@ import type { NextPage } from 'next';
 import LoginForm from '@/components/auth/login-form';
 import OAuthLoginButtonList from '@/components/auth/oauth-login-button-list';
 import AuthNavigation from '@/components/auth/auth-navigation';
+import { SIGNUP_URL } from '@/routes';
 
 const Enter: NextPage = () => {
   return (
@@ -19,7 +20,7 @@ const Enter: NextPage = () => {
         <OAuthLoginButtonList />
 
         <AuthNavigation
-          address="/sign-up"
+          address={SIGNUP_URL}
           message="You don't have an account yet? Sign up!"
         />
       </div>

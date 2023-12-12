@@ -9,6 +9,7 @@ import PostListSection from '@/components/community/post-list-section';
 import PaginationBar from '@/components/pagination/pagination-bar';
 import { useSetRecoilState } from 'recoil';
 import { pageTypeAtom } from '@/atoms';
+import { COMMUNITY } from '@/pageTypes';
 
 interface PostWithUser extends Post {
   user: User;
@@ -29,12 +30,12 @@ const CommunitySearch: NextPage = () => {
   const { q } = router.query;
   const [page, setPage] = useState<number>(1);
   const { data } = useSWR<PostsResponse>(
-    q ? `/api/posts/search?q=${q}&page=${page}` : null
+    q ? `/api/${COMMUNITY}/search?q=${q}&page=${page}` : null
   );
   const setPageType = useSetRecoilState(pageTypeAtom);
 
   useEffect(() => {
-    setPageType('community');
+    setPageType(COMMUNITY);
   }, [setPageType]);
 
   useEffect(() => {

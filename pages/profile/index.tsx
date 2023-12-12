@@ -10,6 +10,7 @@ import { getSession, useSession } from 'next-auth/react';
 import CartIcon from '@/components/icon/cart-icon';
 import ShoppingBagIcon from '@/components/icon/shopping-bag-icon';
 import FilledHeartIcon from '@/components/icon/filled-heart-icon';
+import { PROFILE_URL } from '@/routes';
 
 const Profile: NextPage = () => {
   const { data: session } = useSession();
@@ -21,19 +22,23 @@ const Profile: NextPage = () => {
           <Avatar url={session?.user?.avatar} />
           <div className="flex h-12 flex-col justify-between">
             <h4>{session?.user?.name}</h4>
-            <Link href="/profile/edit" className="text-gray-400">
+            <Link href={`${PROFILE_URL}/edit`} className="text-gray-400">
               Edit profile &rarr;
             </Link>
           </div>
         </div>
         <div className="mt-10 flex">
-          <Tab href="/profile/sale" text="판매중인 상품" className="w-1/3">
+          <Tab
+            href={`${PROFILE_URL}/sale`}
+            text="판매중인 상품"
+            className="w-1/3"
+          >
             <CartIcon />
           </Tab>
-          <Tab href="/profile/bought" text="구매내역" className="w-1/3">
+          <Tab href={`${PROFILE_URL}/bought`} text="구매내역" className="w-1/3">
             <ShoppingBagIcon />
           </Tab>
-          <Tab href="/profile/fav" text="관심목록" className="w-1/3">
+          <Tab href={`${PROFILE_URL}/fav`} text="관심목록" className="w-1/3">
             <FilledHeartIcon />
           </Tab>
         </div>
