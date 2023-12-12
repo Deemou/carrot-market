@@ -1,10 +1,11 @@
 import type { NextPage } from 'next';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import TokenForm from '@/components/auth/token-form';
 import AccountForm from '@/components/auth/account-form';
 import EmailForm from '@/components/auth/email-form';
 import Button from '@/components/common/button/button';
 import AuthNavigation from '@/components/auth/auth-navigation';
+import { LOGIN_URL } from '@/routes';
 
 const SignUp: NextPage = () => {
   const [email, setEmail] = useState('');

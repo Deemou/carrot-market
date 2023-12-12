@@ -12,6 +12,7 @@ export default function NavBar() {
   const { data: session } = useSession();
   const router = useRouter();
   const onLoginClick = async () => {
+    localStorage.setItem('prevPath', router.asPath);
     router.push(LOGIN_URL);
   };
   const onLogoutClick = async () => {
