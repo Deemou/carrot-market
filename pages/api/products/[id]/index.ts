@@ -9,7 +9,6 @@ async function handler(
   res: NextApiResponse<ResponseType>
 ) {
   const session = await getServerSession(req, res, authOptions);
-  if (!session) return res.status(400).json({ ok: false });
 
   const {
     query: { id }
@@ -56,18 +55,20 @@ async function handler(
       }
     }
   });
-  const isLiked = Boolean(
-    await client.record.findFirst({
-      where: {
-        productId: productQuery?.id,
-        userId: Number(session.user.id),
-        kind: 'Fav'
-      },
-      select: {
-        id: true
-      }
-    })
-  );
+  const isLiked = session
+    ? Boolean(
+        await client.record.findFirst({
+          where: {
+            productId: productQuery?.id,
+            userId: Number(session.user.id),
+            kind: 'Fav'
+          },
+          select: {
+            id: true
+          }
+        })
+      )
+    : false;
   const product = {
     ...productQuery,
     _count: { favs: productQuery._count.records }

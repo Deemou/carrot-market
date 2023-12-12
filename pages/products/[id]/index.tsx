@@ -12,6 +12,9 @@ import RelatedItemSection from '@/components/product/related-item-section';
 import { useSetRecoilState } from 'recoil';
 import { pageTypeAtom } from '@/atoms';
 import { useEffect } from 'react';
+import { useSession } from 'next-auth/react';
+import redirectToLoginIfConfirmed from '@/libs/client/redirectToLoginIfConfirmed';
+import { PRODUCTS } from '@/pageTypes';
 
 interface ProductWithUser extends Product {
   user: User;
@@ -27,23 +30,28 @@ interface ItemDetailResponse {
 }
 
 const ItemDetail: NextPage<ItemDetailResponse> = (props) => {
+  const { data: session } = useSession();
   const router = useRouter();
   const { data, mutate } = useSWR<ItemDetailResponse>(
-    `/api/products/${router.query.id}`,
+    `/api/${PRODUCTS}/${router.query.id}`,
     {
       fallbackData: props
     }
   );
   const [toggleFav, { loading }] = useMutation(
-    `/api/products/${router.query.id}/fav`
+    `/api/${PRODUCTS}/${router.query.id}/fav`
   );
   const setPageType = useSetRecoilState(pageTypeAtom);
 
   useEffect(() => {
-    setPageType('products');
+    setPageType(PRODUCTS);
   }, [setPageType]);
 
   const onFavClick = () => {
+    if (!session) {
+      redirectToLoginIfConfirmed(router);
+      return;
+    }
     if (!data) return;
     if (!loading) {
       toggleFav({});
