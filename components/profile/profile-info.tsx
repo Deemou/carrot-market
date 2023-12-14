@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { PROFILE_URL } from '@/routes';
-import Avatar from '../common/avatar';
+import { useRouter } from 'next/router';
+import AvatarButton from './avatar-button';
 
 interface ProfileInfoProps {
   avatar: string | null;
@@ -13,9 +14,14 @@ export default function ProfileInfo({
   userId,
   userName
 }: ProfileInfoProps) {
+  const router = useRouter();
+  const onAvatarClick = () => {
+    router.push(`${PROFILE_URL}/${userId}`);
+  };
+
   return (
     <div className="my-3 flex items-center space-x-3">
-      <Avatar url={avatar} />
+      <AvatarButton url={avatar} onClick={onAvatarClick} />
       <div className="flex h-12 flex-col justify-between">
         <h4>{userName}</h4>
         <Link href={`${PROFILE_URL}/${userId}`} className="text-gray-500">
