@@ -7,10 +7,13 @@ interface LayoutProps {
 }
 
 export default function Layout({ seoTitle, children }: LayoutProps) {
+  const SITE_NAME = 'Carrot Market';
+  const TITLE = `${seoTitle} - ${SITE_NAME}`;
+
   return (
     <>
       <Head>
-        <title>{seoTitle}</title>
+        <title>{TITLE}</title>
       </Head>
       <Header />
       <main className="mx-auto flex w-full flex-col items-center pb-24 pt-20">
