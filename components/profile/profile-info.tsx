@@ -1,6 +1,6 @@
 import Link from 'next/link';
-import Avatar from '../common/avatar';
 import { PROFILE_URL } from '@/routes';
+import Avatar from '../common/avatar';
 
 interface ProfileInfoProps {
   avatar: string | null;

@@ -1,22 +1,38 @@
-import React from 'react';
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+import React, { MouseEvent, useState } from 'react';
 import { signOut, useSession } from 'next-auth/react';
 import NavChannel from '@components/nav/nav-channel';
 import Button from '@/components/common/button/button';
-import Avatar from '../common/avatar';
 import { useRouter } from 'next/router';
-import HomeLogo from '../common/home-logo';
 import { HOME_URL, LOGIN_URL, PROFILE_URL } from '@/routes';
 import { COMMUNITY } from '@/pageTypes';
+import HomeLogo from '../common/home-logo';
+import AvatarButton from '../profile/avatar-button';
 
 export default function NavBar() {
   const { data: session } = useSession();
   const router = useRouter();
+  const [isMenuVisible, setIsMenuVisible] = useState(false);
+
   const onLoginClick = async () => {
     localStorage.setItem('prevPath', router.asPath);
     router.push(LOGIN_URL);
   };
+
+  const onAvatarClick = () => {
+    setIsMenuVisible(true);
+  };
+  const onProfileClick = () => {
+    router.push(PROFILE_URL);
+  };
   const onLogoutClick = async () => {
     await signOut();
+  };
+  const onAvatarBlur = () => {
+    setIsMenuVisible(false);
+  };
+  const onMenuMouseDown = (e: MouseEvent<HTMLDivElement>) => {
+    e.preventDefault();
   };
 
   return (
@@ -26,13 +42,39 @@ export default function NavBar() {
         <div className="flex space-x-3">
           <NavChannel link={HOME_URL} name="홈" />
           <NavChannel link={`/${COMMUNITY}`} name="커뮤니티" />
-          {session && <NavChannel link={PROFILE_URL} name="프로필" />}
         </div>
       </div>
       {session ? (
-        <div className="flex space-x-3">
-          <Avatar url={session.user.avatar} />
-          <Button onClick={onLogoutClick} type="button" text="Log out" />
+        <div className="flex flex-col">
+          <AvatarButton
+            url={session.user.avatar}
+            onClick={onAvatarClick}
+            onBlur={onAvatarBlur}
+          />
+          {isMenuVisible && (
+            <div className="relative">
+              <div
+                onMouseDown={onMenuMouseDown}
+                role="list"
+                className="absolute top-2 right-0 w-24 divide-y divide-white rounded-lg border border-blue-50 bg-black"
+              >
+                <button
+                  onClick={onProfileClick}
+                  type="button"
+                  className="w-full p-2 text-left outline-none"
+                >
+                  Profile
+                </button>
+                <button
+                  onClick={onLogoutClick}
+                  type="button"
+                  className="w-full p-2 text-left outline-none"
+                >
+                  Log out
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       ) : (
         <div>
