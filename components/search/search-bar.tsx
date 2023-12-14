@@ -2,8 +2,8 @@ import SearchForm from '@/components/search/search-form';
 import ProductFloatingButton from '@/components/product/product-floating-button';
 import { useRecoilValue } from 'recoil';
 import { pageTypeAtom } from '@/atoms';
-import CommunityFloatingButton from '../community/community-floating-button';
 import { COMMUNITY, PRODUCTS } from '@/pageTypes';
+import CommunityFloatingButton from '../community/community-floating-button';
 
 export default function SearchBar() {
   const pageType = useRecoilValue(pageTypeAtom);

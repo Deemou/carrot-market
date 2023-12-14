@@ -5,8 +5,8 @@ import useMutation from '@libs/client/useMutation';
 import useCoords from '@libs/client/useCoords';
 import Button from '@/components/common/button/button';
 import { IPostForm, PostResponse } from '@/types/community';
-import PostInput from './post-input';
 import { COMMUNITY } from '@/pageTypes';
+import PostInput from './post-input';
 
 interface PostFormProps {
   buttonText: string;

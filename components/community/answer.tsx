@@ -1,14 +1,21 @@
 import { AnswerWithUser } from '@/types/community';
-import Avatar from '../common/avatar';
+import { useRouter } from 'next/router';
+import { PROFILE_URL } from '@/routes';
+import AvatarButton from '../profile/avatar-button';
 
 interface AnswerProps {
   answer: AnswerWithUser;
 }
 
 export default function Answer({ answer }: AnswerProps) {
+  const router = useRouter();
+  const onAvatarClick = () => {
+    router.push(`${PROFILE_URL}/${answer.user.id}`);
+  };
+
   return (
     <div key={answer.id} className="flex items-start space-x-3">
-      <Avatar url={answer.user.avatar} />
+      <AvatarButton url={answer.user.avatar} onClick={onAvatarClick} />
       <div>
         <div className="flex flex-col">
           <span>{answer.user.name}</span>

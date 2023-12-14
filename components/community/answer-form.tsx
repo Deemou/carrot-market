@@ -7,11 +7,11 @@ import {
   CommunityPostResponse,
   IAnswerForm
 } from '@/types/community';
-import Answernput from './answer-input';
-import Button from '../common/button/button';
 import { useSession } from 'next-auth/react';
 import redirectToLoginIfConfirmed from '@/libs/client/redirectToLoginIfConfirmed';
 import { useRouter } from 'next/router';
+import Button from '../common/button/button';
+import AnswerInput from './answer-input';
 
 interface AnswerFormProps {
   requestUrl: string;
@@ -50,7 +50,7 @@ export default function AnswerForm({
 
   return (
     <form onSubmit={handleSubmit(onValid)} className="flex flex-col space-y-4">
-      <Answernput register={register} />
+      <AnswerInput register={register} />
       <Button text={loading ? 'Loading...' : buttonText} />
     </form>
   );

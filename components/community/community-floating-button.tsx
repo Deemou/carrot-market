@@ -1,6 +1,6 @@
 import FloatingButton from '@/components/common/button/floating-button';
-import WriteIcon from '../icon/write-icon';
 import { COMMUNITY } from '@/pageTypes';
+import WriteIcon from '../icon/write-icon';
 
 export default function CommunityFloatingButton() {
   return (

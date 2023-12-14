@@ -12,9 +12,9 @@ import useSWR from 'swr';
 import { useRecoilValue } from 'recoil';
 import { pageTypeAtom } from '@/atoms';
 import cls from '@/libs/client/utils';
-import SearchButton from './search-button';
 import { ProductsResponse } from '@/types/product';
 import { PRODUCTS } from '@/pageTypes';
+import SearchButton from './search-button';
 
 interface ISearchForm {
   query: string;
@@ -94,7 +94,7 @@ export default function SearchForm() {
     const ref = itemRefs.current[selectedIndex];
     if (!ref) return;
     if (ref.textContent) setValue('query', ref.textContent);
-  }, [selectedIndex]);
+  }, [selectedIndex, setValue]);
 
   useEffect(() => {
     if (!q) return;

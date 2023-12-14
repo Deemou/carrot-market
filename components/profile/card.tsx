@@ -4,12 +4,12 @@ import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
 import { useRecoilValue } from 'recoil';
 import { pageTypeAtom } from '@/atoms';
+import { COMMUNITY, PRODUCTS } from '@/pageTypes';
+import { HOME_URL } from '@/routes';
 import MenuButton from '../common/button/menu-button';
 import DeleteWarningModal from '../common/delete-warning-modal';
 import MenuModal from '../common/button/menu-modal';
 import ProfileInfo from './profile-info';
-import { COMMUNITY, PRODUCTS } from '@/pageTypes';
-import { HOME_URL } from '@/routes';
 
 interface CardProps {
   avatar: string | null;
