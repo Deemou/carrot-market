@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import EmptyHeartIcon from '../icon/empty-heart-icon';
 import { PRODUCTS } from '@/pageTypes';
+import EmptyHeartIcon from '../icon/empty-heart-icon';
 
 interface ItemProps {
   id: number;

@@ -1,7 +1,7 @@
 import Link from 'next/link';
+import { COMMUNITY } from '@/pageTypes';
 import CheckIcon from '../icon/check-icon';
 import MessageIcon from '../icon/message-icon';
-import { COMMUNITY } from '@/pageTypes';
 
 interface PostProps {
   id: number;
