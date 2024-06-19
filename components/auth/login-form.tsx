@@ -5,9 +5,9 @@ import Button from '@/components/common/button/button';
 import Input from '@/components/common/input/input';
 import { signIn } from 'next-auth/react';
 import { ILoginForm } from '@/types/form';
+import redirectToPrevPath from '@/libs/client/redirectToPrevPath';
 import EmailInput from './email-input';
 import ErrorMessage from '../common/error-message';
-import redirectToPrevPath from '@/libs/client/redirectToPrevPath';
 
 export default function LoginForm() {
   const [isLoading, setIsLoading] = useState(false);
@@ -38,8 +38,8 @@ export default function LoginForm() {
 
         // authorize()에서 호출한 throw new Error("")가 result.error에 저장됨
         if (result?.error) setError('formErrors', { message: result.error });
-
-        redirectToPrevPath(router);
+        else redirectToPrevPath(router);
+        setIsLoading(false);
       } catch (error) {
         console.error(error);
       }
